@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f8f7" />
+    <meta name="description" content="جسر للتواصل السريع بين الممارسين الصحيين والهندسة الطبية عند تعطل الأجهزة." />
+    <title>جسر | بلاغات الأجهزة الطبية</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="جسر، الصفحة الرئيسية">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M7 18h22M18 7v22"/><circle cx="18" cy="18" r="14"/></svg></span>
+          <span><strong>جسر</strong><small>بلاغات الأجهزة الطبية</small></span>
+        </a>
+        <div class="topbar-meta"><span id="today-label"></span></div>
+        <div class="role-switch" role="group" aria-label="اختيار نوع المستخدم">
+          <button type="button" class="role-button is-active" data-role="clinician" aria-pressed="true">ممارس صحي</button>
+          <button type="button" class="role-button" data-role="engineering" aria-pressed="false">هندسة طبية</button>
+        </div>
+      </header>
+      <main id="app-main" tabindex="-1"></main>
+      <footer class="site-footer"><span>جسر — حين يتوقف الجهاز، يبدأ التواصل.</span><span>بيانات محفوظة على هذا الجهاز فقط</span></footer>
+    </div>
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
