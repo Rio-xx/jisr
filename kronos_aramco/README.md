@@ -1,30 +1,61 @@
-# Kronos × Aramco (2222.SR)
+# Kronos × تداول
 
-اختبار رجعي لنموذج Kronos-small على سهم أرامكو: آخر 30 يوم تداول كبيانات اختبار، والتنبؤ بها من كل ما قبلها.
+تجارب تنبؤ بأسعار الأسهم السعودية بنموذج [Kronos-small](https://github.com/shiyu-coder/Kronos)، مع تطبيق Streamlit بالعربية.
 
-## التثبيت
-```bash
-git clone https://github.com/shiyu-coder/Kronos ../Kronos   # أو أي مسار آخر
-python3 -m venv ../Kronos/.venv
-../Kronos/.venv/bin/pip install -r ../Kronos/requirements.txt yfinance
-```
+> ⚠️ تجربة شخصية — ليست توصية استثمارية.
 
-## التشغيل (CPU)
-```bash
-KRONOS_DIR=../Kronos ../Kronos/.venv/bin/python forecast_aramco.py
-```
-يطبع MAE ونسبة صحة الاتجاه، ويحفظ `aramco_kronos_forecast.png`.
-يتطلب الوصول إلى `query*.finance.yahoo.com` و`huggingface.co`.
+| الملف | الوظيفة |
+|---|---|
+| `app.py` | تطبيق Streamlit: «توقعات الأسبوع» و«تقييم توقع سابق» |
+| `predict_week.py` | سطر أوامر: توقع 5 أيام تداول لأعلى 30 سهمًا سيولة → `predictions_YYYY-MM-DD.csv` |
+| `evaluate_week.py` | سطر أوامر: تقييم ملف توقعات بعد مرور 5 جلسات مقارنةً بتاسي |
+| `forecast_aramco.py` | اختبار رجعي لأرامكو (2222.SR) على آخر 30 يوم تداول |
+| `tadawul_common.py` | قائمة الأسهم، وتحميل البيانات من yfinance، وتحميل النموذج |
+| `model/` | نسخة من كود Kronos (رخصة MIT، انظر `model/SOURCE.txt`) |
 
-## توقعات الأسبوع لأعلى 30 سهمًا سيولة
+## التشغيل محليًا
 
 ```bash
-# بعد إغلاق آخر جلسة: يتنبأ بأيام التداول الخمسة القادمة (الأحد–الخميس)
-KRONOS_DIR=../Kronos ../Kronos/.venv/bin/python predict_week.py
-# بعد مرور 5 أيام تداول: يقيّم ملف التوقعات مقابل الأسعار الفعلية وتاسي
-../Kronos/.venv/bin/python evaluate_week.py predictions_YYYY-MM-DD.csv
+cd kronos_aramco
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+
+streamlit run app.py                                 # التطبيق
+python predict_week.py                               # توقع الأسبوع من سطر الأوامر
+python evaluate_week.py predictions_YYYY-MM-DD.csv   # التقييم بعد 5 جلسات
+python forecast_aramco.py                            # اختبار أرامكو الرجعي
 ```
 
-- يُختار أعلى 30 سهمًا من قائمة مرشحة (`tadawul_common.UNIVERSE`) حسب متوسط قيمة التداول خلال آخر 60 جلسة.
-- تواريخ التوقع تقويم الأحد–الخميس ولا تحتسب العطل الرسمية. أما التقييم فيعتمد على الجلسة الخامسة الفعلية في بيانات تاسي.
-- عائد أعلى/أدنى 5 متوسط متساوي الأوزان. والاتجاه يُقارن بإشارة العائد المتوقع مع إشارة العائد الفعلي على 5 أيام.
+يحتاج التشغيل إلى الوصول إلى `huggingface.co` لتنزيل النموذج (حوالي 100 ميغابايت في أول مرة) وإلى `*.finance.yahoo.com` للأسعار.
+
+## النشر على Streamlit Community Cloud
+
+1. **ارفع الكود إلى GitHub.** الكود موجود في المستودع `rio-xx/jisr` على الفرع `claude/exciting-mendel-utuqz2`. يمكنك النشر من هذا الفرع مباشرة، أو دمجه في `main` أولًا.
+2. ادخل إلى **[share.streamlit.io](https://share.streamlit.io)** وسجّل الدخول بحساب GitHub. عند أول دخول اسمح لـ Streamlit بالوصول إلى مستودعاتك. إن كان المستودع خاصًا فامنحه صلاحية المستودعات الخاصة.
+3. اضغط **Create app** ثم **Deploy a public app from GitHub**، واملأ الحقول:
+   - **Repository:** `rio-xx/jisr`
+   - **Branch:** `claude/exciting-mendel-utuqz2` (أو `main` بعد الدمج)
+   - **Main file path:** `kronos_aramco/app.py`
+   - **App URL:** اختر اسمًا، مثل `tadawul-kronos`
+4. افتح **Advanced settings** واختر **Python 3.12**. لا يحتاج التطبيق إلى أي Secrets.
+5. اضغط **Deploy**. يقرأ Streamlit ملف `kronos_aramco/requirements.txt` لأنه في نفس مجلد `app.py`:
+   - السطر `--extra-index-url https://download.pytorch.org/whl/cpu` مع `torch==…+cpu` يثبّت نسخة PyTorch الخاصة بالمعالج فقط (حوالي 200 ميغابايت) بدل نسخة CUDA التي يتجاوز حجمها عدة غيغابايت ولا تتسع لها موارد Community Cloud.
+   - يستغرق البناء الأول بضع دقائق.
+6. بعد اكتمال البناء افتح الرابط واضغط **شغّل التوقع**:
+   - أول تشغيل ينزّل النموذج من Hugging Face ثم يتنبأ بـ 30 سهمًا على CPU، وقد يستغرق بضع دقائق.
+   - النموذج والبيانات يُخزَّنان مؤقتًا (`st.cache_resource` و`st.cache_data`).
+   - نتيجة التوقع لنفس يوم التداول تُحفظ وتُشارك بين كل الزوار، فلا يُعاد الحساب إلا عند وجود يوم تداول جديد.
+7. **التحديثات:** أي `git push` إلى الفرع المنشور يعيد نشر التطبيق تلقائيًا.
+
+### ملاحظات وحل المشكلات
+
+- **فشل تثبيت torch:** إن لم تتوفر النسخة المثبّتة في `requirements.txt` لإصدار Python المختار، غيّر السطر إلى إصدار متاح في [قائمة PyTorch CPU](https://download.pytorch.org/whl/cpu/torch/)، مثل `torch==2.7.1+cpu`، أو اختر Python 3.12. يمكنك متابعة السجل من **Manage app** ثم **Logs**.
+- **«تعذّر تحميل البيانات»:** قد تحدّ Yahoo من الطلبات القادمة من خوادم مشتركة. انتظر دقائق ثم أعد المحاولة. البيانات تُخزَّن مؤقتًا لمدة ساعة.
+- **النوم:** تنام تطبيقات Community Cloud بعد فترة بلا زيارات، وتستيقظ عند أول زيارة. عند الاستيقاظ تُفقد النتائج المخزنة مؤقتًا ويُحمَّل النموذج من جديد.
+- **الذاكرة:** Kronos-small صغير (حوالي 25 مليون معامل)، فيعمل ضمن حدود الموارد المجانية.
+
+## المنهجية باختصار
+
+- **أعلى 30 سهمًا سيولة:** تُختار من قائمة مرشحة (`UNIVERSE` في `tadawul_common.py`) حسب متوسط قيمة التداول خلال آخر 60 جلسة، ويُستبعد أي سهم لم يتداول في آخر جلسة.
+- **التوقع:** 5 جلسات قادمة على تقويم الأحد–الخميس، بمتوسط 5 مسارات، وسياق حتى 512 يومًا. تواريخ التوقع في الملف لا تحتسب العطل الرسمية.
+- **التقييم:** يعتمد على الجلسة الخامسة الفعلية في بيانات تاسي، فتُحتسب العطل تلقائيًا. عائد أعلى 5 وأدنى 5 متوسط متساوي الأوزان. صحة الاتجاه تقارن إشارة العائد المتوقع بإشارة العائد الفعلي على 5 أيام.

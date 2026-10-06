@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 import yfinance as yf
 
-KRONOS_DIR = Path(os.environ.get("KRONOS_DIR", Path(__file__).resolve().parents[2] / "Kronos"))
+HERE = Path(__file__).resolve().parent
 TASI = "^TASI.SR"
 # Tadawul trades Sunday–Thursday.
 TADAWUL_BDAY = pd.offsets.CustomBusinessDay(weekmask="Sun Mon Tue Wed Thu")
@@ -37,9 +37,17 @@ UNIVERSE = {
 
 
 def import_kronos():
-    sys.path.insert(0, str(KRONOS_DIR))
+    """Import Kronos from $KRONOS_DIR if set, else from the vendored ./model package."""
+    sys.path.insert(0, os.environ.get("KRONOS_DIR", str(HERE)))
     from model import Kronos, KronosTokenizer, KronosPredictor
     return Kronos, KronosTokenizer, KronosPredictor
+
+
+def load_predictor(max_context: int = 512):
+    Kronos, KronosTokenizer, KronosPredictor = import_kronos()
+    tokenizer = KronosTokenizer.from_pretrained("NeoQuasar/Kronos-Tokenizer-base")
+    model = Kronos.from_pretrained("NeoQuasar/Kronos-small")
+    return KronosPredictor(model, tokenizer, device="cpu", max_context=max_context)
 
 
 def _clean(df: pd.DataFrame) -> pd.DataFrame:

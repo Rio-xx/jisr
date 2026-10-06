@@ -4,10 +4,8 @@ Holds out the last 30 trading days, forecasts them from all prior data,
 plots predicted vs. actual close, and prints MAE and directional accuracy.
 
 Usage:
-    KRONOS_DIR=/path/to/Kronos python forecast_aramco.py
+    python forecast_aramco.py
 """
-import os
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -19,9 +17,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-KRONOS_DIR = Path(os.environ.get("KRONOS_DIR", Path(__file__).resolve().parents[2] / "Kronos"))
-sys.path.insert(0, str(KRONOS_DIR))
-from model import Kronos, KronosTokenizer, KronosPredictor  # noqa: E402
+from tadawul_common import import_kronos  # noqa: E402
+
+Kronos, KronosTokenizer, KronosPredictor = import_kronos()
 
 TICKER = "2222.SR"
 TEST_DAYS = 30
