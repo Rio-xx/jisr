@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أوديسة ألفايوتا: أرغوس وكراكن</title>
+<title>أوديسة ألفايوتا: أرقوس وكراكن</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
     --teal: #48dfc4;
     --red: #ff2a55;
     --green: #39ff14;
+    --gold: #ffd400;
     --text: #ece8ff;
     --muted: #a99ccf;
   }
@@ -46,57 +47,73 @@
   }
   .overlay.show { opacity: 1; pointer-events: auto; }
   .panel {
-    width: min(92%, 58em);
-    max-height: 94%;
+    width: min(94%, 60em);
+    max-height: 95%;
     overflow: auto;
-    padding: 1.4em 2em;
+    padding: 1.2em 1.8em;
     border-radius: 1.1em;
     background: linear-gradient(160deg, rgba(34, 18, 70, 0.92), rgba(10, 8, 26, 0.95));
     border: 1px solid rgba(162, 89, 255, 0.45);
     box-shadow: 0 0 3em rgba(162, 89, 255, 0.25), inset 0 0 2em rgba(0, 243, 255, 0.05);
     text-align: center;
   }
-  .panel.small { width: min(80%, 30em); }
+  .panel.small { width: min(86%, 38em); }
   h1 {
-    font-size: 2.6em; font-weight: 900; line-height: 1.25;
+    font-size: 2.4em; font-weight: 900; line-height: 1.25;
     background: linear-gradient(90deg, var(--purple), #e0b3ff 45%, var(--cyan));
     -webkit-background-clip: text; background-clip: text; color: transparent;
     filter: drop-shadow(0 0 0.35em rgba(162, 89, 255, 0.6));
   }
-  h2 { font-size: 2.1em; font-weight: 900; margin-bottom: 0.3em; }
-  .sub { color: var(--muted); font-size: 1.05em; margin-bottom: 0.9em; }
-  .cards { display: flex; gap: 1em; justify-content: center; margin-bottom: 0.9em; }
+  h2 { font-size: 2.1em; font-weight: 900; margin-bottom: 0.2em; }
+  .sub { color: var(--muted); font-size: 1.02em; margin-bottom: 0.7em; }
+  .cards { display: flex; gap: 1em; justify-content: center; margin-bottom: 0.7em; }
   .card {
     flex: 1; display: flex; align-items: center; gap: 0.8em;
-    padding: 0.6em 0.9em; border-radius: 0.9em;
+    padding: 0.5em 0.9em; border-radius: 0.9em;
     background: rgba(255, 255, 255, 0.04);
     text-align: right;
   }
   .card.argus { border: 1px solid rgba(162, 89, 255, 0.55); box-shadow: inset 0 0 1.4em rgba(162, 89, 255, 0.15); }
   .card.kraken { border: 1px solid rgba(72, 223, 196, 0.55); box-shadow: inset 0 0 1.4em rgba(72, 223, 196, 0.15); }
-  .card canvas { width: 7.5em; height: 8.5em; flex: none; }
-  .card h3 { font-size: 1.25em; font-weight: 900; }
+  .card canvas { width: 6.5em; height: 7.4em; flex: none; }
+  .card h3 { font-size: 1.2em; font-weight: 900; }
   .card.argus h3 { color: #c58bff; }
   .card.kraken h3 { color: var(--teal); }
-  .card p { font-size: 0.92em; color: var(--muted); line-height: 1.7; }
+  .card p { font-size: 0.9em; color: var(--muted); line-height: 1.65; }
   kbd {
     display: inline-block; min-width: 1.8em; padding: 0 0.4em; margin: 0 0.1em;
     border-radius: 0.35em; font-family: 'Cairo', monospace; font-weight: 700; font-size: 0.9em;
     background: #1b1433; border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 0 2px 0 rgba(255, 255, 255, 0.15); color: #fff; direction: ltr;
   }
-  .rules { list-style: none; text-align: right; font-size: 0.95em; line-height: 1.75; margin: 0 auto 1em; max-width: 46em; }
+  .rules { list-style: none; text-align: right; font-size: 0.9em; line-height: 1.7; margin: 0 auto 0.7em; max-width: 48em; }
   .rules li { display: flex; align-items: baseline; gap: 0.6em; }
   .dot { width: 0.85em; height: 0.85em; border-radius: 50%; flex: none; transform: translateY(0.1em); }
   .dot.red { background: var(--red); box-shadow: 0 0 0.6em var(--red); }
   .dot.cyan { background: var(--cyan); box-shadow: 0 0 0.6em var(--cyan); }
   .dot.green { background: var(--green); box-shadow: 0 0 0.6em var(--green); }
-  .dot.yellow { background: #ffd400; box-shadow: 0 0 0.6em #ffd400; border-radius: 0.2em; }
+  .dot.yellow { background: var(--gold); box-shadow: 0 0 0.6em var(--gold); border-radius: 0.2em; }
+  .dot.gem { background: linear-gradient(135deg, var(--purple), var(--cyan)); transform: translateY(0.1em) rotate(45deg); border-radius: 0.15em; }
   .dot.portal { background: linear-gradient(90deg, var(--purple), var(--cyan)); box-shadow: 0 0 0.6em var(--purple); }
   .rules b.r { color: #ff7a93; } .rules b.c { color: #7ff8ff; } .rules b.g { color: #8dff6b; }
+  .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6em; margin: 0.2em 0 0.8em; }
+  .lvl {
+    font-family: inherit; color: var(--text); cursor: pointer;
+    padding: 0.45em 0.3em; border-radius: 0.8em;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(162, 89, 255, 0.45);
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .lvl:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 1.2em rgba(0, 243, 255, 0.35); background: rgba(0, 243, 255, 0.08); }
+  .lvl.current { border-color: var(--cyan); box-shadow: 0 0 1em rgba(0, 243, 255, 0.3); }
+  .lvl:disabled { opacity: 0.38; cursor: not-allowed; }
+  .lvl .n { display: block; font-size: 1.35em; font-weight: 900; line-height: 1.2; }
+  .lvl .t { display: block; font-size: 0.78em; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lvl .s { display: block; font-size: 0.95em; letter-spacing: 0.1em; color: var(--gold); direction: ltr; }
+  .lvl .s .off { color: rgba(255, 255, 255, 0.2); }
   .btn {
-    font-family: inherit; font-size: 1.2em; font-weight: 900;
-    padding: 0.45em 1.8em; margin: 0.25em; border-radius: 999px; cursor: pointer;
+    font-family: inherit; font-size: 1.15em; font-weight: 900;
+    padding: 0.4em 1.6em; margin: 0.25em; border-radius: 999px; cursor: pointer;
     color: #0a0618; border: none;
     background: linear-gradient(90deg, var(--purple), var(--cyan));
     box-shadow: 0 0 1.4em rgba(162, 89, 255, 0.55);
@@ -104,14 +121,18 @@
   }
   .btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 0 2em rgba(0, 243, 255, 0.6); }
   .btn.ghost { background: transparent; color: var(--text); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: none; }
-  .hint { color: var(--muted); font-size: 0.85em; margin-top: 0.5em; }
-  .stats { display: flex; gap: 1em; justify-content: center; margin: 0.8em 0 1em; }
-  .stat { padding: 0.5em 1.2em; border-radius: 0.8em; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); }
-  .stat span { display: block; font-size: 0.85em; color: var(--muted); }
-  .stat strong { font-size: 1.6em; direction: ltr; display: inline-block; }
+  .btn[hidden] { display: none; }
+  .hint { color: var(--muted); font-size: 0.82em; margin-top: 0.4em; }
+  .stars { font-size: 2.6em; letter-spacing: 0.15em; direction: ltr; line-height: 1.2; }
+  .stars .on { color: var(--gold); text-shadow: 0 0 0.4em rgba(255, 212, 0, 0.8); }
+  .stars .off { color: rgba(255, 255, 255, 0.15); }
+  .stats { display: flex; gap: 0.6em; justify-content: center; margin: 0.6em 0 0.9em; flex-wrap: wrap; }
+  .stat { padding: 0.4em 0.9em; border-radius: 0.8em; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); min-width: 6.5em; }
+  .stat span { display: block; font-size: 0.8em; color: var(--muted); }
+  .stat strong { font-size: 1.35em; direction: ltr; display: inline-block; }
   #done h2 { background: linear-gradient(90deg, var(--purple), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   #dead h2 { color: #ff4d6d; text-shadow: 0 0 0.6em rgba(255, 42, 85, 0.7); }
-  #deadReason { font-size: 1.15em; margin-bottom: 1em; color: #ffd0d9; }
+  #deadReason { font-size: 1.1em; margin-bottom: 1em; color: #ffd0d9; }
 </style>
 </head>
 <body>
@@ -122,13 +143,13 @@
     <!-- START SCREEN -->
     <div class="overlay show" id="start">
       <div class="panel">
-        <h1>أوديسة ألفايوتا: أرغوس وكراكن</h1>
-        <p class="sub">مغامرة تعاونية لاعبَين في قلب مركز بيانات النيون — لا أحد ينجو وحده!</p>
+        <h1>أوديسة ألفايوتا: أرقوس وكراكن</h1>
+        <p class="sub">مغامرة تعاونية للاعبَين في قلب مركز بيانات النيون — خمس مراحل، وكل مرحلة أصعب من التي قبلها!</p>
         <div class="cards">
           <div class="card argus">
             <canvas id="pvArgus" dir="ltr"></canvas>
             <div>
-              <h3>أرغوس — اللاعب الأول</h3>
+              <h3>أرقوس — اللاعب الأول</h3>
               <p>الحركة: <kbd>A</kbd> <kbd>D</kbd> &nbsp; القفز: <kbd>W</kbd></p>
               <p>يعبر برك <b style="color:#ff7a93">البيانات الخام الحمراء</b> بأمان.</p>
             </div>
@@ -143,27 +164,31 @@
           </div>
         </div>
         <ul class="rules">
-          <li><span class="dot red"></span><span><b class="r">البرك الحمراء (بيانات خام):</b> آمنة لأرغوس — لكنها تقضي على كراكن فورًا.</span></li>
-          <li><span class="dot cyan"></span><span><b class="c">البرك السماوية (محطات الوكلاء):</b> آمنة لكراكن — لكنها تقضي على أرغوس فورًا.</span></li>
-          <li><span class="dot green"></span><span><b class="g">البرك الخضراء (برمجيات خبيثة):</b> قاتلة لكليكما! اقفزا فوقها.</span></li>
-          <li><span class="dot yellow"></span><span><b>الأزرار والبوابات:</b> قف على زر لتنخفض البوابة التي تحمل اللون والحرف نفسيهما. البوابة تبقى مفتوحة ما دام أحدكما واقفًا على الزر.</span></li>
-          <li><span class="dot portal"></span><span><b>الهدف:</b> يجب أن يقف كل منكما داخل بوابته الملوّنة <b>في الوقت نفسه</b> لإنهاء المستوى.</span></li>
+          <li><span class="dot red"></span><span><b class="r">البرك الحمراء:</b> آمنة لأرقوس — قاتلة لكراكن. <b class="c">البرك السماوية:</b> آمنة لكراكن — قاتلة لأرقوس. <b class="g">البرك الخضراء:</b> قاتلة لكليكما!</span></li>
+          <li><span class="dot yellow"></span><span><b>الأزرار:</b> قف على زر لتشغيل الجهاز الذي يحمل اللون والحرف نفسيهما: بوابة تنخفض، أو مصعد يرتفع، أو جسر ضوئي يظهر. يعمل الجهاز ما دام أحدكما واقفًا على الزر.</span></li>
+          <li><span class="dot gem"></span><span><b>البلّورات:</b> اجمع بلّورات لونك (بنفسجية لأرقوس، سماوية لكراكن). جمعها كلها + إنهاء المرحلة ضمن الوقت المستهدف = ٣ نجوم.</span></li>
+          <li><span class="dot portal"></span><span><b>الهدف:</b> أن يقف كل منكما داخل بوابته الملوّنة <b>في الوقت نفسه</b>. إنهاء مرحلة يفتح المرحلة التالية.</span></li>
         </ul>
+        <div class="levels" id="levelList"></div>
         <button class="btn" id="btnStart">ابدأ المهمة ◀</button>
-        <p class="hint"><kbd>Enter</kbd> للبدء • <kbd>R</kbd> لإعادة المستوى • <kbd>Esc</kbd> إيقاف مؤقت • <kbd>M</kbd> كتم الصوت</p>
+        <p class="hint"><kbd>Enter</kbd> للبدء • <kbd>R</kbd> لإعادة المرحلة • <kbd>Esc</kbd> إيقاف مؤقت • <kbd>M</kbd> كتم الصوت</p>
       </div>
     </div>
 
     <!-- LEVEL COMPLETE -->
     <div class="overlay" id="done">
       <div class="panel small">
-        <h2>اكتمل المستوى!</h2>
-        <p class="sub">تمت مزامنة أرغوس وكراكن مع الشبكة بنجاح. تعاون مثالي!</p>
+        <h2 id="doneTitle">اكتملت المرحلة!</h2>
+        <div class="stars" id="doneStars"></div>
+        <p class="sub" id="doneSub">تمت مزامنة أرقوس وكراكن مع الشبكة بنجاح.</p>
         <div class="stats">
           <div class="stat"><span>زمن المهمة</span><strong id="doneTime">00:00.0</strong></div>
+          <div class="stat"><span>الوقت المستهدف</span><strong id="donePar">00:00</strong></div>
+          <div class="stat"><span>البلّورات</span><strong id="doneGems">0/0</strong></div>
           <div class="stat"><span>محاولات فاشلة</span><strong id="doneDeaths">0</strong></div>
         </div>
-        <button class="btn" id="btnAgain">العب مجددًا</button>
+        <button class="btn" id="btnNext">المرحلة التالية ◀</button>
+        <button class="btn ghost" id="btnAgain">إعادة المرحلة</button>
         <button class="btn ghost" id="btnMenu">القائمة الرئيسية</button>
       </div>
     </div>
@@ -174,6 +199,7 @@
         <h2>انقطع الاتصال!</h2>
         <p id="deadReason"></p>
         <button class="btn" id="btnRetry">إعادة المحاولة (R)</button>
+        <button class="btn ghost" id="btnDeadMenu">القائمة الرئيسية</button>
       </div>
     </div>
 
@@ -181,8 +207,9 @@
     <div class="overlay" id="pause">
       <div class="panel small">
         <h2>إيقاف مؤقت</h2>
-        <p class="sub">اضغط <kbd>Esc</kbd> للمتابعة أو <kbd>R</kbd> لإعادة المستوى.</p>
+        <p class="sub">اضغط <kbd>Esc</kbd> للمتابعة أو <kbd>R</kbd> لإعادة المرحلة.</p>
         <button class="btn" id="btnResume">متابعة</button>
+        <button class="btn ghost" id="btnPauseMenu">القائمة الرئيسية</button>
       </div>
     </div>
   </div>
@@ -228,6 +255,7 @@
     JUMP_CUT: -4,
     COYOTE: 6,
     BUFFER: 7,
+    STEP_UP: 17,   // auto-climb small ledges (lift at rest, light bridges)
   };
 
   const POOL_COLORS = {
@@ -235,55 +263,235 @@
     cyan:  { main: '#00f3ff', light: '#c4fdff', dark: '#004a57', label: 'محطة وكلاء' },
     green: { main: '#39ff14', light: '#c8ffb0', dark: '#0b3d00', label: 'برمجية خبيثة' },
   };
+  const C = { yellow: '#ffd400', magenta: '#ff3df2', orange: '#ff8a00', blue: '#4d7cff', ice: '#7fd4ff' };
 
-  const NAMES = { argus: 'أرغوس', kraken: 'كراكن' };
+  const NAMES = { argus: 'أرقوس', kraken: 'كراكن' };
 
   const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
   const lerp = (a, b, t) => a + (b - a) * t;
   const hash = (n) => { const x = Math.sin(n * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
   const overlap = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  const toAr = (n) => String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
 
   /* =========================================================
-     LEVEL 1
-     Flow: Argus wades the red pool -> stands on button A ->
-     door A lowers for Kraken -> Kraken swims the cyan pool ->
-     stands on button B -> door B lowers for Argus -> Argus holds
-     button C (inside) so Kraken can follow -> both reach portals.
+     LEVELS
+     Play field: walls x 0-20 / 1260-1280, floor top y=680, roof bottom y=126.
+     Jump: max height ~142px, comfortable step = rise <=100 with gap <=60.
+     Pools are hazards lying on a platform top (y = that top).
      ========================================================= */
-  const LEVEL1 = {
-    name: 'المستوى ١ — قلب مركز البيانات',
-    spawns: { argus: { x: 140, y: 630 }, kraken: { x: 200, y: 630 } },
-    solids: [
-      { x: 0, y: 0, w: 20, h: 720, k: 'wallL' },
-      { x: 1260, y: 0, w: 20, h: 720, k: 'wallR' },
-      { x: 0, y: 680, w: 1280, h: 40, k: 'floor' },
-      { x: 20, y: 200, w: 1240, h: 20, k: 'roof' },
-      { x: 20, y: 360, w: 1020, h: 20 },   // upper deck (portals)
-      { x: 200, y: 500, w: 900, h: 20 },   // middle deck (Kraken's route)
-      { x: 20, y: 600, w: 120, h: 16 },    // start step
-      { x: 1160, y: 600, w: 100, h: 16 },  // button A ledge
-      { x: 1160, y: 410, w: 100, h: 16 },  // climb ledge
-    ],
-    pools: [
-      { x: 260, y: 680, w: 300, type: 'red' },
-      { x: 790, y: 680, w: 70, type: 'green' },
-      { x: 700, y: 500, w: 200, type: 'cyan' },
-      { x: 520, y: 360, w: 50, type: 'green' },
-    ],
-    doors: [
-      { id: 'A', x: 640, y: 380, w: 20, h: 120, color: '#ffd400' },
-      { id: 'B', x: 940, y: 220, w: 20, h: 140, color: '#ff3df2' },
-    ],
-    buttons: [
-      { x: 1190, y: 600, w: 50, door: 'A' },
-      { x: 975, y: 500, w: 50, door: 'B' },
-      { x: 830, y: 360, w: 50, door: 'B' },
-    ],
-    portals: [
-      { who: 'argus', x: 60, y: 280, w: 56, h: 80 },
-      { who: 'kraken', x: 150, y: 280, w: 56, h: 80 },
-    ],
-  };
+  const BASE_SOLIDS = [
+    { x: 0, y: 0, w: 20, h: 720, k: 'wallL' },
+    { x: 1260, y: 0, w: 20, h: 720, k: 'wallR' },
+    { x: 0, y: 680, w: 1280, h: 40, k: 'floor' },
+    { x: 20, y: 110, w: 1240, h: 16, k: 'roof' },
+  ];
+
+  const LEVELS = [
+    // ---------------------------------------------------------------- 1
+    {
+      name: 'قلب مركز البيانات',
+      tip: 'الأساسيات: كل زر يفتح بوابة بنفس لونه. افتحا الطريق لبعضكما!',
+      par: 35,
+      spawns: { argus: { x: 140, y: 630 }, kraken: { x: 200, y: 630 } },
+      solids: [
+        { x: 20, y: 360, w: 1020, h: 20 },   // upper deck (portals)
+        { x: 200, y: 500, w: 900, h: 20 },   // middle deck
+        { x: 20, y: 600, w: 120, h: 16 },    // start step
+        { x: 1160, y: 600, w: 100, h: 16 },  // button A ledge
+        { x: 1160, y: 410, w: 100, h: 16 },  // climb ledge
+      ],
+      pools: [
+        { x: 260, y: 680, w: 300, type: 'red' },
+        { x: 790, y: 680, w: 70, type: 'green' },
+        { x: 700, y: 500, w: 200, type: 'cyan' },
+        { x: 520, y: 360, w: 50, type: 'green' },
+      ],
+      doors: [
+        { id: 'A', x: 640, y: 380, w: 20, h: 120, color: C.yellow },
+        { id: 'B', x: 940, y: 126, w: 20, h: 234, color: C.magenta },
+      ],
+      lifts: [],
+      buttons: [
+        { x: 1190, y: 600, w: 50, link: 'A' },
+        { x: 975, y: 500, w: 50, link: 'B' },
+        { x: 830, y: 360, w: 50, link: 'B' },
+      ],
+      gems: [
+        { x: 410, y: 652, who: 'argus' }, { x: 1175, y: 572, who: 'argus' }, { x: 700, y: 332, who: 'argus' },
+        { x: 75, y: 572, who: 'kraken' }, { x: 800, y: 472, who: 'kraken' }, { x: 1210, y: 382, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 60, y: 280, w: 56, h: 80 },
+        { who: 'kraken', x: 150, y: 280, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 2
+    {
+      name: 'المصعد الكمّي',
+      tip: 'جديد: المصعد! قف على الزر الأصفر ليرتفع المصعد ويحمل شريكك للأعلى.',
+      par: 40,
+      spawns: { argus: { x: 60, y: 630 }, kraken: { x: 120, y: 630 } },
+      solids: [
+        { x: 300, y: 400, w: 700, h: 16 },   // upper deck
+        { x: 1170, y: 590, w: 90, h: 16 },   // right step 1
+        { x: 1030, y: 490, w: 80, h: 16 },   // right step 2
+      ],
+      pools: [
+        { x: 330, y: 680, w: 270, type: 'red' },
+        { x: 820, y: 680, w: 70, type: 'green' },
+        { x: 520, y: 400, w: 200, type: 'cyan' },
+      ],
+      doors: [
+        { id: 'D', x: 980, y: 416, w: 20, h: 264, color: C.magenta },
+      ],
+      lifts: [
+        { id: 'L', from: [190, 664], to: [190, 400], w: 100, speed: 2.2, color: C.yellow },
+      ],
+      buttons: [
+        { x: 700, y: 680, w: 50, link: 'L' },
+        { x: 760, y: 400, w: 50, link: 'D' },
+      ],
+      gems: [
+        { x: 465, y: 652, who: 'argus' }, { x: 855, y: 565, who: 'argus' }, { x: 1215, y: 565, who: 'argus' },
+        { x: 240, y: 375, who: 'kraken' }, { x: 620, y: 375, who: 'kraken' }, { x: 735, y: 375, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 850, y: 320, w: 56, h: 80 },
+        { who: 'kraken', x: 920, y: 320, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 3
+    {
+      name: 'سباق التتابع',
+      tip: 'جديد: ممرّان منفصلان وأربع بوابات! كل زر في ممرك يفتح بوابة في ممر شريكك.',
+      par: 45,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 90, y: 630 } },
+      solids: [
+        { x: 130, y: 590, w: 70, h: 16 },    // start step 1
+        { x: 20, y: 500, w: 70, h: 16 },     // start step 2
+        { x: 200, y: 440, w: 1060, h: 16 },  // divider: top lane / bottom lane
+      ],
+      pools: [
+        { x: 220, y: 680, w: 190, type: 'cyan' },
+        { x: 250, y: 440, w: 200, type: 'red' },
+        { x: 990, y: 440, w: 60, type: 'green' },
+        { x: 970, y: 680, w: 60, type: 'green' },
+      ],
+      doors: [
+        { id: '1', x: 460, y: 456, w: 20, h: 224, color: C.yellow },
+        { id: '2', x: 620, y: 126, w: 20, h: 314, color: C.magenta },
+        { id: '3', x: 760, y: 456, w: 20, h: 224, color: C.orange },
+        { id: '4', x: 880, y: 126, w: 20, h: 314, color: C.blue },
+      ],
+      lifts: [],
+      buttons: [
+        { x: 490, y: 440, w: 50, link: '1' },
+        { x: 540, y: 680, w: 50, link: '2' },
+        { x: 700, y: 440, w: 50, link: '3' },
+        { x: 840, y: 680, w: 50, link: '4' },
+      ],
+      gems: [
+        { x: 350, y: 415, who: 'argus' }, { x: 790, y: 335, who: 'argus' }, { x: 1110, y: 415, who: 'argus' },
+        { x: 315, y: 655, who: 'kraken' }, { x: 660, y: 655, who: 'kraken' }, { x: 1110, y: 655, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 1150, y: 360, w: 56, h: 80 },
+        { who: 'kraken', x: 1150, y: 600, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 4
+    {
+      name: 'الجسور الضوئية',
+      tip: 'جديد: منصات متحركة فوق البرمجيات الخبيثة، وجسور ضوئية تظهر عند الضغط على الزر!',
+      par: 50,
+      spawns: { argus: { x: 60, y: 630 }, kraken: { x: 130, y: 630 } },
+      solids: [
+        { x: 20, y: 410, w: 970, h: 16 },    // upper deck
+        { x: 1170, y: 590, w: 90, h: 16 },   // right step 1
+        { x: 1040, y: 500, w: 70, h: 16 },   // right step 2
+      ],
+      pools: [
+        { x: 260, y: 680, w: 740, type: 'green' },
+        { x: 640, y: 410, w: 220, type: 'red' },
+        { x: 260, y: 410, w: 200, type: 'cyan' },
+      ],
+      doors: [
+        { id: 'R', kind: 'bridge', x: 640, y: 400, w: 220, h: 10, color: C.yellow },
+        { id: 'C', kind: 'bridge', x: 260, y: 400, w: 200, h: 10, color: C.magenta },
+      ],
+      lifts: [
+        { id: 'm1', auto: true, from: [270, 600], to: [520, 600], w: 100, speed: 1.5, color: C.ice },
+        { id: 'm2', auto: true, from: [900, 600], to: [650, 600], w: 100, speed: 1.5, color: C.ice },
+      ],
+      buttons: [
+        { x: 500, y: 410, w: 50, link: 'R' },
+        { x: 170, y: 410, w: 50, link: 'C' },
+      ],
+      gems: [
+        { x: 628, y: 565, who: 'argus' }, { x: 750, y: 385, who: 'argus' }, { x: 1215, y: 565, who: 'argus' },
+        { x: 642, y: 565, who: 'kraken' }, { x: 360, y: 385, who: 'kraken' }, { x: 1080, y: 475, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 40, y: 330, w: 56, h: 80 },
+        { who: 'kraken', x: 105, y: 330, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 5
+    {
+      name: 'النواة المركزية',
+      tip: 'المرحلة الأخيرة: منصة متحركة، مصعد، بوابة وجسر ضوئي في مهمة واحدة. بالتوفيق!',
+      par: 60,
+      spawns: { argus: { x: 50, y: 630 }, kraken: { x: 110, y: 630 } },
+      solids: [
+        { x: 200, y: 300, w: 410, h: 16 },   // top deck (portals)
+        { x: 670, y: 400, w: 370, h: 16 },   // middle deck
+        { x: 1060, y: 590, w: 60, h: 16 },   // climb 1
+        { x: 1180, y: 500, w: 80, h: 16 },   // climb 2
+        { x: 1060, y: 410, w: 60, h: 16 },   // climb 3
+      ],
+      pools: [
+        { x: 220, y: 680, w: 340, type: 'green' },
+        { x: 660, y: 680, w: 200, type: 'red' },
+        { x: 760, y: 400, w: 200, type: 'cyan' },
+        { x: 420, y: 300, w: 50, type: 'green' },
+      ],
+      doors: [
+        { id: 'G', x: 1020, y: 416, w: 20, h: 264, color: C.magenta },
+        { id: 'H', kind: 'bridge', x: 760, y: 390, w: 200, h: 10, color: C.orange },
+      ],
+      lifts: [
+        { id: 'm', auto: true, from: [230, 600], to: [450, 600], w: 100, speed: 1.4, color: C.ice },
+        { id: 'E', from: [560, 664], to: [560, 400], w: 100, speed: 2.2, color: C.yellow },
+      ],
+      buttons: [
+        { x: 930, y: 680, w: 50, link: 'E' },
+        { x: 965, y: 400, w: 30, link: 'G' },
+        { x: 1005, y: 400, w: 30, link: 'H' },
+      ],
+      gems: [
+        { x: 340, y: 575, who: 'argus' }, { x: 760, y: 652, who: 'argus' }, { x: 1220, y: 475, who: 'argus' }, { x: 530, y: 275, who: 'argus' },
+        { x: 400, y: 575, who: 'kraken' }, { x: 610, y: 375, who: 'kraken' }, { x: 860, y: 375, who: 'kraken' }, { x: 640, y: 275, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 220, y: 220, w: 56, h: 80 },
+        { who: 'kraken', x: 300, y: 220, w: 56, h: 80 },
+      ],
+    },
+  ];
+
+  /* =========================================================
+     PROGRESS (saved in this browser only)
+     ========================================================= */
+  const SAVE_KEY = 'alphaiota_odyssey_progress_v1';
+  let progress = { unlocked: 1, stars: [], best: [] };
+  try {
+    const s = JSON.parse(localStorage.getItem(SAVE_KEY));
+    if (s && typeof s.unlocked === 'number') progress = { unlocked: s.unlocked, stars: s.stars || [], best: s.best || [] };
+  } catch (e) { /* storage unavailable */ }
+  progress.unlocked = clamp(progress.unlocked, 1, LEVELS.length);
+  function saveProgress() {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(progress)); } catch (e) { /* ignore */ }
+  }
 
   /* =========================================================
      AUDIO (tiny WebAudio synth)
@@ -309,6 +517,8 @@
     jump: (k) => tone(k === 'argus' ? 420 : 520, 0.14, 'square', 0.035, 260),
     button: () => tone(880, 0.08, 'triangle', 0.05),
     door: () => tone(140, 0.25, 'sawtooth', 0.03, -60),
+    bridge: () => tone(660, 0.2, 'sine', 0.05, 400),
+    gem: () => { tone(1200, 0.09, 'triangle', 0.05); tone(1600, 0.12, 'triangle', 0.04, 0, 0.06); },
     death: () => { tone(300, 0.5, 'sawtooth', 0.06, -250); tone(90, 0.6, 'square', 0.04, -40, 0.05); },
     win: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, 'triangle', 0.06, 0, i * 0.11)),
   };
@@ -325,14 +535,15 @@
 
   window.addEventListener('keydown', (e) => {
     if (BLOCK.has(e.code)) e.preventDefault();
-    if (e.repeat) { keys[e.code] = true; return; }
     keys[e.code] = true;
+    if (e.repeat) return;
     initAudio();
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-      if (state === 'menu') startGame();
-      else if (state === 'won' || state === 'dead') startGame();
+      if (state === 'menu') startLevel(defaultLevel());
+      else if (state === 'won') { if (cur + 1 < LEVELS.length) startLevel(cur + 1); else toMenu(); }
+      else if (state === 'dead') startLevel(cur);
     } else if (e.code === 'KeyR') {
-      if (state !== 'menu') startGame();
+      if (state !== 'menu') startLevel(cur);
     } else if (e.code === 'Escape' || e.code === 'KeyP') {
       if (state === 'playing') { state = 'paused'; showOverlay('pause'); }
       else if (state === 'paused') { state = 'playing'; showOverlay(null); }
@@ -394,14 +605,20 @@
 
       this.vy = Math.min(this.vy + PHYS.GRAV, PHYS.MAX_FALL);
 
-      // X axis (strict AABB)
+      // X axis (strict AABB, with a small automatic step-up while walking)
       this.x += this.vx;
       for (const s of solids) {
-        if (overlap(this, s)) {
-          if (this.vx > 0) this.x = s.x - this.w;
-          else if (this.vx < 0) this.x = s.x + s.w;
-          this.vx = 0;
+        if (!overlap(this, s)) continue;
+        const rise = this.y + this.h - s.y;
+        if (this.onGround && this.vx !== 0 && rise > 0 && rise <= PHYS.STEP_UP) {
+          const oldY = this.y;
+          this.y = s.y - this.h;
+          if (!solids.some((o) => o !== s && overlap(this, o))) continue;
+          this.y = oldY;
         }
+        if (this.vx > 0) this.x = s.x - this.w;
+        else if (this.vx < 0) this.x = s.x + s.w;
+        this.vx = 0;
       }
 
       // Y axis (strict AABB)
@@ -825,10 +1042,12 @@
     g.restore();
   }
 
+
   /* =========================================================
      GAME STATE
      ========================================================= */
   let state = 'menu';        // menu | playing | paused | dying | dead | won
+  let cur = 0;               // current level index
   let time = 0;
   let levelFrames = 0;
   let deaths = 0;
@@ -836,7 +1055,7 @@
   let stateTimer = 0;
   let winTimer = 0;
   let L = null;               // live level data
-  let staticLayer = null;
+  let staticLayer = null, staticFor = -1;
   let viewScale = 1, DPR = 1;
   const players = [new Player('argus'), new Player('kraken')];
   const particles = [];
@@ -850,25 +1069,34 @@
     });
   }
 
-  function resetLevel() {
+  function loadLevel(i) {
+    cur = i;
+    const def = LEVELS[i];
     L = {
-      name: LEVEL1.name,
-      solids: LEVEL1.solids,
-      pools: LEVEL1.pools.map((p) => ({ ...p, hz: { x: p.x + 3, y: p.y - 8, w: p.w - 6, h: 10 } })),
-      doors: LEVEL1.doors.map((d) => ({ ...d, open: 0, target: 0 })),
-      buttons: LEVEL1.buttons.map((b) => ({ ...b, pressed: false, anim: 0 })),
-      portals: LEVEL1.portals.map((p) => ({ ...p, occupied: false })),
+      idx: i,
+      def,
+      solids: BASE_SOLIDS.concat(def.solids),
+      pools: def.pools.map((p) => ({ ...p, hz: { x: p.x + 3, y: p.y - 8, w: p.w - 6, h: 10 } })),
+      doors: (def.doors || []).map((d) => ({ kind: 'door', ...d, open: 0, target: 0 })),
+      lifts: (def.lifts || []).map((l) => ({
+        ...l, h: l.h || 14, t: 0, dir: 1, x: l.from[0], y: l.from[1],
+        len: Math.hypot(l.to[0] - l.from[0], l.to[1] - l.from[1]) || 1,
+      })),
+      buttons: def.buttons.map((b) => ({ ...b, pressed: false, anim: 0 })),
+      gems: (def.gems || []).map((g) => ({ ...g, taken: false })),
+      portals: def.portals.map((p) => ({ ...p, occupied: false })),
     };
-    players[0].reset(LEVEL1.spawns.argus);
-    players[1].reset(LEVEL1.spawns.kraken);
+    players[0].reset(def.spawns.argus);
+    players[1].reset(def.spawns.kraken);
     particles.length = 0;
     levelFrames = 0; winTimer = 0; shake = 0; stateTimer = 0;
+    if (staticFor !== i) { staticLayer = buildStatic(); staticFor = i; }
   }
-  resetLevel();
 
-  function doorColor(id) {
-    const d = LEVEL1.doors.find((x) => x.id === id);
-    return d ? d.color : '#fff';
+  function linkActive(id) { return L.buttons.some((b) => b.link === id && b.pressed); }
+  function linkColor(id) {
+    const d = L.doors.find((x) => x.id === id) || L.lifts.find((x) => x.id === id);
+    return d ? d.color : '#ffffff';
   }
 
   /* =========================================================
@@ -902,13 +1130,46 @@
   /* =========================================================
      UPDATE
      ========================================================= */
+  function doorRect(d) {
+    if (d.kind === 'bridge') return d.open > 0.5 ? { x: d.x, y: d.y, w: d.w, h: d.h } : null;
+    const h = d.h * (1 - d.open);
+    return h > 0.5 ? { x: d.x, y: d.y + d.h * d.open, w: d.w, h } : null;
+  }
+
   function currentSolids() {
     const list = L.solids.slice();
-    for (const d of L.doors) {
-      const h = d.h * (1 - d.open);
-      if (h > 0.5) list.push({ x: d.x, y: d.y + d.h * d.open, w: d.w, h });
-    }
+    for (const d of L.doors) { const r = doorRect(d); if (r) list.push(r); }
+    for (const l of L.lifts) list.push({ x: l.x, y: l.y, w: l.w, h: l.h });
     return list;
+  }
+
+  function updateLifts() {
+    const staticAndDoors = L.solids.concat(L.doors.map(doorRect).filter(Boolean));
+    for (const l of L.lifts) {
+      const stepT = l.speed / l.len;
+      let nt = l.t, ndir = l.dir;
+      if (l.auto) {
+        nt = l.t + l.dir * stepT;
+        if (nt >= 1) { nt = 1; ndir = -1; } else if (nt <= 0) { nt = 0; ndir = 1; }
+      } else {
+        const target = linkActive(l.id) ? 1 : 0;
+        if (nt < target) nt = Math.min(target, nt + stepT);
+        else if (nt > target) nt = Math.max(target, nt - stepT);
+      }
+      const nx = lerp(l.from[0], l.to[0], nt), ny = lerp(l.from[1], l.to[1], nt);
+      const dx = nx - l.x, dy = ny - l.y;
+      if (dx === 0 && dy === 0) { l.dir = ndir; continue; }
+      const riders = players.filter((p) => p.alive && p.onGround &&
+        Math.abs(p.y + p.h - l.y) < 2 && p.x < l.x + l.w && p.x + p.w > l.x);
+      const next = { x: nx, y: ny, w: l.w, h: l.h };
+      // never crush a player: pause instead
+      if (players.some((p) => p.alive && !riders.includes(p) && overlap(p, next))) continue;
+      l.t = nt; l.dir = ndir; l.x = nx; l.y = ny;
+      for (const r of riders) {
+        r.x += dx; r.y += dy;
+        if (staticAndDoors.some((s) => overlap(r, s))) r.x -= dx;
+      }
+    }
   }
 
   function kill(p, pool) {
@@ -922,11 +1183,41 @@
     SFX.death();
     let reason;
     if (pool.type === 'green') reason = `أُصيب ${NAMES[p.kind]} ببرمجية خبيثة! البرك الخضراء قاتلة لكليكما.`;
-    else if (pool.type === 'red') reason = 'لمس كراكن البيانات الخام الحمراء! هذه البرك آمنة لأرغوس فقط.';
-    else reason = 'دخل أرغوس محطة الوكلاء السماوية! هذه البرك آمنة لكراكن فقط.';
+    else if (pool.type === 'red') reason = 'لمس كراكن البيانات الخام الحمراء! هذه البرك آمنة لأرقوس فقط.';
+    else reason = 'دخل أرقوس محطة الوكلاء السماوية! هذه البرك آمنة لكراكن فقط.';
     document.getElementById('deadReason').textContent = reason;
     state = 'dying';
     stateTimer = 0;
+  }
+
+  function finishLevel() {
+    state = 'won';
+    stateTimer = 0;
+    SFX.win();
+    for (const portal of L.portals) {
+      burst(portal.x + portal.w / 2, portal.y + portal.h / 2,
+            portal.who === 'argus' ? ['#a259ff', '#e2c8ff'] : ['#00f3ff', '#c4fdff'], 40);
+    }
+    const secs = levelFrames / 60;
+    const allGems = L.gems.every((g) => g.taken);
+    const stars = 1 + (allGems ? 1 : 0) + (secs <= L.def.par ? 1 : 0);
+    progress.stars[cur] = Math.max(progress.stars[cur] || 0, stars);
+    if (!progress.best[cur] || secs < progress.best[cur]) progress.best[cur] = secs;
+    progress.unlocked = Math.max(progress.unlocked, Math.min(LEVELS.length, cur + 2));
+    saveProgress();
+    const last = cur === LEVELS.length - 1;
+    document.getElementById('doneTitle').textContent = last ? 'أنهيتما كل المراحل! 🏆' : `اكتملت المرحلة ${toAr(cur + 1)}!`;
+    document.getElementById('doneSub').textContent = last
+      ? 'أرقوس وكراكن أنقذا النواة المركزية. فريق أسطوري!'
+      : 'تمت مزامنة أرقوس وكراكن مع الشبكة بنجاح. المرحلة التالية أصعب!';
+    document.getElementById('doneStars').innerHTML =
+      [0, 1, 2].map((i) => `<span class="${i < stars ? 'on' : 'off'}">★</span>`).join('');
+    document.getElementById('doneTime').textContent = fmtTime(levelFrames);
+    document.getElementById('donePar').textContent = fmtTime(L.def.par * 60).slice(0, 5);
+    const got = L.gems.filter((g) => g.taken).length;
+    document.getElementById('doneGems').textContent = `${got}/${L.gems.length}`;
+    document.getElementById('doneDeaths').textContent = deaths;
+    document.getElementById('btnNext').hidden = last;
   }
 
   function step() {
@@ -949,19 +1240,20 @@
         b.anim = lerp(b.anim, b.pressed ? 1 : 0, 0.3);
       }
 
-      // 2) doors (lower while any linked button is held)
+      // 2) doors & light bridges
       for (const d of L.doors) {
-        const target = L.buttons.some((b) => b.door === d.id && b.pressed) ? 1 : 0;
-        if (target !== d.target) { d.target = target; SFX.door(); }
-        if (d.open < target) d.open = Math.min(target, d.open + 0.045);
-        else if (d.open > target) d.open = Math.max(target, d.open - 0.045);
+        const target = linkActive(d.id) ? 1 : 0;
+        if (target !== d.target) { d.target = target; (d.kind === 'bridge' ? SFX.bridge : SFX.door)(); }
+        const sp = d.kind === 'bridge' ? 0.08 : 0.045;
+        if (d.open < target) d.open = Math.min(target, d.open + sp);
+        else if (d.open > target) d.open = Math.max(target, d.open - sp);
       }
 
       // 3) door push-out (a closing door never traps a player)
       for (const d of L.doors) {
-        const h = d.h * (1 - d.open);
-        if (h <= 0.5) continue;
-        const r = { x: d.x, y: d.y + d.h * d.open, w: d.w, h };
+        if (d.kind !== 'door') continue;
+        const r = doorRect(d);
+        if (!r) continue;
         for (const p of players) {
           if (p.alive && overlap(p, r)) {
             if (p.x + p.w / 2 < r.x + r.w / 2) p.x = r.x - p.w;
@@ -970,11 +1262,14 @@
         }
       }
 
-      // 4) physics
+      // 4) lifts & moving platforms (carry riders)
+      updateLifts();
+
+      // 5) physics
       const solids = currentSolids();
       for (const p of players) if (p.alive) p.update(solids);
 
-      // 5) hazards
+      // 6) hazards
       for (const p of players) {
         if (!p.alive) continue;
         for (const pool of L.pools) {
@@ -988,7 +1283,18 @@
         }
       }
 
-      // 6) portals
+      // 7) gems
+      for (const g of L.gems) {
+        if (g.taken) continue;
+        const p = players.find((q) => q.kind === g.who);
+        if (p.alive && overlap(p, { x: g.x - 8, y: g.y - 9, w: 16, h: 18 })) {
+          g.taken = true;
+          SFX.gem();
+          burst(g.x, g.y, g.who === 'argus' ? ['#c58bff', '#ffffff'] : ['#7ffcff', '#ffffff'], 16);
+        }
+      }
+
+      // 8) portals
       if (state === 'playing') {
         let both = true;
         for (const portal of L.portals) {
@@ -1005,28 +1311,16 @@
           }
         }
         winTimer = both ? winTimer + 1 : 0;
-        if (winTimer > 40) {
-          state = 'won';
-          stateTimer = 0;
-          SFX.win();
-          for (const portal of L.portals) {
-            burst(portal.x + portal.w / 2, portal.y + portal.h / 2,
-                  portal.who === 'argus' ? ['#a259ff', '#e2c8ff'] : ['#00f3ff', '#c4fdff'], 40);
-          }
-        }
+        if (winTimer > 40) finishLevel();
       }
     } else if (state === 'dying') {
       if (++stateTimer > 70) { state = 'dead'; showOverlay('dead'); }
     } else if (state === 'won') {
-      if (++stateTimer === 50) {
-        document.getElementById('doneTime').textContent = fmtTime(levelFrames);
-        document.getElementById('doneDeaths').textContent = deaths;
-        showOverlay('done');
-      }
+      if (++stateTimer === 50) showOverlay('done');
     }
 
-    // pool bubbles (ambient, always)
     if (state !== 'paused') {
+      if (state === 'menu') updateLifts();
       for (const pool of L.pools) {
         if (Math.random() < pool.w / 1800) {
           spawn(pool.x + 6 + Math.random() * (pool.w - 12), pool.y - 4, (Math.random() - 0.5) * 0.3,
@@ -1047,7 +1341,7 @@
   }
 
   /* =========================================================
-     STATIC LAYER (background + platforms), rebuilt on resize
+     STATIC LAYER (background + platforms), rebuilt on resize / level change
      ========================================================= */
   function buildStatic() {
     const sc = viewScale * DPR;
@@ -1057,7 +1351,6 @@
     const g = c.getContext('2d');
     g.setTransform(sc, 0, 0, sc, 0, 0);
 
-    // base
     g.fillStyle = '#05050a';
     g.fillRect(0, 0, W, H);
     let rg = g.createRadialGradient(330, 520, 0, 330, 520, 720);
@@ -1067,7 +1360,7 @@
     rg.addColorStop(0, 'rgba(0, 90, 200, 0.24)'); rg.addColorStop(1, 'rgba(5, 5, 10, 0)');
     g.fillStyle = rg; g.fillRect(0, 0, W, H);
 
-    // light-speed streaks converging toward the centre
+    // light-speed streaks
     g.save();
     g.lineCap = 'round';
     for (let i = 0; i < 46; i++) {
@@ -1102,39 +1395,36 @@
 
     // HUD band panel
     g.save();
-    g.fillStyle = 'rgba(14, 9, 34, 0.6)';
+    g.fillStyle = 'rgba(14, 9, 34, 0.7)';
     g.strokeStyle = 'rgba(162, 89, 255, 0.35)';
     g.lineWidth = 1.5;
-    g.beginPath(); g.roundRect(32, 30, 1216, 158, 14); g.fill(); g.stroke();
+    g.beginPath(); g.roundRect(32, 26, 1216, 74, 14); g.fill(); g.stroke();
     g.restore();
 
-    // network constellation (inside HUD band, left)
+    // network constellation inside the HUD band
     const nodes = [];
-    for (let i = 0; i < 22; i++) nodes.push([50 + hash(i * 4.4) * 400, 44 + hash(i * 7.2) * 130]);
+    for (let i = 0; i < 16; i++) nodes.push([300 + hash(i * 4.4) * 220, 34 + hash(i * 7.2) * 58]);
     g.save();
     g.lineWidth = 0.8;
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const d = Math.hypot(nodes[i][0] - nodes[j][0], nodes[i][1] - nodes[j][1]);
-        if (d < 95) {
-          g.strokeStyle = `rgba(90, 150, 255, ${0.35 * (1 - d / 95)})`;
+        if (d < 70) {
+          g.strokeStyle = `rgba(90, 150, 255, ${0.3 * (1 - d / 70)})`;
           g.beginPath(); g.moveTo(nodes[i][0], nodes[i][1]); g.lineTo(nodes[j][0], nodes[j][1]); g.stroke();
         }
       }
     }
     g.shadowColor = '#5aa0ff'; g.shadowBlur = 6;
-    g.fillStyle = 'rgba(150, 200, 255, 0.8)';
-    for (const n of nodes) { g.beginPath(); g.arc(n[0], n[1], 1.6, 0, Math.PI * 2); g.fill(); }
+    g.fillStyle = 'rgba(150, 200, 255, 0.7)';
+    for (const n of nodes) { g.beginPath(); g.arc(n[0], n[1], 1.4, 0, Math.PI * 2); g.fill(); }
     g.restore();
 
-    // platforms
-    for (const s of LEVEL1.solids) drawPlatform(g, s);
+    for (const s of L.solids) drawPlatform(g, s);
 
-    // vignette
     rg = g.createRadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, H * 0.95);
     rg.addColorStop(0, 'rgba(0,0,0,0)'); rg.addColorStop(1, 'rgba(0,0,0,0.45)');
     g.fillStyle = rg; g.fillRect(0, 0, W, H);
-
     return c;
   }
 
@@ -1148,7 +1438,6 @@
     g.fillStyle = grd;
     g.fillRect(s.x, s.y, s.w, s.h);
 
-    // panel seams + LEDs
     g.save();
     g.strokeStyle = 'rgba(162, 89, 255, 0.14)';
     g.lineWidth = 1;
@@ -1167,7 +1456,6 @@
     }
     g.restore();
 
-    // neon edges
     g.save();
     g.shadowColor = '#b45cff';
     g.shadowBlur = 14;
@@ -1212,10 +1500,8 @@
     const c = POOL_COLORS[p.type];
     const top = p.y - 8, bot = p.y + 12;
     ctx.save();
-    // basin
     ctx.fillStyle = '#07040f';
     ctx.fillRect(p.x - 4, p.y - 1, p.w + 8, 15);
-    // liquid with animated surface
     ctx.beginPath();
     ctx.moveTo(p.x, bot);
     for (let x = 0; x <= p.w; x += 5) {
@@ -1234,7 +1520,6 @@
     ctx.fillStyle = lg;
     ctx.fill();
     ctx.shadowBlur = 0;
-    // data glyph shimmer inside the liquid
     ctx.globalAlpha = 0.35;
     ctx.fillStyle = c.light;
     for (let x = p.x + 8; x < p.x + p.w - 6; x += 16) {
@@ -1242,14 +1527,12 @@
       ctx.fillRect(x, p.y + 1 + ((x * 7) % 5), k === 0 ? 2 : 4, 2);
     }
     ctx.globalAlpha = 1;
-    // metal lips
     ctx.fillStyle = '#3a2d63';
     ctx.fillRect(p.x - 5, p.y - 3, 5, 15);
     ctx.fillRect(p.x + p.w, p.y - 3, 5, 15);
     ctx.fillStyle = c.main;
     ctx.fillRect(p.x - 5, p.y - 3, 5, 1.5);
     ctx.fillRect(p.x + p.w, p.y - 3, 5, 1.5);
-    // label
     ctx.direction = 'rtl';
     ctx.textAlign = 'center';
     ctx.font = '700 11px Cairo, Tahoma, sans-serif';
@@ -1260,7 +1543,7 @@
   }
 
   function drawButton(b) {
-    const col = doorColor(b.door);
+    const col = linkColor(b.link);
     ctx.save();
     ctx.fillStyle = '#2e2550';
     ctx.beginPath(); ctx.roundRect(b.x - 6, b.y - 4, b.w + 12, 5, 2); ctx.fill();
@@ -1274,25 +1557,22 @@
     ctx.globalAlpha = 1;
     ctx.fillStyle = 'rgba(255,255,255,0.45)';
     ctx.fillRect(b.x + 7, b.y - 4 - capH + 1, b.w - 14, 1);
-    // letter tag
     ctx.direction = 'ltr';
     ctx.textAlign = 'center';
     ctx.font = '900 11px Cairo, Arial, sans-serif';
     ctx.fillStyle = col;
     ctx.globalAlpha = 0.85;
-    ctx.fillText(b.door, b.x + b.w / 2, b.y - 16);
+    ctx.fillText(b.link, b.x + b.w / 2, b.y - 16);
     ctx.restore();
   }
 
   function drawDoor(d) {
     ctx.save();
-    // rail frame
     ctx.strokeStyle = d.color;
     ctx.globalAlpha = 0.25;
     ctx.lineWidth = 1;
     ctx.strokeRect(d.x - 2.5, d.y + 0.5, d.w + 5, d.h - 1);
     ctx.globalAlpha = 1;
-    // slide the panel down into the deck (lowering door)
     ctx.beginPath();
     ctx.rect(d.x - 3, d.y, d.w + 6, d.h);
     ctx.clip();
@@ -1301,7 +1581,6 @@
     mg.addColorStop(0, '#3b3360'); mg.addColorStop(0.5, '#171230'); mg.addColorStop(1, '#3b3360');
     ctx.fillStyle = mg;
     ctx.fillRect(d.x, d.y, d.w, d.h);
-    // hazard stripes
     ctx.save();
     ctx.beginPath(); ctx.rect(d.x + 3, d.y, d.w - 6, d.h); ctx.clip();
     ctx.strokeStyle = d.color;
@@ -1311,7 +1590,6 @@
       ctx.beginPath(); ctx.moveTo(d.x, y); ctx.lineTo(d.x + d.w, y + 10); ctx.stroke();
     }
     ctx.restore();
-    // neon edges
     ctx.shadowColor = d.color;
     ctx.shadowBlur = 12;
     ctx.fillStyle = d.color;
@@ -1319,7 +1597,6 @@
     ctx.fillRect(d.x + d.w - 2, d.y, 2, d.h);
     ctx.fillRect(d.x, d.y, d.w, 3);
     ctx.shadowBlur = 0;
-    // letter plate
     ctx.fillStyle = '#0b0818';
     ctx.beginPath(); ctx.roundRect(d.x + 2, d.y + 10, d.w - 4, 16, 3); ctx.fill();
     ctx.direction = 'ltr';
@@ -1331,6 +1608,122 @@
     ctx.restore();
   }
 
+  function drawBridge(d) {
+    ctx.save();
+    // emitters at both ends
+    ctx.fillStyle = '#3a2d63';
+    ctx.fillRect(d.x - 8, d.y - 4, 8, d.h + 6);
+    ctx.fillRect(d.x + d.w, d.y - 4, 8, d.h + 6);
+    ctx.shadowColor = d.color;
+    ctx.shadowBlur = 10;
+    ctx.fillStyle = d.color;
+    ctx.fillRect(d.x - 3, d.y - 2, 3, d.h + 2);
+    ctx.fillRect(d.x + d.w, d.y - 2, 3, d.h + 2);
+    ctx.shadowBlur = 0;
+    if (d.open > 0.02) {
+      const a = d.open;
+      ctx.globalAlpha = 0.25 + 0.55 * a;
+      ctx.shadowColor = d.color;
+      ctx.shadowBlur = 18 * a;
+      const w = d.w * a;
+      const x0 = d.x + (d.w - w) / 2;
+      const bg = ctx.createLinearGradient(0, d.y, 0, d.y + d.h);
+      bg.addColorStop(0, '#ffffff'); bg.addColorStop(0.4, d.color); bg.addColorStop(1, 'rgba(0,0,0,0.2)');
+      ctx.fillStyle = bg;
+      ctx.fillRect(x0, d.y, w, d.h);
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = 0.5 * a;
+      ctx.fillStyle = '#ffffff';
+      for (let x = x0 + ((time * 60) % 14); x < x0 + w; x += 14) ctx.fillRect(x, d.y + 3, 6, 1.5);
+    } else {
+      ctx.globalAlpha = 0.35;
+      ctx.strokeStyle = d.color;
+      ctx.setLineDash([5, 7]);
+      ctx.lineWidth = 1;
+      ctx.strokeRect(d.x + 0.5, d.y + 0.5, d.w - 1, d.h - 1);
+      ctx.setLineDash([]);
+    }
+    ctx.globalAlpha = 0.9;
+    ctx.direction = 'ltr';
+    ctx.textAlign = 'center';
+    ctx.font = '900 11px Cairo, Arial, sans-serif';
+    ctx.fillStyle = d.color;
+    ctx.fillText(d.id, d.x - 4, d.y - 8);
+    ctx.restore();
+  }
+
+  function drawLift(l) {
+    const col = l.color;
+    ctx.save();
+    // rail
+    ctx.globalAlpha = 0.28;
+    ctx.strokeStyle = col;
+    ctx.setLineDash([4, 7]);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(l.from[0] + l.w / 2, l.from[1] + l.h / 2);
+    ctx.lineTo(l.to[0] + l.w / 2, l.to[1] + l.h / 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 1;
+    // thrusters
+    for (const k of [0.22, 0.78]) {
+      const gx = l.x + l.w * k, gy = l.y + l.h + 2;
+      const tg = ctx.createRadialGradient(gx, gy, 0, gx, gy, 12);
+      tg.addColorStop(0, col); tg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = 0.45 + 0.25 * Math.sin(time * 12 + k * 9);
+      ctx.fillStyle = tg;
+      ctx.fillRect(gx - 12, gy - 6, 24, 18);
+    }
+    ctx.globalAlpha = 1;
+    // body
+    const bg = ctx.createLinearGradient(0, l.y, 0, l.y + l.h);
+    bg.addColorStop(0, '#463c72'); bg.addColorStop(1, '#151030');
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.roundRect(l.x, l.y, l.w, l.h, 4); ctx.fill();
+    ctx.shadowColor = col;
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = col;
+    ctx.fillRect(l.x + 2, l.y, l.w - 4, 2.5);
+    ctx.shadowBlur = 0;
+    // chevrons
+    ctx.fillStyle = col;
+    ctx.globalAlpha = 0.6;
+    for (let i = 0; i < 3; i++) ctx.fillRect(l.x + l.w / 2 - 14 + i * 11, l.y + 6, 6, 3);
+    ctx.globalAlpha = 1;
+    if (!l.auto) {
+      ctx.direction = 'ltr';
+      ctx.textAlign = 'center';
+      ctx.font = '900 10px Cairo, Arial, sans-serif';
+      ctx.fillStyle = '#0b0818';
+      ctx.fillText(l.id, l.x + 8, l.y + 11);
+    }
+    ctx.restore();
+  }
+
+  function drawGem(g) {
+    if (g.taken) return;
+    const isA = g.who === 'argus';
+    const col = isA ? '#b26bff' : '#22f0ff';
+    const light = isA ? '#f0deff' : '#e0ffff';
+    const y = g.y + Math.sin(time * 3 + g.x * 0.05) * 2.5;
+    ctx.save();
+    ctx.translate(g.x, y);
+    ctx.shadowColor = col;
+    ctx.shadowBlur = 14;
+    const gg = ctx.createLinearGradient(-6, -9, 6, 9);
+    gg.addColorStop(0, light); gg.addColorStop(0.5, col); gg.addColorStop(1, isA ? '#5a189a' : '#007a8a');
+    ctx.fillStyle = gg;
+    ctx.beginPath();
+    ctx.moveTo(0, -9); ctx.lineTo(7, -2); ctx.lineTo(0, 9); ctx.lineTo(-7, -2); ctx.closePath();
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(-7, -2); ctx.lineTo(7, -2); ctx.moveTo(0, -9); ctx.lineTo(-2.5, -2); ctx.lineTo(0, 9); ctx.stroke();
+    ctx.restore();
+  }
+
   function drawPortal(p) {
     const isA = p.who === 'argus';
     const col = isA ? '#a259ff' : '#00f3ff';
@@ -1339,7 +1732,6 @@
     const archY = p.y + rx;
     const pulse = p.occupied ? 1 : 0.5 + 0.5 * Math.sin(time * 3 + (isA ? 0 : 1.5));
     ctx.save();
-    // arch path
     const arch = () => {
       ctx.beginPath();
       ctx.moveTo(p.x, p.y + p.h);
@@ -1357,7 +1749,6 @@
     ctx.fillStyle = ig;
     ctx.fill();
     ctx.globalAlpha = 1;
-    // swirl
     ctx.save();
     arch(); ctx.clip();
     ctx.translate(cx, p.y + p.h * 0.55);
@@ -1370,7 +1761,6 @@
       ctx.stroke();
     }
     ctx.restore();
-    // neon frame
     arch();
     ctx.shadowColor = col;
     ctx.shadowBlur = 18 + 16 * pulse;
@@ -1381,13 +1771,11 @@
     ctx.strokeStyle = light;
     ctx.lineWidth = 1;
     ctx.stroke();
-    // base pad
     ctx.fillStyle = col;
     ctx.shadowColor = col;
     ctx.shadowBlur = 14;
     ctx.fillRect(p.x - 4, p.y + p.h - 3, p.w + 8, 3);
     ctx.shadowBlur = 0;
-    // label
     ctx.direction = 'rtl';
     ctx.textAlign = 'center';
     ctx.font = '700 12px Cairo, Tahoma, sans-serif';
@@ -1399,7 +1787,6 @@
   function drawPlayer(p) {
     if (!p.alive) return;
     const fx = p.x + p.w / 2, fy = p.y + p.h;
-    // contact shadow
     ctx.save();
     ctx.globalAlpha = p.onGround ? 0.45 : 0.2;
     ctx.fillStyle = '#000';
@@ -1408,7 +1795,6 @@
     if (p.kind === 'argus') drawArgus(ctx, fx, fy, p.renderState());
     else drawKraken(ctx, fx, fy, p.renderState());
 
-    // name tag during the first seconds of a level
     if (levelFrames < 300 && state === 'playing') {
       const a = Math.min(1, (300 - levelFrames) / 60);
       ctx.save();
@@ -1420,8 +1806,7 @@
       ctx.fillStyle = col;
       ctx.shadowColor = col;
       ctx.shadowBlur = 8;
-      const label = NAMES[p.kind];
-      ctx.fillText(label, fx, p.y - (p.kind === 'argus' ? 42 : 62));
+      ctx.fillText(NAMES[p.kind], fx, p.y - (p.kind === 'argus' ? 42 : 62));
       ctx.restore();
     }
   }
@@ -1439,89 +1824,107 @@
 
   function drawHUD() {
     ctx.save();
-    // title
+    // title + level name (right)
     ctx.direction = 'rtl';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'alphabetic';
-    ctx.font = '900 36px Cairo, Tahoma, sans-serif';
-    const tg = ctx.createLinearGradient(870, 0, 1230, 0);
+    ctx.font = '900 27px Cairo, Tahoma, sans-serif';
+    const tg = ctx.createLinearGradient(960, 0, 1226, 0);
     tg.addColorStop(0, '#00f3ff'); tg.addColorStop(1, '#d3a6ff');
     ctx.shadowColor = '#a259ff';
-    ctx.shadowBlur = 18;
+    ctx.shadowBlur = 16;
     ctx.fillStyle = tg;
-    ctx.fillText('أوديسة ألفايوتا', 1226, 84);
+    ctx.fillText('أوديسة ألفايوتا', 1226, 60);
     ctx.shadowBlur = 0;
-    ctx.font = '700 16px Cairo, Tahoma, sans-serif';
+    ctx.font = '700 14px Cairo, Tahoma, sans-serif';
     ctx.fillStyle = '#b9a8ff';
-    ctx.fillText('أرغوس وكراكن • ' + L.name, 1226, 116);
-
-    // legend chips
-    const chips = [
-      ['red', 'بيانات خام: آمنة لأرغوس'],
-      ['cyan', 'محطات الوكلاء: آمنة لكراكن'],
-      ['green', 'برمجيات خبيثة: قاتلة للجميع'],
-    ];
-    ctx.font = '700 13px Cairo, Tahoma, sans-serif';
-    let x = 1226;
-    for (const [type, text] of chips) {
-      const c = POOL_COLORS[type].main;
-      ctx.shadowColor = c; ctx.shadowBlur = 10;
-      ctx.fillStyle = c;
-      ctx.beginPath(); ctx.arc(x - 6, 158, 5, 0, Math.PI * 2); ctx.fill();
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = '#ddd5ff';
-      ctx.fillText(text, x - 16, 163);
-      x -= ctx.measureText(text).width + 40;
-    }
+    ctx.fillText(`المرحلة ${toAr(cur + 1)}/${toAr(LEVELS.length)} • ${L.def.name}`, 1226, 88);
 
     // timer (centre)
     ctx.textAlign = 'center';
-    ctx.font = '700 14px Cairo, Tahoma, sans-serif';
+    ctx.font = '700 12px Cairo, Tahoma, sans-serif';
     ctx.fillStyle = '#a99ccf';
-    ctx.fillText('زمن المهمة', 640, 64);
+    ctx.fillText(`زمن المهمة (الهدف ${toAr(L.def.par)} ث)`, 700, 46);
     ctx.direction = 'ltr';
-    ctx.font = '700 34px "Courier New", monospace';
-    ctx.fillStyle = '#ece8ff';
-    ctx.shadowColor = '#00f3ff';
+    ctx.font = '700 28px "Courier New", monospace';
+    const overPar = levelFrames / 60 > L.def.par;
+    ctx.fillStyle = overPar ? '#ffb3c2' : '#ece8ff';
+    ctx.shadowColor = overPar ? '#ff2a55' : '#00f3ff';
     ctx.shadowBlur = 10;
-    ctx.fillText(fmtTime(levelFrames), 640, 100);
+    ctx.fillText(fmtTime(levelFrames), 700, 80);
     ctx.shadowBlur = 0;
 
     // portal status pills
     ctx.direction = 'rtl';
-    ctx.font = '700 13px Cairo, Tahoma, sans-serif';
-    const pills = [
-      ['argus', '#a259ff', 690],
-      ['kraken', '#00f3ff', 590],
-    ];
-    for (const [who, col, px] of pills) {
+    ctx.font = '700 12px Cairo, Tahoma, sans-serif';
+    for (const [who, col, px] of [['argus', '#a259ff', 905], ['kraken', '#00f3ff', 820]]) {
       const pl = players.find((q) => q.kind === who);
       const on = pl.inPortal;
       ctx.fillStyle = on ? col : 'rgba(255,255,255,0.06)';
-      ctx.globalAlpha = on ? 0.9 : 1;
       ctx.strokeStyle = col;
       ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.roundRect(px - 44, 118, 88, 24, 12); ctx.fill(); ctx.stroke();
-      ctx.globalAlpha = 1;
+      ctx.beginPath(); ctx.roundRect(px - 38, 50, 76, 22, 11); ctx.fill(); ctx.stroke();
       ctx.fillStyle = on ? '#0a0618' : '#ddd5ff';
-      ctx.fillText(NAMES[who] + (on ? ' ✓' : ''), px, 135);
+      ctx.fillText(NAMES[who] + (on ? ' ✓' : ''), px, 66);
     }
-
-    // key hints (left)
-    ctx.textAlign = 'left';
-    ctx.font = '700 12px Cairo, Tahoma, sans-serif';
-    ctx.fillStyle = 'rgba(200, 190, 240, 0.65)';
-    ctx.fillText('R إعادة • Esc إيقاف • M ' + (muted ? 'تشغيل الصوت' : 'كتم الصوت'), 52, 178);
-
-    // win sync bar
     if (winTimer > 0) {
       ctx.fillStyle = 'rgba(255,255,255,0.1)';
-      ctx.fillRect(560, 150, 160, 5);
-      const wg = ctx.createLinearGradient(560, 0, 720, 0);
+      ctx.fillRect(782, 80, 161, 4);
+      const wg = ctx.createLinearGradient(782, 0, 943, 0);
       wg.addColorStop(0, '#a259ff'); wg.addColorStop(1, '#00f3ff');
       ctx.fillStyle = wg;
-      ctx.fillRect(560, 150, 160 * Math.min(1, winTimer / 40), 5);
+      ctx.fillRect(782, 80, 161 * Math.min(1, winTimer / 40), 4);
     }
+
+    // gems (left)
+    let gx = 60;
+    ctx.direction = 'ltr';
+    ctx.textAlign = 'left';
+    for (const who of ['argus', 'kraken']) {
+      const all = L.gems.filter((g) => g.who === who);
+      const got = all.filter((g) => g.taken).length;
+      const col = who === 'argus' ? '#b26bff' : '#22f0ff';
+      ctx.save();
+      ctx.translate(gx, 56);
+      ctx.shadowColor = col; ctx.shadowBlur = 10;
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.moveTo(0, -9); ctx.lineTo(7, -2); ctx.lineTo(0, 9); ctx.lineTo(-7, -2); ctx.closePath(); ctx.fill();
+      ctx.restore();
+      ctx.font = '700 17px "Courier New", monospace';
+      ctx.fillStyle = got === all.length ? col : '#ddd5ff';
+      ctx.fillText(`${got}/${all.length}`, gx + 13, 62);
+      gx += 90;
+    }
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'left';
+    ctx.font = '700 11px Cairo, Tahoma, sans-serif';
+    ctx.fillStyle = 'rgba(200, 190, 240, 0.6)';
+    ctx.fillText('R إعادة • Esc إيقاف • M ' + (muted ? 'تشغيل الصوت' : 'كتم الصوت'), 50, 90);
+    ctx.restore();
+  }
+
+  function drawBanner() {
+    if (state !== 'playing' || levelFrames > 260) return;
+    const a = Math.min(1, levelFrames / 15, (260 - levelFrames) / 40);
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'center';
+    ctx.font = '700 14px Cairo, Tahoma, sans-serif';
+    const tip = L.def.tip;
+    const w = Math.max(360, ctx.measureText(tip).width + 60);
+    ctx.fillStyle = 'rgba(10, 6, 26, 0.82)';
+    ctx.strokeStyle = 'rgba(162, 89, 255, 0.6)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.roundRect(640 - w / 2, 140, w, 76, 14); ctx.fill(); ctx.stroke();
+    ctx.font = '900 24px Cairo, Tahoma, sans-serif';
+    const tg = ctx.createLinearGradient(640 - 150, 0, 640 + 150, 0);
+    tg.addColorStop(0, '#00f3ff'); tg.addColorStop(1, '#d3a6ff');
+    ctx.fillStyle = tg;
+    ctx.fillText(`المرحلة ${toAr(cur + 1)}: ${L.def.name}`, 640, 174);
+    ctx.font = '700 14px Cairo, Tahoma, sans-serif';
+    ctx.fillStyle = '#ddd5ff';
+    ctx.fillText(tip, 640, 202);
     ctx.restore();
   }
 
@@ -1534,14 +1937,16 @@
     drawAmbient();
     drawHUD();
 
-    for (const d of L.doors) drawDoor(d);
     for (const p of L.portals) drawPortal(p);
     for (const pool of L.pools) drawPool(pool);
+    for (const d of L.doors) (d.kind === 'bridge' ? drawBridge : drawDoor)(d);
+    for (const l of L.lifts) drawLift(l);
     for (const b of L.buttons) drawButton(b);
-    // Kraken first so Argus is in front when overlapping
+    for (const g of L.gems) drawGem(g);
     drawPlayer(players[1]);
     drawPlayer(players[0]);
     drawParticles();
+    drawBanner();
 
     if (state === 'menu') renderPreviews();
   }
@@ -1587,24 +1992,53 @@
   };
   function showOverlay(name) {
     for (const k in overlays) overlays[k].classList.toggle('show', k === name);
+    if (name === 'start') renderLevelList();
   }
-  function startGame() {
+  function defaultLevel() {
+    // first unlocked level that hasn't been cleared yet, otherwise the last unlocked one
+    for (let i = 0; i < progress.unlocked; i++) if (!progress.stars[i]) return i;
+    return progress.unlocked - 1;
+  }
+  function renderLevelList() {
+    const box = document.getElementById('levelList');
+    box.innerHTML = '';
+    const def = defaultLevel();
+    LEVELS.forEach((lv, i) => {
+      const b = document.createElement('button');
+      b.className = 'lvl' + (i === def ? ' current' : '');
+      b.id = 'lvl-' + (i + 1);
+      const locked = i >= progress.unlocked;
+      b.disabled = locked;
+      const st = progress.stars[i] || 0;
+      b.innerHTML = `<span class="n">${locked ? '🔒' : toAr(i + 1)}</span>` +
+        `<span class="t">${lv.name}</span>` +
+        `<span class="s">${[0, 1, 2].map((k) => `<span class="${k < st ? '' : 'off'}">★</span>`).join('')}</span>`;
+      b.title = lv.tip;
+      b.addEventListener('click', () => startLevel(i));
+      box.appendChild(b);
+    });
+  }
+  let lastStarted = -1;
+  function startLevel(i) {
     initAudio();
-    if (state === 'menu') deaths = 0;
-    resetLevel();
+    if (i !== lastStarted) deaths = 0;
+    lastStarted = i;
+    loadLevel(i);
     state = 'playing';
     showOverlay(null);
   }
   function toMenu() {
-    resetLevel();
+    loadLevel(defaultLevel());
     state = 'menu';
-    deaths = 0;
     showOverlay('start');
   }
-  document.getElementById('btnStart').addEventListener('click', startGame);
-  document.getElementById('btnAgain').addEventListener('click', () => { deaths = 0; startGame(); });
+  document.getElementById('btnStart').addEventListener('click', () => startLevel(defaultLevel()));
+  document.getElementById('btnNext').addEventListener('click', () => startLevel(Math.min(cur + 1, LEVELS.length - 1)));
+  document.getElementById('btnAgain').addEventListener('click', () => startLevel(cur));
   document.getElementById('btnMenu').addEventListener('click', toMenu);
-  document.getElementById('btnRetry').addEventListener('click', startGame);
+  document.getElementById('btnRetry').addEventListener('click', () => startLevel(cur));
+  document.getElementById('btnDeadMenu').addEventListener('click', toMenu);
+  document.getElementById('btnPauseMenu').addEventListener('click', toMenu);
   document.getElementById('btnResume').addEventListener('click', () => { state = 'playing'; showOverlay(null); });
 
   /* =========================================================
@@ -1622,12 +2056,14 @@
     stage.style.fontSize = Math.max(8, 15 * viewScale) + 'px';
     canvas.width = Math.round(W * viewScale * DPR);
     canvas.height = Math.round(H * viewScale * DPR);
-    staticLayer = buildStatic();
+    if (L) staticLayer = buildStatic();
     sizePreview(pvA);
     sizePreview(pvK);
   }
   window.addEventListener('resize', resize);
   resize();
+  loadLevel(defaultLevel());
+  renderLevelList();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { staticLayer = buildStatic(); });
 
   /* =========================================================
@@ -1650,11 +2086,13 @@
   }
   requestAnimationFrame(frame);
 
-  // Small debug/test hook (read-only snapshot)
+  // Small read-only snapshot used by automated tests
   window.__alphaiota = {
     get state() { return state; },
+    get level() { return cur; },
     get players() { return players.map((p) => ({ kind: p.kind, x: p.x, y: p.y, onGround: p.onGround, alive: p.alive })); },
-    get doors() { return L.doors.map((d) => ({ id: d.id, open: d.open })); },
+    get gems() { return L.gems.filter((g) => g.taken).length + '/' + L.gems.length; },
+    get lifts() { return L.lifts.map((l) => ({ id: l.id, x: l.x, y: l.y })); },
   };
 })();
 </script>
