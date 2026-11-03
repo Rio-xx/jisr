@@ -97,7 +97,7 @@
   .dot.laser { background: #ff2266; box-shadow: 0 0 0.6em #ff2266; border-radius: 0.15em; width: 0.35em; }
   .dot.portal { background: linear-gradient(90deg, var(--purple), var(--cyan)); box-shadow: 0 0 0.6em var(--purple); }
   .rules b.r { color: #ff7a93; } .rules b.c { color: #7ff8ff; } .rules b.g { color: #8dff6b; }
-  .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6em; margin: 0.2em 0 0.8em; }
+  .levels { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.6em; margin: 0.2em 0 0.8em; }
   .lvl {
     font-family: inherit; color: var(--text); cursor: pointer;
     padding: 0.45em 0.3em; border-radius: 0.8em;
@@ -112,6 +112,31 @@
   .lvl .t { display: block; font-size: 0.78em; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lvl .s { display: block; font-size: 0.95em; letter-spacing: 0.1em; color: var(--gold); direction: ltr; }
   .lvl .s .off { color: rgba(255, 255, 255, 0.2); }
+  .lvl.secret { border-color: rgba(255, 212, 0, 0.7); background: rgba(255, 212, 0, 0.07); }
+  .lvl.boss { border-color: rgba(57, 255, 20, 0.6); }
+  .races { display: flex; gap: 0.6em; justify-content: center; margin: -0.3em 0 0.6em; flex-wrap: wrap; }
+  .lvl.race { padding: 0.35em 1.2em; border-color: rgba(255, 106, 213, 0.6); }
+  .lvl.race .n { font-size: 1em; }
+  #touch { position: absolute; inset: 0; pointer-events: none; display: none; direction: ltr; }
+  body.touch #touch { display: block; }
+  .tpad { position: absolute; bottom: 1.5%; display: flex; gap: 6px; pointer-events: auto; align-items: flex-end; opacity: 0.6; }
+  .tpad.left { left: 1%; }
+  .tpad.right { right: 1%; }
+  .tpad button, #tPause {
+    width: 44px; height: 44px; border-radius: 50%;
+    font-size: 17px; font-weight: 900; color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.35); background: rgba(20, 12, 45, 0.25);
+    touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+  }
+  .tpad.left button { border-color: rgba(162, 89, 255, 0.8); box-shadow: 0 0 0.8em rgba(162, 89, 255, 0.5); }
+  .tpad.right button { border-color: rgba(0, 243, 255, 0.8); box-shadow: 0 0 0.8em rgba(0, 243, 255, 0.4); }
+  .tpad button.jump { margin-bottom: 18px; }
+  .tpad button.on { background: rgba(255, 255, 255, 0.3); }
+  #tPause { position: absolute; top: 19%; left: 1%; pointer-events: auto; width: 34px; height: 34px; font-size: 13px; opacity: 0.6; }
+  #rotate { display: none; position: fixed; inset: 0; z-index: 10; background: #05050a; color: #ece8ff;
+    align-items: center; justify-content: center; flex-direction: column; gap: 12px; font-size: 20px; text-align: center; padding: 20px; }
+  #rotate b { font-size: 54px; }
+  @media (orientation: portrait) { body.touch #rotate { display: flex; } }
   .btn {
     font-family: inherit; font-size: 1.15em; font-weight: 900;
     padding: 0.4em 1.6em; margin: 0.25em; border-radius: 999px; cursor: pointer;
@@ -137,15 +162,31 @@
 </style>
 </head>
 <body>
+<div id="rotate"><b>📱↻</b>أدر جهازك أفقيًا للعب<br><small>كل لاعب يمسك جهة من الشاشة</small></div>
 <div id="wrap">
   <div id="stage">
     <canvas id="game" dir="ltr"></canvas>
+
+    <!-- TOUCH CONTROLS (phones / tablets) -->
+    <div id="touch">
+      <div class="tpad left">
+        <button data-code="KeyA" aria-label="أرقوس يسار">◀</button>
+        <button data-code="KeyD" aria-label="أرقوس يمين">▶</button>
+        <button data-code="KeyW" class="jump" aria-label="أرقوس قفز">▲</button>
+      </div>
+      <div class="tpad right">
+        <button data-code="ArrowUp" class="jump" aria-label="كراكن قفز">▲</button>
+        <button data-code="ArrowLeft" aria-label="كراكن يسار">◀</button>
+        <button data-code="ArrowRight" aria-label="كراكن يمين">▶</button>
+      </div>
+      <button id="tPause" aria-label="إيقاف مؤقت">⏸</button>
+    </div>
 
     <!-- START SCREEN -->
     <div class="overlay show" id="start">
       <div class="panel">
         <h1>أوديسة ألفايوتا: أرقوس وكراكن</h1>
-        <p class="sub">مغامرة تعاونية للاعبَين في قلب مركز بيانات النيون — ثماني مراحل، وكل مرحلة أصعب وأكثر حماسًا من التي قبلها!</p>
+        <p class="sub">مغامرة تعاونية للاعبَين: ١١ مرحلة + معركة زعيم + مرحلة سرية + وضع سباق!</p>
         <div class="cards">
           <div class="card argus">
             <canvas id="pvArgus" dir="ltr"></canvas>
@@ -165,13 +206,13 @@
           </div>
         </div>
         <ul class="rules">
-          <li><span class="dot red"></span><span><b class="r">البرك الحمراء:</b> آمنة لأرقوس — قاتلة لكراكن. <b class="c">البرك السماوية:</b> آمنة لكراكن — قاتلة لأرقوس. <b class="g">البرك الخضراء:</b> قاتلة لكليكما!</span></li>
-          <li><span class="dot yellow"></span><span><b>الأزرار:</b> قف على زر لتشغيل الجهاز الذي يحمل اللون والحرف نفسيهما: بوابة تنخفض، أو مصعد يرتفع، أو جسر ضوئي يظهر. يعمل الجهاز ما دام أحدكما واقفًا على الزر.</span></li>
-          <li><span class="dot gem"></span><span><b>البلّورات:</b> اجمع بلّورات لونك (بنفسجية لأرقوس، سماوية لكراكن). جمعها كلها + إنهاء المرحلة ضمن الوقت المستهدف = ٣ نجوم.</span></li>
-          <li><span class="dot laser"></span><span><b style="color:#ff6b93">مخاطر جديدة:</b> أشعة ليزر تعمل وتنطفئ (انتظرا اللحظة المناسبة)، وفيروسات متجولة تُهزم بالقفز فوق رأسها، وطوفان أخضر يرتفع — أسرعا! ومنصات القفز تطلقكما عاليًا.</span></li>
-          <li><span class="dot portal"></span><span><b>الهدف:</b> أن يقف كل منكما داخل بوابته الملوّنة <b>في الوقت نفسه</b>. إنهاء مرحلة يفتح المرحلة التالية.</span></li>
+          <li><span class="dot red"></span><span><b class="r">الحمراء</b> آمنة لأرقوس فقط، <b class="c">السماوية</b> آمنة لكراكن فقط، و<b class="g">الخضراء</b> قاتلة لكليكما!</span></li>
+          <li><span class="dot yellow"></span><span><b>الأزرار</b> تشغّل الجهاز الذي يحمل لونها وحرفها (بوابة، مصعد، جسر ضوئي، منصة قفز، ليزر) ما دام أحدكما واقفًا عليها.</span></li>
+          <li><span class="dot laser"></span><span><b style="color:#ff6b93">احذرا:</b> الليزر يعمل وينطفئ، والفيروسات تُهزم بالقفز فوق رأسها، والطوفان يرتفع!</span></li>
+          <li><span class="dot gem"></span><span><b>النجوم:</b> أنهيا المرحلة ★، واجمعا كل بلّورات لونكما ★، وأنهياها ضمن الوقت المستهدف ★. الهدف: كل منكما في بوابته <b>في الوقت نفسه</b>.</span></li>
         </ul>
         <div class="levels" id="levelList"></div>
+        <div class="races" id="raceList"></div>
         <button class="btn" id="btnStart">ابدأ المهمة ◀</button>
         <p class="hint"><kbd>Enter</kbd> للبدء • <kbd>R</kbd> لإعادة المرحلة • <kbd>Esc</kbd> إيقاف مؤقت • <kbd>M</kbd> كتم الصوت</p>
       </div>
@@ -211,6 +252,7 @@
         <h2>إيقاف مؤقت</h2>
         <p class="sub">اضغط <kbd>Esc</kbd> للمتابعة أو <kbd>R</kbd> لإعادة المرحلة.</p>
         <button class="btn" id="btnResume">متابعة</button>
+        <button class="btn ghost" id="btnPauseRestart">إعادة المرحلة</button>
         <button class="btn ghost" id="btnPauseMenu">القائمة الرئيسية</button>
       </div>
     </div>
@@ -613,16 +655,218 @@
         { who: 'kraken', x: 1180, y: 200, w: 56, h: 80 },
       ],
     },
+    // ---------------------------------------------------------------- 9
+    {
+      name: 'منجم البيانات',
+      tip: 'ثلاثة طوابق متعرجة: جسور، فيروسات، ليزر، وبوابة يحرسها زرّان. تعاونا في كل طابق!',
+      par: 75,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [
+        { x: 20, y: 520, w: 1080, h: 16 },   // deck 1
+        { x: 160, y: 360, w: 1100, h: 16 },  // deck 2
+        { x: 20, y: 240, w: 1080, h: 16 },   // deck 3 (portals)
+      ],
+      pools: [
+        { x: 640, y: 680, w: 220, type: 'red' },
+        { x: 400, y: 520, w: 200, type: 'cyan' },
+        { x: 750, y: 240, w: 40, type: 'green' },
+      ],
+      doors: [
+        { id: 'R', kind: 'bridge', x: 640, y: 670, w: 220, h: 10, color: C.yellow },
+        { id: 'C', kind: 'bridge', x: 400, y: 510, w: 200, h: 10, color: C.magenta },
+        { id: 'D', x: 1060, y: 256, w: 20, h: 104, color: C.orange },
+      ],
+      lifts: [],
+      pads: [
+        { x: 1170, y: 680, w: 40, power: -15 },
+        { x: 50, y: 520, w: 40, power: -15 },
+        { x: 1185, y: 360, w: 40, power: -14 },
+      ],
+      lasers: [
+        { x: 500, y: 256, w: 8, h: 104, period: 130, on: 60, offset: 0 },
+        { x: 700, y: 256, w: 8, h: 104, period: 130, on: 60, offset: 65 },
+      ],
+      viruses: [
+        { y: 680, minX: 300, maxX: 520, speed: 1.5 },
+        { y: 520, minX: 650, maxX: 900, speed: 1.5 },
+        { y: 240, minX: 300, maxX: 520, speed: 1.1 },
+      ],
+      buttons: [
+        { x: 1000, y: 520, w: 50, link: 'R' },
+        { x: 250, y: 520, w: 50, link: 'C' },
+        { x: 200, y: 360, w: 50, link: 'D' },
+        { x: 1092, y: 360, w: 30, link: 'D' },
+      ],
+      gems: [
+        { x: 750, y: 655, who: 'argus' }, { x: 1190, y: 440, who: 'argus' }, { x: 600, y: 335, who: 'argus' }, { x: 900, y: 215, who: 'argus' },
+        { x: 500, y: 495, who: 'kraken' }, { x: 70, y: 420, who: 'kraken' }, { x: 1205, y: 280, who: 'kraken' }, { x: 450, y: 215, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 60, y: 160, w: 56, h: 80 },
+        { who: 'kraken', x: 130, y: 160, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 10
+    {
+      name: 'المنصات الطائرة',
+      tip: 'لا أرض هنا! منصات تصعد وتنزل وتتحرك فوق البرمجيات الخبيثة. التوقيت هو كل شيء!',
+      par: 75,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [
+        { x: 360, y: 440, w: 800, h: 16 },   // deck 1
+        { x: 920, y: 300, w: 240, h: 16 },   // deck 2
+        { x: 20, y: 300, w: 680, h: 16 },    // deck 3 (portals)
+      ],
+      pools: [
+        { x: 200, y: 680, w: 1060, type: 'green' },
+        { x: 460, y: 440, w: 200, type: 'red' },
+        { x: 300, y: 300, w: 200, type: 'cyan' },
+      ],
+      doors: [
+        { id: 'R', kind: 'bridge', x: 460, y: 430, w: 200, h: 10, color: C.yellow },
+        { id: 'C', kind: 'bridge', x: 300, y: 290, w: 200, h: 10, color: C.magenta },
+      ],
+      lifts: [
+        { id: 'v1', auto: true, from: [230, 640], to: [230, 440], w: 100, speed: 1.3, pause: 50, color: C.ice },
+        { id: 'v2', auto: true, from: [1160, 440], to: [1160, 300], w: 100, speed: 1.2, pause: 50, color: C.ice },
+        { id: 'h', auto: true, from: [700, 300], to: [820, 300], w: 100, speed: 1.2, pause: 50, color: C.ice },
+      ],
+      lasers: [
+        { x: 690, y: 316, w: 8, h: 124, period: 120, on: 55, offset: 30 },
+        { x: 600, y: 126, w: 8, h: 174, period: 130, on: 60, offset: 0 },
+      ],
+      viruses: [
+        { y: 440, minX: 730, maxX: 1000, speed: 1.5 },
+      ],
+      buttons: [
+        { x: 1000, y: 300, w: 50, link: 'R' },
+        { x: 200, y: 300, w: 50, link: 'C' },
+      ],
+      gems: [
+        { x: 560, y: 415, who: 'argus' }, { x: 280, y: 500, who: 'argus' }, { x: 1100, y: 275, who: 'argus' },
+        { x: 400, y: 275, who: 'kraken' }, { x: 1210, y: 370, who: 'kraken' }, { x: 760, y: 275, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 40, y: 220, w: 56, h: 80 },
+        { who: 'kraken', x: 110, y: 220, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 11 (BOSS)
+    {
+      name: 'الفيروس الأم',
+      tip: 'المعركة الأخيرة! قفا على الزرّين معًا ليشحن المدفع، وأطلقاه حين يمرّ الفيروس الأم فوقه!',
+      par: 90,
+      music: 150,
+      spawns: { argus: { x: 420, y: 630 }, kraken: { x: 830, y: 630 } },
+      solids: [
+        { x: 400, y: 575, w: 110, h: 14 },   // shelter left
+        { x: 770, y: 575, w: 110, h: 14 },   // shelter right
+      ],
+      pools: [
+        { x: 180, y: 680, w: 200, type: 'red' },
+        { x: 900, y: 680, w: 200, type: 'cyan' },
+        { x: 540, y: 680, w: 200, type: 'green' },
+      ],
+      doors: [],
+      lifts: [],
+      buttons: [
+        { x: 100, y: 680, w: 50, link: 'P' },
+        { x: 1130, y: 680, w: 50, link: 'Q' },
+      ],
+      cannon: { x: 640, w: 46, links: ['P', 'Q'] },
+      boss: { hp: 3, x: 640, baseY: 250, r: 52, minX: 230, maxX: 1050, speed: 1.6, delay: 180 },
+      gems: [
+        { x: 280, y: 652, who: 'argus' }, { x: 455, y: 540, who: 'argus' },
+        { x: 1000, y: 652, who: 'kraken' }, { x: 825, y: 540, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 30, y: 600, w: 56, h: 80 },
+        { who: 'kraken', x: 1194, y: 600, w: 56, h: 80 },
+      ],
+    },
   ];
+
+  // Secret level — unlocked by touching the hidden golden glitch in level 2
+  const SECRET = {
+    name: 'حديقة القفز السرية',
+    tip: '✦ مرحلة سرية! منصات قفز في كل مكان وبلّورات كثيرة. استمتعا!',
+    par: 40,
+    spawns: { argus: { x: 40, y: 630 }, kraken: { x: 60, y: 630 } },
+    solids: [
+      { x: 180, y: 500, w: 200, h: 16 },
+      { x: 440, y: 330, w: 200, h: 16 },
+      { x: 700, y: 250, w: 540, h: 16 },
+    ],
+    pools: [
+      { x: 950, y: 680, w: 60, type: 'green' },
+      { x: 910, y: 250, w: 40, type: 'green' },
+    ],
+    doors: [], lifts: [], buttons: [],
+    pads: [
+      { x: 110, y: 680, w: 40, power: -15 },
+      { x: 330, y: 500, w: 40, power: -15 },
+      { x: 880, y: 680, w: 40, power: -19, color: C.yellow },
+    ],
+    viruses: [
+      { y: 680, minX: 450, maxX: 700, speed: 1.8 },
+      { y: 250, minX: 805, maxX: 870, speed: 1.0 },
+    ],
+    gems: [
+      { x: 230, y: 475, who: 'argus' }, { x: 300, y: 475, who: 'kraken' },
+      { x: 350, y: 410, who: 'argus' }, { x: 350, y: 370, who: 'kraken' },
+      { x: 500, y: 305, who: 'argus' }, { x: 580, y: 305, who: 'kraken' },
+      { x: 900, y: 520, who: 'argus' }, { x: 900, y: 470, who: 'kraken' },
+      { x: 900, y: 420, who: 'argus' }, { x: 900, y: 375, who: 'kraken' },
+      { x: 740, y: 225, who: 'argus' }, { x: 1000, y: 225, who: 'kraken' },
+    ],
+    portals: [
+      { who: 'argus', x: 1110, y: 170, w: 56, h: 80 },
+      { who: 'kraken', x: 1180, y: 170, w: 56, h: 80 },
+    ],
+  };
+
+  // Race tracks: two identical lanes (top = أرقوس, bottom = كراكن). First to the portal wins.
+  function raceTrack(name, tip, lane) {
+    const def = {
+      name, tip, race: true, par: 0,
+      spawns: { argus: { x: 40, y: 350 }, kraken: { x: 40, y: 630 } },
+      solids: [{ x: 20, y: 400, w: 1240, h: 16 }],
+      pools: [], doors: [], lifts: [], pads: [], lasers: [], viruses: [], buttons: [], gems: [], portals: [],
+    };
+    lane(def, 'argus', 400, 126);
+    lane(def, 'kraken', 680, 416);
+    return def;
+  }
+  const RACES = [
+    raceTrack('سباق النيون', '🏁 سباق! أول من يصل إلى بوابته يفوز. الموت يعيدك لبداية مسارك فقط.', (d, who, base, ceil) => {
+      d.pools.push({ x: 230, y: base, w: 70, type: 'green' }, { x: 790, y: base, w: 80, type: 'green' });
+      d.lasers.push({ x: 400, y: ceil, w: 8, h: base - ceil, period: 120, on: 55, offset: 0 },
+                    { x: 1100, y: ceil, w: 8, h: base - ceil, period: 100, on: 50, offset: 30 });
+      d.viruses.push({ y: base, minX: 500, maxX: 690, speed: 1.6, dir: 1 });
+      d.solids.push({ x: 940, y: base - 60, w: 30, h: 60 });
+      d.portals.push({ who, x: 1180, y: base - 80, w: 56, h: 80 });
+    }),
+    raceTrack('سباق المنصات', '🏁 سباق! منصة متحركة، ليزر، منصة قفز وجدار — من الأسرع؟', (d, who, base, ceil) => {
+      d.pools.push({ x: 200, y: base, w: 560, type: 'green' });
+      d.lifts.push({ id: who[0] + 'm', auto: true, from: [210, base - 60], to: [560, base - 60], w: 100, speed: 2, color: C.ice });
+      d.lasers.push({ x: 830, y: ceil, w: 8, h: base - ceil, period: 110, on: 50, offset: 0 });
+      d.pads.push({ x: 880, y: base, w: 40, power: -13.5 });
+      d.solids.push({ x: 970, y: base - 120, w: 30, h: 120 });
+      d.viruses.push({ y: base, minX: 1075, maxX: 1125, speed: 1.1, dir: 1 });
+      d.portals.push({ who, x: 1180, y: base - 80, w: 56, h: 80 });
+    }),
+  ];
+  // golden glitch hidden in level 2 (off the main path)
+  LEVELS[1].secretToken = { x: 55, y: 330 };
 
   /* =========================================================
      PROGRESS (saved in this browser only)
      ========================================================= */
   const SAVE_KEY = 'alphaiota_odyssey_progress_v1';
-  let progress = { unlocked: 1, stars: [], best: [] };
+  let progress = { unlocked: 1, stars: [], best: [], secret: false, secretStars: 0, raceWins: { argus: 0, kraken: 0 } };
   try {
     const s = JSON.parse(localStorage.getItem(SAVE_KEY));
-    if (s && typeof s.unlocked === 'number') progress = { unlocked: s.unlocked, stars: s.stars || [], best: s.best || [] };
+    if (s && typeof s.unlocked === 'number') progress = { ...progress, ...s, stars: s.stars || [], best: s.best || [] };
   } catch (e) { /* storage unavailable */ }
   progress.unlocked = clamp(progress.unlocked, 1, LEVELS.length);
   function saveProgress() {
@@ -660,6 +904,12 @@
     boing: () => { tone(180, 0.3, 'sine', 0.07, 520); tone(360, 0.18, 'triangle', 0.03, 300); },
     stomp: () => { tone(320, 0.12, 'square', 0.05, -220); tone(900, 0.08, 'triangle', 0.04, 0, 0.04); },
     alarm: () => { tone(620, 0.18, 'square', 0.03, -120); tone(620, 0.18, 'square', 0.03, -120, 0.25); },
+    charge: () => tone(220, 0.9, 'sawtooth', 0.025, 700),
+    beam: () => { tone(90, 0.7, 'sawtooth', 0.07, -40); tone(1400, 0.5, 'square', 0.025, -900); },
+    bossHit: () => { tone(160, 0.5, 'square', 0.07, -120); tone(80, 0.6, 'sawtooth', 0.05, -40, 0.1); },
+    bossDie: () => [392, 311, 262, 196, 131].forEach((f, i) => tone(f, 0.35, 'sawtooth', 0.06, -60, i * 0.12)),
+    shoot: () => tone(500, 0.12, 'square', 0.025, -300),
+    secret: () => [784, 988, 1175, 1568].forEach((f, i) => tone(f, 0.2, 'sine', 0.06, 0, i * 0.08)),
   };
 
   /* =========================================================
@@ -747,13 +997,15 @@
     initAudio();
     if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       if (state === 'menu') startLevel(defaultLevel());
-      else if (state === 'won') { if (cur + 1 < LEVELS.length) startLevel(cur + 1); else toMenu(); }
-      else if (state === 'dead') startLevel(cur);
+      else if (state === 'won') {
+        if (mode === 'campaign' && cur + 1 < LEVELS.length) startLevel(cur + 1);
+        else if (mode === 'race') restart();
+        else toMenu();
+      } else if (state === 'dead') restart();
     } else if (e.code === 'KeyR') {
-      if (state !== 'menu') startLevel(cur);
+      if (state !== 'menu') restart();
     } else if (e.code === 'Escape' || e.code === 'KeyP') {
-      if (state === 'playing') { state = 'paused'; showOverlay('pause'); }
-      else if (state === 'paused') { state = 'playing'; showOverlay(null); }
+      togglePause();
     } else if (e.code === 'KeyM') {
       muted = !muted;
       Music.setMuted(muted);
@@ -819,7 +1071,7 @@
       for (const s of solids) {
         if (!overlap(this, s)) continue;
         const rise = this.y + this.h - s.y;
-        if (this.onGround && this.vx !== 0 && rise > 0 && rise <= PHYS.STEP_UP) {
+        if ((this.onGround || this.coyote > 0) && this.vy >= 0 && this.vx !== 0 && rise > 0 && rise <= PHYS.STEP_UP) {
           const oldY = this.y;
           this.y = s.y - this.h;
           if (!solids.some((o) => o !== s && overlap(this, o))) continue;
@@ -1156,12 +1408,6 @@
     g.scale(1 + s.squash * 0.6, 1 - s.squash);
     g.scale(flip, 1);
 
-    // ---- Back tentacle (behind body) ----
-    const sw2 = Math.sin(t * 2.3) * 2.5 + a * 2;
-    drawTentacle(g,
-      [[-8, -17], [-24, -24 + sw2], [-38, -10 + sw2], [-28, -3]],
-      5.6, 1.4, '#3fd8bc', '#1fae92', 1, [0.42, 0.62, 0.8], null);
-
     drawStubbyLegs(g, s, '#2fc4a8', '#0f7d68');
 
     const bob = -Math.abs(Math.sin(s.walk)) * 2.4 * a + Math.sin(t * 2.2 + 1) * 0.7 * (1 - a);
@@ -1256,7 +1502,11 @@
      GAME STATE
      ========================================================= */
   let state = 'menu';        // menu | playing | paused | dying | dead | won
-  let cur = 0;               // current level index
+  let cur = 0;               // current campaign level index
+  let mode = 'campaign';     // campaign | secret | race
+  let modeIdx = 0;           // index within the current mode
+  let toast = null;          // { text, t }
+  let lastRaceDeath = '';
   let time = 0;
   let levelFrames = 0;
   let deaths = 0;
@@ -1264,7 +1514,7 @@
   let stateTimer = 0;
   let winTimer = 0;
   let L = null;               // live level data
-  let staticLayer = null, staticFor = -1;
+  let staticLayer = null, staticFor = null;
   let viewScale = 1, DPR = 1;
   const players = [new Player('argus'), new Player('kraken')];
   const particles = [];
@@ -1278,9 +1528,11 @@
     });
   }
 
-  function loadLevel(i) {
-    cur = i;
-    const def = LEVELS[i];
+  function defFor(m, i) { return m === 'race' ? RACES[i] : m === 'secret' ? SECRET : LEVELS[i]; }
+  function loadLevel(i, m = 'campaign') {
+    mode = m; modeIdx = i;
+    if (m === 'campaign') cur = i;
+    const def = defFor(m, i);
     L = {
       idx: i,
       def,
@@ -1296,21 +1548,27 @@
       portals: def.portals.map((p) => ({ ...p, occupied: false })),
       pads: (def.pads || []).map((p) => ({ color: C.pad, ...p, anim: 0, on: true })),
       lasers: (def.lasers || []).map((l) => ({ color: C.laser, ...l, active: false, warn: false, rem: 0 })),
-      viruses: (def.viruses || []).map((v, i) => ({ ...v, x: (v.minX + v.maxX) / 2, dir: i % 2 ? -1 : 1, w: 28, h: 28, alive: true, t: i * 1.7 })),
+      viruses: (def.viruses || []).map((v, i) => ({ ...v, x: (v.minX + v.maxX) / 2, dir: v.dir || (i % 2 ? -1 : 1), w: 28, h: 28, alive: true, t: i * 1.7 })),
       flood: def.flood ? { ...def.flood, y: 730 } : null,
+      boss: def.boss ? { ...def.boss, maxHp: def.boss.hp, y: def.boss.baseY, dir: 1, t: 0, fire: def.boss.delay, aim: def.boss.delay + 120, stun: 0, flash: 0, dead: false, deathT: 0 } : null,
+      cannon: def.cannon ? { ...def.cannon, charge: 0, beam: 0, cool: 0, hit: false } : null,
+      orbs: [],
+      token: def.secretToken && !progress.secret ? { ...def.secretToken, taken: false } : null,
     };
+    if (L.boss) for (const p of L.portals) p.locked = true;
     players[0].reset(def.spawns.argus);
     players[1].reset(def.spawns.kraken);
     particles.length = 0;
     levelFrames = 0; winTimer = 0; shake = 0; stateTimer = 0;
-    if (staticFor !== i) { staticLayer = buildStatic(); staticFor = i; }
+    if (staticFor !== def) { staticLayer = buildStatic(); staticFor = def; }
+    for (const p of players) p.respawn = 0;
   }
 
   function linkActive(id) { return L.buttons.some((b) => b.link === id && b.pressed); }
   function linkColor(id) {
     const d = L.doors.find((x) => x.id === id) || L.lifts.find((x) => x.id === id) ||
               L.pads.find((x) => x.id === id) || L.lasers.find((x) => x.id === id);
-    return d ? d.color : '#ffffff';
+    return d ? d.color : (L.cannon && L.cannon.links.includes(id) ? '#00f3ff' : '#ffffff');
   }
 
   /* =========================================================
@@ -1362,9 +1620,10 @@
     for (const l of L.lifts) {
       const stepT = l.speed / l.len;
       let nt = l.t, ndir = l.dir;
+      if (l.wait > 0) { l.wait--; continue; }
       if (l.auto) {
         nt = l.t + l.dir * stepT;
-        if (nt >= 1) { nt = 1; ndir = -1; } else if (nt <= 0) { nt = 0; ndir = 1; }
+        if (nt >= 1) { nt = 1; ndir = -1; l.wait = l.pause || 0; } else if (nt <= 0) { nt = 0; ndir = 1; l.wait = l.pause || 0; }
       } else {
         const target = linkActive(l.id) ? 1 : 0;
         if (nt < target) nt = Math.min(target, nt + stepT);
@@ -1386,6 +1645,92 @@
     }
   }
 
+  function bossSolidHit(x, y) {
+    for (const s of L.solids) if (x > s.x && x < s.x + s.w && y > s.y && y < s.y + s.h) return true;
+    return false;
+  }
+  function updateBoss() {
+    const B = L.boss, Cn = L.cannon;
+    // orbs
+    for (let i = L.orbs.length - 1; i >= 0; i--) {
+      const o = L.orbs[i];
+      o.x += o.vx; o.y += o.vy; o.vy += o.g; o.life--;
+      let gone = o.life <= 0 || o.y > H || o.x < 0 || o.x > W || bossSolidHit(o.x, o.y);
+      if (!gone) {
+        for (const p of players) {
+          if (p.alive && overlap(p, { x: o.x - 6, y: o.y - 6, w: 12, h: 12 })) { kill(p, { type: 'orb' }); gone = true; break; }
+        }
+      }
+      if (gone) {
+        for (let k = 0; k < 6; k++) spawn(o.x, o.y, (Math.random() - 0.5) * 3, -Math.random() * 2, 18, '#9dff6b', 2.5, 0.1);
+        L.orbs.splice(i, 1);
+      }
+    }
+    if (!B) return;
+    if (B.dead) { B.deathT++; return; }
+    B.t++;
+    const rage = B.maxHp - B.hp;
+    if (B.flash > 0) B.flash--;
+    if (B.stun > 0) B.stun--;
+    else {
+      B.x += B.dir * B.speed * (1 + rage * 0.35);
+      if (B.x < B.minX) { B.x = B.minX; B.dir = 1; }
+      if (B.x > B.maxX) { B.x = B.maxX; B.dir = -1; }
+    }
+    B.y = B.baseY + Math.sin(B.t * 0.035) * 22;
+    // bombs dropped straight down
+    if (B.stun <= 0 && --B.fire <= 0) {
+      const n = B.hp === 1 ? 2 : 1;
+      for (let k = 0; k < n; k++) {
+        L.orbs.push({ x: B.x + (k - (n - 1) / 2) * 30, y: B.y + B.r * 0.8, vx: (Math.random() - 0.5) * 1.2, vy: 1, g: 0.09, life: 400, aimed: false });
+      }
+      SFX.shoot();
+      B.fire = [0, 45, 60, 75][B.hp] || 75;
+    }
+    // aimed shots once hurt
+    if (B.hp <= 2 && B.stun <= 0 && --B.aim <= 0) {
+      const targets = players.filter((p) => p.alive);
+      if (targets.length) {
+        const tp = targets[Math.floor(Math.random() * targets.length)];
+        const dx = tp.x + 15 - B.x, dy = tp.y + 25 - B.y, d = Math.hypot(dx, dy) || 1;
+        const sp = 2.2 + rage * 0.2;
+        L.orbs.push({ x: B.x, y: B.y, vx: dx / d * sp, vy: dy / d * sp, g: 0, life: 500, aimed: true });
+        SFX.shoot();
+      }
+      B.aim = B.hp === 1 ? 160 : 190;
+    }
+    // the co-op cannon
+    if (Cn) {
+      const armed = Cn.links.every((id) => linkActive(id));
+      if (Cn.beam > 0) {
+        if (!Cn.hit && Math.abs(B.x - Cn.x) < B.r + Cn.w / 2) {
+          Cn.hit = true;
+          B.hp--; B.flash = 40; B.stun = 70;
+          shake = 20;
+          SFX.bossHit();
+          burst(B.x, B.y, ['#39ff14', '#ffffff', '#ff2a55', '#00f3ff'], 60);
+          if (B.hp <= 0) {
+            B.dead = true;
+            L.orbs.length = 0;
+            SFX.bossDie();
+            for (let k = 0; k < 5; k++) burst(B.x + (Math.random() - 0.5) * 120, B.y + (Math.random() - 0.5) * 120, ['#39ff14', '#ffd400', '#ffffff', '#ff2a55'], 40);
+            shake = 30;
+            for (const p of L.portals) p.locked = false;
+            toast = { text: '💥 دمّرتما الفيروس الأم! ادخلا بوابتيكما!', t: 0 };
+          }
+        }
+        if (--Cn.beam === 0) Cn.cool = 80;
+      } else if (Cn.cool > 0) {
+        Cn.cool--;
+      } else if (armed) {
+        if (Cn.charge === 0) SFX.charge();
+        if (++Cn.charge >= 50) { Cn.charge = 0; Cn.beam = 45; Cn.hit = false; SFX.beam(); shake = Math.max(shake, 10); }
+      } else {
+        Cn.charge = Math.max(0, Cn.charge - 2);
+      }
+    }
+  }
+
   function kill(p, pool) {
     if (!p.alive) return;
     p.alive = false;
@@ -1397,6 +1742,7 @@
     burst(cx, cy, own.concat([hue]), 70);
     shake = 16;
     SFX.death();
+    if (mode === 'race') { p.respawn = 50; lastRaceDeath = `${NAMES[p.kind]}: ${type}`; return; }
     const nm = NAMES[p.kind];
     let reason;
     if (type === 'green') reason = `أُصيب ${nm} ببرمجية خبيثة! البرك الخضراء قاتلة لكليكما.`;
@@ -1404,12 +1750,36 @@
     else if (type === 'cyan') reason = 'دخل أرقوس محطة الوكلاء السماوية! هذه البرك آمنة لكراكن فقط.';
     else if (type === 'laser') reason = `احترق ${nm} بشعاع الليزر! انتظرا حتى ينطفئ الشعاع ثم اعبرا بسرعة.`;
     else if (type === 'virus') reason = `أمسك فيروسٌ بـ${nm}! اقفز فوق رأس الفيروس لتدميره بدل أن تلمسه من الجانب.`;
+    else if (type === 'orb') reason = `أصابت قذيفة الفيروس الأم ${nm}! تحرّكا باستمرار واحتميا تحت المظلّات.`;
     else reason = `ابتلع طوفان البرمجيات الخبيثة ${nm}! أسرعا في التسلّق.`;
     document.getElementById('deadReason').textContent = reason;
     state = 'dying';
     stateTimer = 0;
   }
 
+  function setStat(id, label, value) {
+    const el = document.getElementById(id);
+    el.textContent = value;
+    el.previousElementSibling.textContent = label;
+  }
+  function finishRace(winner) {
+    state = 'won';
+    stateTimer = 0;
+    SFX.win();
+    const portal = L.portals.find((p) => p.who === winner);
+    burst(portal.x + portal.w / 2, portal.y + portal.h / 2, winner === 'argus' ? ['#a259ff', '#e2c8ff'] : ['#00f3ff', '#c4fdff'], 60);
+    progress.raceWins[winner] = (progress.raceWins[winner] || 0) + 1;
+    saveProgress();
+    document.getElementById('doneTitle').textContent = `🏁 فاز ${NAMES[winner]}!`;
+    document.getElementById('doneSub').textContent = winner === 'argus' ? 'أرقوس أسرع من كراكن هذه المرة… هل يقبل كراكن التحدي؟' : 'كراكن سبق أرقوس بمجسّه! هل يريد أرقوس الثأر؟';
+    document.getElementById('doneStars').textContent = winner === 'argus' ? '🟣' : '🔵';
+    setStat('doneTime', 'زمن الفوز', fmtTime(levelFrames));
+    setStat('donePar', 'انتصارات أرقوس', progress.raceWins.argus || 0);
+    setStat('doneGems', 'انتصارات كراكن', progress.raceWins.kraken || 0);
+    setStat('doneDeaths', 'السباق', toAr(modeIdx + 1));
+    document.getElementById('btnNext').hidden = true;
+    document.getElementById('btnAgain').textContent = 'جولة ثأر!';
+  }
   function finishLevel() {
     state = 'won';
     stateTimer = 0;
@@ -1421,15 +1791,28 @@
     const secs = levelFrames / 60;
     const allGems = L.gems.every((g) => g.taken);
     const stars = 1 + (allGems ? 1 : 0) + (secs <= L.def.par ? 1 : 0);
-    progress.stars[cur] = Math.max(progress.stars[cur] || 0, stars);
-    if (!progress.best[cur] || secs < progress.best[cur]) progress.best[cur] = secs;
-    progress.unlocked = Math.max(progress.unlocked, Math.min(LEVELS.length, cur + 2));
-    saveProgress();
-    const last = cur === LEVELS.length - 1;
-    document.getElementById('doneTitle').textContent = last ? 'أنهيتما كل المراحل! 🏆' : `اكتملت المرحلة ${toAr(cur + 1)}!`;
-    document.getElementById('doneSub').textContent = last
-      ? 'أرقوس وكراكن أنقذا النواة المركزية. فريق أسطوري!'
-      : 'تمت مزامنة أرقوس وكراكن مع الشبكة بنجاح. المرحلة التالية أصعب!';
+    document.getElementById('btnAgain').textContent = 'إعادة المرحلة';
+    setStat('doneTime', 'زمن المهمة', '');
+    setStat('donePar', 'الوقت المستهدف', '');
+    setStat('doneGems', 'البلّورات', '');
+    setStat('doneDeaths', 'محاولات فاشلة', '');
+    if (mode === 'secret') {
+      progress.secretStars = Math.max(progress.secretStars || 0, stars);
+      saveProgress();
+      document.getElementById('doneTitle').textContent = '✦ أنهيتما المرحلة السرية!';
+      document.getElementById('doneSub').textContent = 'قلة قليلة تجد هذه المرحلة. أنتما من النخبة!';
+    } else {
+      progress.stars[cur] = Math.max(progress.stars[cur] || 0, stars);
+      if (!progress.best[cur] || secs < progress.best[cur]) progress.best[cur] = secs;
+      progress.unlocked = Math.max(progress.unlocked, Math.min(LEVELS.length, cur + 2));
+      saveProgress();
+      const lastL = cur === LEVELS.length - 1;
+      document.getElementById('doneTitle').textContent = lastL ? 'هزمتما الفيروس الأم! 🏆' : `اكتملت المرحلة ${toAr(cur + 1)}!`;
+      document.getElementById('doneSub').textContent = lastL
+        ? 'أرقوس وكراكن حرّرا مركز البيانات بالكامل. فريق أسطوري! جرّبا وضع السباق الآن.'
+        : 'تمت مزامنة أرقوس وكراكن مع الشبكة بنجاح. المرحلة التالية أصعب!';
+    }
+    const last = mode !== 'campaign' || cur === LEVELS.length - 1;
     document.getElementById('doneStars').innerHTML =
       [0, 1, 2].map((i) => `<span class="${i < stars ? 'on' : 'off'}">★</span>`).join('');
     document.getElementById('doneTime').textContent = fmtTime(levelFrames);
@@ -1579,14 +1962,43 @@
         }
       }
 
+      // 7b) secret token
+      if (L.token && !L.token.taken) {
+        for (const p of players) {
+          if (p.alive && overlap(p, { x: L.token.x - 13, y: L.token.y - 13, w: 26, h: 26 })) {
+            L.token.taken = true;
+            progress.secret = true;
+            saveProgress();
+            SFX.secret();
+            burst(L.token.x, L.token.y, ['#ffd400', '#fff3a0', '#ffffff'], 50);
+            toast = { text: '✦ اكتشفتما مرحلة سرية! ستجدانها في القائمة الرئيسية', t: 0 };
+            break;
+          }
+        }
+      }
+
+      // 7c) boss fight
+      updateBoss();
+
+      // 7d) race: respawn fallen racers at their lane start
+      if (mode === 'race') {
+        for (const p of players) {
+          if (!p.alive && p.respawn > 0 && --p.respawn === 0) {
+            p.reset(L.def.spawns[p.kind]);
+            burst(p.x + 15, p.y + 25, ['#ffffff', p.kind === 'argus' ? '#a259ff' : '#00f3ff'], 20);
+          }
+        }
+      }
+
       // 8) portals
       if (state === 'playing') {
         let both = true;
         for (const portal of L.portals) {
           const p = players.find((q) => q.kind === portal.who);
           const cx = p.x + p.w / 2;
-          const inside = p.alive && p.onGround && cx > portal.x + 6 && cx < portal.x + portal.w - 6 &&
+          const inside = !portal.locked && p.alive && p.onGround && cx > portal.x + 6 && cx < portal.x + portal.w - 6 &&
                          Math.abs(p.y + p.h - (portal.y + portal.h)) < 2;
+          if (inside && mode === 'race') { finishRace(portal.who); break; }
           portal.occupied = inside;
           p.inPortal = inside;
           if (!inside) both = false;
@@ -1595,14 +2007,17 @@
             spawn(portal.x + Math.random() * portal.w, portal.y + portal.h, 0, -1 - Math.random() * 1.5, 40, col, 2.5);
           }
         }
-        winTimer = both ? winTimer + 1 : 0;
-        if (winTimer > 40) finishLevel();
+        if (state === 'playing') {
+          winTimer = both ? winTimer + 1 : 0;
+          if (winTimer > 40) finishLevel();
+        }
       }
     } else if (state === 'dying') {
       if (++stateTimer > 70) { state = 'dead'; showOverlay('dead'); }
     } else if (state === 'won') {
       if (++stateTimer === 50) showOverlay('done');
     }
+    if (toast && ++toast.t > 300) toast = null;
 
     if (state !== 'paused') {
       if (state === 'menu') updateLifts();
@@ -2216,6 +2631,207 @@
     ctx.restore();
   }
 
+  function drawCannon() {
+    const Cn = L.cannon;
+    if (!Cn) return;
+    const x = Cn.x;
+    ctx.save();
+    // pedestal
+    ctx.fillStyle = '#2a2050';
+    ctx.beginPath(); ctx.roundRect(x - 30, 640, 60, 40, 6); ctx.fill();
+    ctx.fillStyle = '#463c72';
+    ctx.beginPath(); ctx.roundRect(x - 18, 620, 36, 24, 5); ctx.fill();
+    const ch = Cn.charge / 50;
+    ctx.shadowColor = '#00f3ff';
+    ctx.shadowBlur = 10 + ch * 30;
+    ctx.fillStyle = Cn.cool > 0 ? '#3a4a66' : `rgba(0, 243, 255, ${0.4 + ch * 0.6})`;
+    ctx.beginPath(); ctx.arc(x, 618, 9 + ch * 6, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    // link lights
+    Cn.links.forEach((id, i) => {
+      ctx.fillStyle = linkActive(id) ? '#ffd400' : '#3a2d63';
+      ctx.beginPath(); ctx.arc(x - 12 + i * 24, 660, 4, 0, Math.PI * 2); ctx.fill();
+    });
+    if (ch > 0) {
+      ctx.globalAlpha = ch * 0.6;
+      ctx.strokeStyle = '#00f3ff';
+      ctx.setLineDash([4, 8]);
+      ctx.beginPath(); ctx.moveTo(x, 600); ctx.lineTo(x, 126); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+    }
+    if (Cn.beam > 0) {
+      const a = Math.min(1, Cn.beam / 10);
+      const w = Cn.w * (0.8 + Math.random() * 0.3);
+      const bg = ctx.createLinearGradient(x - w / 2, 0, x + w / 2, 0);
+      bg.addColorStop(0, 'rgba(0,243,255,0)'); bg.addColorStop(0.3, 'rgba(0,243,255,0.8)');
+      bg.addColorStop(0.5, '#ffffff'); bg.addColorStop(0.7, 'rgba(0,243,255,0.8)'); bg.addColorStop(1, 'rgba(0,243,255,0)');
+      ctx.globalAlpha = a;
+      ctx.shadowColor = '#00f3ff';
+      ctx.shadowBlur = 40;
+      ctx.fillStyle = bg;
+      ctx.fillRect(x - w / 2, 126, w, 494);
+      ctx.shadowBlur = 0;
+      for (let k = 0; k < 3; k++) spawn(x + (Math.random() - 0.5) * w, 126 + Math.random() * 490, (Math.random() - 0.5) * 4, (Math.random() - 0.5) * 4, 14, '#c4fdff', 2.5);
+    }
+    ctx.restore();
+  }
+
+  function drawBoss() {
+    const B = L.boss;
+    if (!B || (B.dead && B.deathT > 40)) return;
+    ctx.save();
+    if (B.dead) ctx.globalAlpha = 1 - B.deathT / 40;
+    const r = B.r * (B.dead ? 1 + B.deathT / 30 : 1);
+    const x = B.x, y = B.y;
+    // aura
+    const ag = ctx.createRadialGradient(x, y, r * 0.5, x, y, r * 2.2);
+    ag.addColorStop(0, 'rgba(57,255,20,0.25)'); ag.addColorStop(1, 'rgba(57,255,20,0)');
+    ctx.fillStyle = ag;
+    ctx.fillRect(x - r * 2.2, y - r * 2.2, r * 4.4, r * 4.4);
+    // tentacle spikes
+    ctx.lineCap = 'round';
+    for (let i = 0; i < 14; i++) {
+      const a = B.t * 0.02 + (i / 14) * Math.PI * 2;
+      const len = r + 16 + Math.sin(B.t * 0.1 + i) * 6;
+      ctx.strokeStyle = i % 2 ? '#2bd60f' : '#1a9e00';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(x + Math.cos(a) * r * 0.8, y + Math.sin(a) * r * 0.8);
+      ctx.quadraticCurveTo(x + Math.cos(a + 0.3) * (r + 8), y + Math.sin(a + 0.3) * (r + 8), x + Math.cos(a) * len, y + Math.sin(a) * len);
+      ctx.stroke();
+      ctx.fillStyle = '#c8ffb0';
+      ctx.beginPath(); ctx.arc(x + Math.cos(a) * len, y + Math.sin(a) * len, 4, 0, Math.PI * 2); ctx.fill();
+    }
+    // body
+    const bg = ctx.createRadialGradient(x - r * 0.35, y - r * 0.35, 4, x, y, r);
+    bg.addColorStop(0, B.flash > 0 && Math.floor(B.flash / 4) % 2 ? '#ffffff' : '#d8ffc8');
+    bg.addColorStop(0.45, B.flash > 0 && Math.floor(B.flash / 4) % 2 ? '#ff8aa0' : '#39ff14');
+    bg.addColorStop(1, '#0b4d00');
+    ctx.shadowColor = '#39ff14';
+    ctx.shadowBlur = 30;
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    // circuit veins
+    ctx.strokeStyle = 'rgba(11, 61, 0, 0.6)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 5; i++) {
+      const a = i * 1.3 + 0.4;
+      ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * r * 0.3, y + Math.sin(a) * r * 0.3);
+      ctx.lineTo(x + Math.cos(a) * r * 0.6, y + Math.sin(a) * r * 0.6);
+      ctx.lineTo(x + Math.cos(a + 0.3) * r * 0.85, y + Math.sin(a + 0.3) * r * 0.85);
+      ctx.stroke();
+    }
+    // crown
+    ctx.fillStyle = '#ffd400';
+    ctx.shadowColor = '#ffd400'; ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.moveTo(x - 26, y - r + 6);
+    for (let i = 0; i <= 4; i++) ctx.lineTo(x - 26 + i * 13, y - r - (i % 2 ? 4 : 22));
+    ctx.lineTo(x + 26, y - r + 6);
+    ctx.closePath(); ctx.fill();
+    ctx.shadowBlur = 0;
+    // giant angry eye that follows the nearest player
+    let tx = x, ty = y + 200;
+    let best = 1e9;
+    for (const p of players) if (p.alive) { const d = Math.abs(p.x - x); if (d < best) { best = d; tx = p.x + 15; ty = p.y + 25; } }
+    const ea = Math.atan2(ty - y, tx - x);
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.ellipse(x, y - 4, 22, 17, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ff2a55';
+    ctx.shadowColor = '#ff2a55'; ctx.shadowBlur = 14;
+    ctx.beginPath(); ctx.arc(x + Math.cos(ea) * 9, y - 4 + Math.sin(ea) * 7, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#05050a';
+    ctx.beginPath(); ctx.arc(x + Math.cos(ea) * 11, y - 4 + Math.sin(ea) * 8, 4, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#0b3d00';
+    ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.moveTo(x - 28, y - 30); ctx.lineTo(x + 2, y - 20); ctx.lineTo(x + 28, y - 30); ctx.stroke();
+    // teeth
+    ctx.fillStyle = '#0b3d00';
+    ctx.beginPath(); ctx.ellipse(x, y + 28, 20, 9, 0, 0, Math.PI); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    for (let i = 0; i < 5; i++) {
+      ctx.beginPath(); ctx.moveTo(x - 16 + i * 8, y + 28); ctx.lineTo(x - 12 + i * 8, y + 35); ctx.lineTo(x - 8 + i * 8, y + 28); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawOrbs() {
+    ctx.save();
+    for (const o of L.orbs) {
+      const g = ctx.createRadialGradient(o.x - 2, o.y - 2, 1, o.x, o.y, 9);
+      g.addColorStop(0, '#ffffff'); g.addColorStop(0.4, o.aimed ? '#ff6b8a' : '#9dff6b'); g.addColorStop(1, o.aimed ? 'rgba(255,42,85,0)' : 'rgba(57,255,20,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(o.x, o.y, 9, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = o.aimed ? '#ff2a55' : '#39ff14';
+      ctx.beginPath(); ctx.arc(o.x, o.y, 4.5, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawBossBar() {
+    const B = L.boss;
+    if (!B || B.dead) return;
+    ctx.save();
+    const w = 360, x0 = 640 - w / 2, y0 = 142;
+    ctx.fillStyle = 'rgba(10, 6, 26, 0.8)';
+    ctx.beginPath(); ctx.roundRect(x0 - 10, y0 - 6, w + 20, 34, 10); ctx.fill();
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'right';
+    ctx.font = '900 13px Cairo, Tahoma, sans-serif';
+    ctx.fillStyle = '#9dff6b';
+    ctx.fillText('👑 الفيروس الأم', x0 + w, y0 + 15);
+    for (let i = 0; i < B.maxHp; i++) {
+      const bx = x0 + i * 72, on = i < B.hp;
+      ctx.fillStyle = on ? '#39ff14' : '#2a2a3a';
+      ctx.shadowColor = '#39ff14'; ctx.shadowBlur = on ? 10 : 0;
+      ctx.beginPath(); ctx.roundRect(bx, y0 + 4, 64, 14, 4); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawToken() {
+    const tk = L.token;
+    if (!tk || tk.taken) return;
+    ctx.save();
+    ctx.translate(tk.x, tk.y + Math.sin(time * 2.5) * 3);
+    ctx.rotate(Math.sin(time * 1.5) * 0.3);
+    ctx.globalAlpha = 0.55 + 0.3 * Math.sin(time * 6);
+    ctx.shadowColor = '#ffd400';
+    ctx.shadowBlur = 16;
+    ctx.fillStyle = '#ffd400';
+    ctx.beginPath();
+    for (let i = 0; i < 8; i++) {
+      const a = (i / 8) * Math.PI * 2, rr = i % 2 ? 4 : 11;
+      ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+    }
+    ctx.closePath(); ctx.fill();
+    // glitch slices
+    if (Math.random() < 0.2) { ctx.fillStyle = '#00f3ff'; ctx.fillRect(-14, (Math.random() - 0.5) * 16, 28, 2); }
+    ctx.restore();
+  }
+
+  function drawToast() {
+    if (!toast) return;
+    const a = Math.min(1, toast.t / 15, (300 - toast.t) / 40);
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, a);
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'center';
+    ctx.font = '900 20px Cairo, Tahoma, sans-serif';
+    const w = ctx.measureText(toast.text).width + 50;
+    ctx.fillStyle = 'rgba(30, 20, 0, 0.85)';
+    ctx.strokeStyle = '#ffd400';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(640 - w / 2, 300, w, 46, 23); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#ffe680';
+    ctx.shadowColor = '#ffd400'; ctx.shadowBlur = 12;
+    ctx.fillText(toast.text, 640, 330);
+    ctx.restore();
+  }
+
   function drawPortal(p) {
     const isA = p.who === 'argus';
     const col = isA ? '#a259ff' : '#00f3ff';
@@ -2224,6 +2840,7 @@
     const archY = p.y + rx;
     const pulse = p.occupied ? 1 : 0.5 + 0.5 * Math.sin(time * 3 + (isA ? 0 : 1.5));
     ctx.save();
+    if (p.locked) ctx.globalAlpha = 0.3;
     const arch = () => {
       ctx.beginPath();
       ctx.moveTo(p.x, p.y + p.h);
@@ -2330,16 +2947,16 @@
     ctx.shadowBlur = 0;
     ctx.font = '700 14px Cairo, Tahoma, sans-serif';
     ctx.fillStyle = '#b9a8ff';
-    ctx.fillText(`المرحلة ${toAr(cur + 1)}/${toAr(LEVELS.length)} • ${L.def.name}`, 1226, 88);
+    ctx.fillText(levelLabel() + ' • ' + L.def.name, 1226, 88);
 
     // timer (centre)
     ctx.textAlign = 'center';
     ctx.font = '700 12px Cairo, Tahoma, sans-serif';
     ctx.fillStyle = '#a99ccf';
-    ctx.fillText(`زمن المهمة (الهدف ${toAr(L.def.par)} ث)`, 700, 46);
+    ctx.fillText(mode === 'race' ? 'زمن السباق' : `زمن المهمة (الهدف ${toAr(L.def.par)} ث)`, 700, 46);
     ctx.direction = 'ltr';
     ctx.font = '700 28px "Courier New", monospace';
-    const overPar = levelFrames / 60 > L.def.par;
+    const overPar = mode !== 'race' && levelFrames / 60 > L.def.par;
     ctx.fillStyle = overPar ? '#ffb3c2' : '#ece8ff';
     ctx.shadowColor = overPar ? '#ff2a55' : '#00f3ff';
     ctx.shadowBlur = 10;
@@ -2395,6 +3012,11 @@
     ctx.restore();
   }
 
+  function levelLabel() {
+    if (mode === 'race') return `🏁 سباق ${toAr(modeIdx + 1)}`;
+    if (mode === 'secret') return '✦ مرحلة سرية';
+    return `المرحلة ${toAr(cur + 1)}/${toAr(LEVELS.length)}`;
+  }
   function drawBanner() {
     if (state !== 'playing' || levelFrames > 260) return;
     const a = Math.min(1, levelFrames / 15, (260 - levelFrames) / 40);
@@ -2413,7 +3035,7 @@
     const tg = ctx.createLinearGradient(640 - 150, 0, 640 + 150, 0);
     tg.addColorStop(0, '#00f3ff'); tg.addColorStop(1, '#d3a6ff');
     ctx.fillStyle = tg;
-    ctx.fillText(`المرحلة ${toAr(cur + 1)}: ${L.def.name}`, 640, 174);
+    ctx.fillText(`${levelLabel()}: ${L.def.name}`, 640, 174);
     ctx.font = '700 14px Cairo, Tahoma, sans-serif';
     ctx.fillStyle = '#ddd5ff';
     ctx.fillText(tip, 640, 202);
@@ -2438,12 +3060,18 @@
     for (const b of L.buttons) drawButton(b);
     for (const g of L.gems) drawGem(g);
     for (const v of L.viruses) drawVirus(v);
+    drawToken();
+    drawCannon();
+    drawBoss();
     drawPlayer(players[1]);
     drawPlayer(players[0]);
+    drawOrbs();
     drawFlood();
     drawParticles();
+    drawBossBar();
     drawBanner();
     drawFloodAlert();
+    drawToast();
 
     if (state === 'menu') renderPreviews();
   }
@@ -2496,35 +3124,67 @@
     for (let i = 0; i < progress.unlocked; i++) if (!progress.stars[i]) return i;
     return progress.unlocked - 1;
   }
+  function starHTML(st) {
+    return [0, 1, 2].map((k) => `<span class="${k < st ? '' : 'off'}">★</span>`).join('');
+  }
   function renderLevelList() {
     const box = document.getElementById('levelList');
     box.innerHTML = '';
     const def = defaultLevel();
+    // secret tile (only once discovered)
+    const sb = document.createElement('button');
+    sb.className = 'lvl secret';
+    sb.id = 'lvl-secret';
+    sb.disabled = !progress.secret;
+    sb.innerHTML = progress.secret
+      ? `<span class="n">✦</span><span class="t">${SECRET.name}</span><span class="s">${starHTML(progress.secretStars || 0)}</span>`
+      : '<span class="n">?</span><span class="t">مرحلة سرية مخفية…</span><span class="s"><span class="off">★★★</span></span>';
+    sb.title = progress.secret ? SECRET.tip : 'ابحثا عن الرمز الذهبي المخفي في إحدى المراحل!';
+    sb.addEventListener('click', () => startDef('secret', 0));
+    const rl = document.getElementById('raceList');
+    rl.innerHTML = '';
+    RACES.forEach((r, i) => {
+      const b = document.createElement('button');
+      b.className = 'lvl race';
+      b.id = 'race-' + (i + 1);
+      b.innerHTML = `<span class="n">🏁 ${r.name}</span><span class="t">أرقوس ضد كراكن</span>`;
+      b.title = r.tip;
+      b.addEventListener('click', () => startDef('race', i));
+      rl.appendChild(b);
+    });
     LEVELS.forEach((lv, i) => {
       const b = document.createElement('button');
-      b.className = 'lvl' + (i === def ? ' current' : '');
+      b.className = 'lvl' + (i === def ? ' current' : '') + (lv.boss ? ' boss' : '');
       b.id = 'lvl-' + (i + 1);
       const locked = i >= progress.unlocked;
       b.disabled = locked;
       const st = progress.stars[i] || 0;
-      b.innerHTML = `<span class="n">${locked ? '🔒' : toAr(i + 1)}</span>` +
+      b.innerHTML = `<span class="n">${locked ? '🔒' : lv.boss ? '👑' : toAr(i + 1)}</span>` +
         `<span class="t">${lv.name}</span>` +
         `<span class="s">${[0, 1, 2].map((k) => `<span class="${k < st ? '' : 'off'}">★</span>`).join('')}</span>`;
       b.title = lv.tip;
       b.addEventListener('click', () => startLevel(i));
       box.appendChild(b);
     });
+    box.appendChild(sb);
   }
-  let lastStarted = -1;
-  function startLevel(i) {
+  let lastStarted = '';
+  function startDef(m, i) {
     initAudio();
-    if (i !== lastStarted) deaths = 0;
-    lastStarted = i;
-    loadLevel(i);
+    const key = m + i;
+    if (key !== lastStarted) deaths = 0;
+    lastStarted = key;
+    loadLevel(i, m);
     state = 'playing';
     showOverlay(null);
     Music.stop();
-    Music.start(LEVELS[i].music);
+    Music.start(defFor(m, i).music || (m === 'race' ? 132 : undefined));
+  }
+  function startLevel(i) { startDef('campaign', i); }
+  function restart() { startDef(mode, modeIdx); }
+  function togglePause() {
+    if (state === 'playing') { state = 'paused'; showOverlay('pause'); }
+    else if (state === 'paused') { state = 'playing'; showOverlay(null); }
   }
   function toMenu() {
     Music.stop();
@@ -2534,9 +3194,26 @@
   }
   document.getElementById('btnStart').addEventListener('click', () => startLevel(defaultLevel()));
   document.getElementById('btnNext').addEventListener('click', () => startLevel(Math.min(cur + 1, LEVELS.length - 1)));
-  document.getElementById('btnAgain').addEventListener('click', () => startLevel(cur));
+  document.getElementById('btnAgain').addEventListener('click', restart);
   document.getElementById('btnMenu').addEventListener('click', toMenu);
-  document.getElementById('btnRetry').addEventListener('click', () => startLevel(cur));
+  document.getElementById('btnRetry').addEventListener('click', restart);
+  document.getElementById('btnPauseRestart').addEventListener('click', restart);
+
+  /* =========================================================
+     TOUCH CONTROLS — each on-screen button acts as a held key
+     ========================================================= */
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) document.body.classList.add('touch');
+  document.querySelectorAll('#touch [data-code]').forEach((btn) => {
+    const code = btn.dataset.code;
+    const press = (e) => { e.preventDefault(); initAudio(); keys[code] = true; btn.classList.add('on'); try { btn.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ } };
+    const release = (e) => { e.preventDefault(); keys[code] = false; btn.classList.remove('on'); };
+    btn.addEventListener('pointerdown', press);
+    btn.addEventListener('pointerup', release);
+    btn.addEventListener('pointercancel', release);
+    btn.addEventListener('lostpointercapture', release);
+    btn.addEventListener('contextmenu', (e) => e.preventDefault());
+  });
+  document.getElementById('tPause').addEventListener('pointerdown', (e) => { e.preventDefault(); togglePause(); });
   document.getElementById('btnDeadMenu').addEventListener('click', toMenu);
   document.getElementById('btnPauseMenu').addEventListener('click', toMenu);
   document.getElementById('btnResume').addEventListener('click', () => { state = 'playing'; showOverlay(null); });
@@ -2597,6 +3274,11 @@
     get viruses() { return L.viruses.filter((v) => v.alive).map((v) => ({ x: v.x, y: v.y })); },
     get pads() { return L.pads.map((p) => ({ x: p.x, y: p.y, w: p.w, on: p.on })); },
     get flood() { return L.flood ? L.flood.y : null; },
+    get boss() { return L.boss ? { hp: L.boss.hp, x: L.boss.x, dead: L.boss.dead } : null; },
+    get orbs() { return L.orbs.map((o) => ({ x: o.x, y: o.y, vx: o.vx, vy: o.vy })); },
+    get mode() { return mode; },
+    get lastRaceDeath() { return lastRaceDeath; },
+    get secret() { return progress.secret; },
   };
 })();
 </script>
