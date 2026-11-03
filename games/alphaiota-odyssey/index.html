@@ -50,7 +50,7 @@
     width: min(94%, 60em);
     max-height: 95%;
     overflow: auto;
-    padding: 1.2em 1.8em;
+    padding: 0.9em 1.6em;
     border-radius: 1.1em;
     background: linear-gradient(160deg, rgba(34, 18, 70, 0.92), rgba(10, 8, 26, 0.95));
     border: 1px solid rgba(162, 89, 255, 0.45);
@@ -59,7 +59,7 @@
   }
   .panel.small { width: min(86%, 38em); }
   h1 {
-    font-size: 2.4em; font-weight: 900; line-height: 1.25;
+    font-size: 2.1em; font-weight: 900; line-height: 1.25;
     background: linear-gradient(90deg, var(--purple), #e0b3ff 45%, var(--cyan));
     -webkit-background-clip: text; background-clip: text; color: transparent;
     filter: drop-shadow(0 0 0.35em rgba(162, 89, 255, 0.6));
@@ -75,7 +75,7 @@
   }
   .card.argus { border: 1px solid rgba(162, 89, 255, 0.55); box-shadow: inset 0 0 1.4em rgba(162, 89, 255, 0.15); }
   .card.kraken { border: 1px solid rgba(72, 223, 196, 0.55); box-shadow: inset 0 0 1.4em rgba(72, 223, 196, 0.15); }
-  .card canvas { width: 6.5em; height: 7.4em; flex: none; }
+  .card canvas { width: 5em; height: 5.8em; flex: none; }
   .card h3 { font-size: 1.2em; font-weight: 900; }
   .card.argus h3 { color: #c58bff; }
   .card.kraken h3 { color: var(--teal); }
@@ -86,7 +86,7 @@
     background: #1b1433; border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 0 2px 0 rgba(255, 255, 255, 0.15); color: #fff; direction: ltr;
   }
-  .rules { list-style: none; text-align: right; font-size: 0.9em; line-height: 1.7; margin: 0 auto 0.7em; max-width: 48em; }
+  .rules { list-style: none; text-align: right; font-size: 0.84em; line-height: 1.6; margin: 0 auto 0.7em; max-width: 48em; }
   .rules li { display: flex; align-items: baseline; gap: 0.6em; }
   .dot { width: 0.85em; height: 0.85em; border-radius: 50%; flex: none; transform: translateY(0.1em); }
   .dot.red { background: var(--red); box-shadow: 0 0 0.6em var(--red); }
@@ -94,9 +94,10 @@
   .dot.green { background: var(--green); box-shadow: 0 0 0.6em var(--green); }
   .dot.yellow { background: var(--gold); box-shadow: 0 0 0.6em var(--gold); border-radius: 0.2em; }
   .dot.gem { background: linear-gradient(135deg, var(--purple), var(--cyan)); transform: translateY(0.1em) rotate(45deg); border-radius: 0.15em; }
+  .dot.laser { background: #ff2266; box-shadow: 0 0 0.6em #ff2266; border-radius: 0.15em; width: 0.35em; }
   .dot.portal { background: linear-gradient(90deg, var(--purple), var(--cyan)); box-shadow: 0 0 0.6em var(--purple); }
   .rules b.r { color: #ff7a93; } .rules b.c { color: #7ff8ff; } .rules b.g { color: #8dff6b; }
-  .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6em; margin: 0.2em 0 0.8em; }
+  .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6em; margin: 0.2em 0 0.8em; }
   .lvl {
     font-family: inherit; color: var(--text); cursor: pointer;
     padding: 0.45em 0.3em; border-radius: 0.8em;
@@ -107,7 +108,7 @@
   .lvl:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 1.2em rgba(0, 243, 255, 0.35); background: rgba(0, 243, 255, 0.08); }
   .lvl.current { border-color: var(--cyan); box-shadow: 0 0 1em rgba(0, 243, 255, 0.3); }
   .lvl:disabled { opacity: 0.38; cursor: not-allowed; }
-  .lvl .n { display: block; font-size: 1.35em; font-weight: 900; line-height: 1.2; }
+  .lvl .n { display: block; font-size: 1.15em; font-weight: 900; line-height: 1.2; }
   .lvl .t { display: block; font-size: 0.78em; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lvl .s { display: block; font-size: 0.95em; letter-spacing: 0.1em; color: var(--gold); direction: ltr; }
   .lvl .s .off { color: rgba(255, 255, 255, 0.2); }
@@ -144,7 +145,7 @@
     <div class="overlay show" id="start">
       <div class="panel">
         <h1>أوديسة ألفايوتا: أرقوس وكراكن</h1>
-        <p class="sub">مغامرة تعاونية للاعبَين في قلب مركز بيانات النيون — خمس مراحل، وكل مرحلة أصعب من التي قبلها!</p>
+        <p class="sub">مغامرة تعاونية للاعبَين في قلب مركز بيانات النيون — ثماني مراحل، وكل مرحلة أصعب وأكثر حماسًا من التي قبلها!</p>
         <div class="cards">
           <div class="card argus">
             <canvas id="pvArgus" dir="ltr"></canvas>
@@ -167,6 +168,7 @@
           <li><span class="dot red"></span><span><b class="r">البرك الحمراء:</b> آمنة لأرقوس — قاتلة لكراكن. <b class="c">البرك السماوية:</b> آمنة لكراكن — قاتلة لأرقوس. <b class="g">البرك الخضراء:</b> قاتلة لكليكما!</span></li>
           <li><span class="dot yellow"></span><span><b>الأزرار:</b> قف على زر لتشغيل الجهاز الذي يحمل اللون والحرف نفسيهما: بوابة تنخفض، أو مصعد يرتفع، أو جسر ضوئي يظهر. يعمل الجهاز ما دام أحدكما واقفًا على الزر.</span></li>
           <li><span class="dot gem"></span><span><b>البلّورات:</b> اجمع بلّورات لونك (بنفسجية لأرقوس، سماوية لكراكن). جمعها كلها + إنهاء المرحلة ضمن الوقت المستهدف = ٣ نجوم.</span></li>
+          <li><span class="dot laser"></span><span><b style="color:#ff6b93">مخاطر جديدة:</b> أشعة ليزر تعمل وتنطفئ (انتظرا اللحظة المناسبة)، وفيروسات متجولة تُهزم بالقفز فوق رأسها، وطوفان أخضر يرتفع — أسرعا! ومنصات القفز تطلقكما عاليًا.</span></li>
           <li><span class="dot portal"></span><span><b>الهدف:</b> أن يقف كل منكما داخل بوابته الملوّنة <b>في الوقت نفسه</b>. إنهاء مرحلة يفتح المرحلة التالية.</span></li>
         </ul>
         <div class="levels" id="levelList"></div>
@@ -263,7 +265,7 @@
     cyan:  { main: '#00f3ff', light: '#c4fdff', dark: '#004a57', label: 'محطة وكلاء' },
     green: { main: '#39ff14', light: '#c8ffb0', dark: '#0b3d00', label: 'برمجية خبيثة' },
   };
-  const C = { yellow: '#ffd400', magenta: '#ff3df2', orange: '#ff8a00', blue: '#4d7cff', ice: '#7fd4ff' };
+  const C = { yellow: '#ffd400', magenta: '#ff3df2', orange: '#ff8a00', blue: '#4d7cff', ice: '#7fd4ff', laser: '#ff2266', pad: '#39d5ff' };
 
   const NAMES = { argus: 'أرقوس', kraken: 'كراكن' };
 
@@ -477,6 +479,140 @@
         { who: 'kraken', x: 300, y: 220, w: 56, h: 80 },
       ],
     },
+    // ---------------------------------------------------------------- 6
+    {
+      name: 'مختبر الليزر',
+      tip: 'جديد: أشعة ليزر تعمل وتنطفئ بالتناوب، ومنصات قفز تطلقكما عاليًا!',
+      par: 45,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [
+        { x: 20, y: 440, w: 980, h: 16 },    // middle deck
+        { x: 300, y: 270, w: 180, h: 16 },   // high ledge
+        { x: 100, y: 270, w: 140, h: 16 },   // portal ledge
+      ],
+      pools: [
+        { x: 680, y: 680, w: 220, type: 'red' },
+        { x: 200, y: 440, w: 220, type: 'cyan' },
+      ],
+      doors: [
+        { id: 'R', kind: 'bridge', x: 680, y: 670, w: 220, h: 10, color: C.yellow },
+      ],
+      lifts: [],
+      pads: [
+        { x: 1050, y: 680, w: 40, power: -17.5 },
+        { x: 540, y: 440, w: 40, power: -16 },
+        { x: 30, y: 440, w: 40, power: -16 },
+      ],
+      lasers: [
+        { x: 260, y: 456, w: 8, h: 224, period: 140, on: 70, offset: 0 },
+        { x: 420, y: 456, w: 8, h: 224, period: 140, on: 70, offset: 47 },
+        { x: 580, y: 456, w: 8, h: 224, period: 140, on: 70, offset: 94 },
+        { x: 700, y: 126, w: 8, h: 314, period: 120, on: 60, offset: 0 },
+        { x: 850, y: 126, w: 8, h: 314, period: 120, on: 60, offset: 60 },
+        { id: 'X', x: 266, y: 126, w: 8, h: 144, link: 'X', color: C.magenta },
+      ],
+      buttons: [
+        { x: 880, y: 440, w: 50, link: 'R' },
+        { x: 120, y: 440, w: 50, link: 'X' },
+      ],
+      gems: [
+        { x: 340, y: 652, who: 'argus' }, { x: 730, y: 655, who: 'argus' }, { x: 560, y: 330, who: 'argus' },
+        { x: 500, y: 652, who: 'kraken' }, { x: 840, y: 645, who: 'kraken' }, { x: 310, y: 415, who: 'kraken' }, { x: 50, y: 330, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 110, y: 190, w: 56, h: 80 },
+        { who: 'kraken', x: 178, y: 190, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 7
+    {
+      name: 'غزو الفيروسات',
+      tip: 'جديد: فيروسات متجولة! اقفز فوق رأس الفيروس لتدميره — ولا تلمسه من الجانب.',
+      par: 55,
+      spawns: { argus: { x: 30, y: 630 }, kraken: { x: 70, y: 630 } },
+      solids: [
+        { x: 200, y: 450, w: 860, h: 16 },   // middle deck
+        { x: 300, y: 300, w: 790, h: 16 },   // top deck
+      ],
+      pools: [
+        { x: 880, y: 680, w: 200, type: 'red' },
+        { x: 620, y: 450, w: 200, type: 'cyan' },
+      ],
+      doors: [],
+      lifts: [
+        { id: 'E', from: [110, 664], to: [110, 450], w: 90, speed: 2.2, color: C.yellow },
+        { id: 'F', from: [1100, 664], to: [1100, 300], w: 100, speed: 2.2, color: C.magenta },
+      ],
+      pads: [
+        { id: 'G', x: 210, y: 450, w: 40, power: -16, link: 'G', color: C.orange },
+      ],
+      viruses: [
+        { y: 680, minX: 290, maxX: 520, speed: 1.4 },
+        { y: 680, minX: 600, maxX: 840, speed: 1.7 },
+        { y: 450, minX: 330, maxX: 580, speed: 1.3 },
+        { y: 300, minX: 600, maxX: 1000, speed: 1.6 },
+      ],
+      buttons: [
+        { x: 1210, y: 680, w: 40, link: 'E' },
+        { x: 960, y: 450, w: 50, link: 'F' },
+        { x: 480, y: 300, w: 50, link: 'G' },
+      ],
+      gems: [
+        { x: 420, y: 652, who: 'argus' }, { x: 980, y: 652, who: 'argus' }, { x: 800, y: 272, who: 'argus' },
+        { x: 270, y: 425, who: 'kraken' }, { x: 720, y: 425, who: 'kraken' }, { x: 230, y: 380, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 320, y: 220, w: 56, h: 80 },
+        { who: 'kraken', x: 390, y: 220, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 8
+    {
+      name: 'الطوفان',
+      tip: 'المرحلة الأخيرة: طوفان البرمجيات الخبيثة يرتفع! تسلّقا بسرعة وتعاونا بلا تردد!',
+      par: 40,
+      music: 142,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [
+        { x: 300, y: 560, w: 960, h: 16 },   // tier A
+        { x: 20, y: 420, w: 940, h: 16 },    // tier B
+        { x: 300, y: 280, w: 960, h: 16 },   // tier C (portals)
+      ],
+      pools: [
+        { x: 500, y: 560, w: 200, type: 'red' },
+        { x: 500, y: 420, w: 200, type: 'cyan' },
+        { x: 900, y: 280, w: 60, type: 'green' },
+      ],
+      doors: [
+        { id: 'R', kind: 'bridge', x: 500, y: 550, w: 200, h: 10, color: C.yellow },
+        { id: 'C', kind: 'bridge', x: 500, y: 410, w: 200, h: 10, color: C.magenta },
+      ],
+      lifts: [],
+      pads: [
+        { x: 200, y: 680, w: 40, power: -13.5 },
+        { x: 1000, y: 560, w: 40, power: -15 },
+        { x: 150, y: 420, w: 40, power: -15 },
+      ],
+      lasers: [
+        { x: 1040, y: 126, w: 8, h: 154, period: 110, on: 50, offset: 0 },
+      ],
+      viruses: [
+        { y: 280, minX: 520, maxX: 820, speed: 1.8 },
+      ],
+      buttons: [
+        { x: 760, y: 560, w: 50, link: 'R' },
+        { x: 380, y: 420, w: 50, link: 'C' },
+      ],
+      flood: { delay: 240, speed: 0.27, minY: 300 },
+      gems: [
+        { x: 600, y: 535, who: 'argus' }, { x: 220, y: 560, who: 'argus' }, { x: 650, y: 252, who: 'argus' },
+        { x: 600, y: 395, who: 'kraken' }, { x: 1020, y: 480, who: 'kraken' }, { x: 170, y: 330, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 1110, y: 200, w: 56, h: 80 },
+        { who: 'kraken', x: 1180, y: 200, w: 56, h: 80 },
+      ],
+    },
   ];
 
   /* =========================================================
@@ -521,7 +657,78 @@
     gem: () => { tone(1200, 0.09, 'triangle', 0.05); tone(1600, 0.12, 'triangle', 0.04, 0, 0.06); },
     death: () => { tone(300, 0.5, 'sawtooth', 0.06, -250); tone(90, 0.6, 'square', 0.04, -40, 0.05); },
     win: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, 'triangle', 0.06, 0, i * 0.11)),
+    boing: () => { tone(180, 0.3, 'sine', 0.07, 520); tone(360, 0.18, 'triangle', 0.03, 300); },
+    stomp: () => { tone(320, 0.12, 'square', 0.05, -220); tone(900, 0.08, 'triangle', 0.04, 0, 0.04); },
+    alarm: () => { tone(620, 0.18, 'square', 0.03, -120); tone(620, 0.18, 'square', 0.03, -120, 0.25); },
   };
+
+  /* =========================================================
+     MUSIC — tiny procedural synthwave loop (Am – F – C – G)
+     ========================================================= */
+  const Music = (() => {
+    let timer = null, nextT = 0, stepI = 0, master = null, noiseBuf = null, bpm = 112;
+    const ROOTS = [110, 87.31, 130.81, 98];
+    const CHORDS = [[1, 1.189, 1.498, 2], [1, 1.26, 1.498, 2], [1, 1.26, 1.498, 2], [1, 1.26, 1.498, 1.782]];
+    function osc(f, t, dur, type, vol, slideTo) {
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(f, t);
+      if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+      g.gain.setValueAtTime(vol, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(master);
+      o.start(t); o.stop(t + dur + 0.02);
+    }
+    function hat(t, vol) {
+      if (!noiseBuf) {
+        noiseBuf = AC.createBuffer(1, AC.sampleRate * 0.1, AC.sampleRate);
+        const d = noiseBuf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      }
+      const src = AC.createBufferSource(), hp = AC.createBiquadFilter(), g = AC.createGain();
+      src.buffer = noiseBuf;
+      hp.type = 'highpass'; hp.frequency.value = 7000;
+      g.gain.setValueAtTime(vol, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+      src.connect(hp); hp.connect(g); g.connect(master);
+      src.start(t); src.stop(t + 0.06);
+    }
+    function schedule(i, t) {
+      const bar = Math.floor(i / 16) % 4, s = i % 16, root = ROOTS[bar], ch = CHORDS[bar];
+      if (s % 4 === 0) osc(150, t, 0.22, 'sine', 0.09, 40);                       // kick
+      if (s % 2 === 1) hat(t, 0.018);                                            // hats
+      if (s % 2 === 0) osc(root * (s % 8 === 6 ? 2 : 1), t, 0.2, 'sawtooth', 0.022); // bass
+      osc(root * 4 * ch[(s + (bar % 2)) % 4], t, 0.14, 'triangle', 0.011);         // arpeggio
+      if (s === 0 || s === 10) osc(root * 2 * ch[2], t, 0.6, 'square', 0.006);      // pad stab
+    }
+    function tick() {
+      if (!AC || !master) return;
+      while (nextT < AC.currentTime + 0.2) {
+        schedule(stepI++, nextT);
+        nextT += 60 / bpm / 4;
+      }
+    }
+    return {
+      start(tempo) {
+        bpm = tempo || 112;
+        if (!AC) return;
+        if (!master) {
+          master = AC.createGain();
+          master.gain.value = muted ? 0 : 1;
+          master.connect(AC.destination);
+          nextT = AC.currentTime + 0.05;
+          stepI = 0;
+          timer = setInterval(tick, 40);
+        }
+      },
+      stop() {
+        if (timer) clearInterval(timer);
+        timer = null;
+        if (master) { master.disconnect(); master = null; }
+      },
+      setMuted(m) { if (master) master.gain.value = m ? 0 : 1; },
+    };
+  })();
 
   /* =========================================================
      INPUT (uses e.code -> works with Arabic keyboard layouts)
@@ -549,6 +756,7 @@
       else if (state === 'paused') { state = 'playing'; showOverlay(null); }
     } else if (e.code === 'KeyM') {
       muted = !muted;
+      Music.setMuted(muted);
     }
   });
   window.addEventListener('keyup', (e) => { keys[e.code] = false; });
@@ -570,7 +778,7 @@
       this.facing = 1;
       this.coyote = 0; this.jumpBuf = 0; this.prevJump = false;
       this.walk = 0; this.moveAmt = 0; this.squash = 0;
-      this.alive = true; this.inPortal = false;
+      this.alive = true; this.inPortal = false; this.boost = false; this.py = sp.y;
     }
     update(solids) {
       const c = this.controls;
@@ -601,7 +809,8 @@
         SFX.jump(this.kind);
         dust(this.x + this.w / 2, this.y + this.h, 6);
       }
-      if (!jumpHeld && this.vy < PHYS.JUMP_CUT) this.vy = PHYS.JUMP_CUT;
+      if (this.vy >= 0) this.boost = false;
+      if (!jumpHeld && !this.boost && this.vy < PHYS.JUMP_CUT) this.vy = PHYS.JUMP_CUT;
 
       this.vy = Math.min(this.vy + PHYS.GRAV, PHYS.MAX_FALL);
 
@@ -1085,6 +1294,10 @@
       buttons: def.buttons.map((b) => ({ ...b, pressed: false, anim: 0 })),
       gems: (def.gems || []).map((g) => ({ ...g, taken: false })),
       portals: def.portals.map((p) => ({ ...p, occupied: false })),
+      pads: (def.pads || []).map((p) => ({ color: C.pad, ...p, anim: 0, on: true })),
+      lasers: (def.lasers || []).map((l) => ({ color: C.laser, ...l, active: false, warn: false, rem: 0 })),
+      viruses: (def.viruses || []).map((v, i) => ({ ...v, x: (v.minX + v.maxX) / 2, dir: i % 2 ? -1 : 1, w: 28, h: 28, alive: true, t: i * 1.7 })),
+      flood: def.flood ? { ...def.flood, y: 730 } : null,
     };
     players[0].reset(def.spawns.argus);
     players[1].reset(def.spawns.kraken);
@@ -1095,7 +1308,8 @@
 
   function linkActive(id) { return L.buttons.some((b) => b.link === id && b.pressed); }
   function linkColor(id) {
-    const d = L.doors.find((x) => x.id === id) || L.lifts.find((x) => x.id === id);
+    const d = L.doors.find((x) => x.id === id) || L.lifts.find((x) => x.id === id) ||
+              L.pads.find((x) => x.id === id) || L.lasers.find((x) => x.id === id);
     return d ? d.color : '#ffffff';
   }
 
@@ -1178,13 +1392,19 @@
     deaths++;
     const cx = p.x + p.w / 2, cy = p.y + p.h / 2;
     const own = p.kind === 'argus' ? ['#a259ff', '#d3a6ff', '#00f3ff'] : ['#48dfc4', '#b3fff1', '#ff99cc'];
-    burst(cx, cy, own.concat([POOL_COLORS[pool.type].main]), 70);
+    const type = pool.type;
+    const hue = POOL_COLORS[type] ? POOL_COLORS[type].main : type === 'laser' ? C.laser : '#39ff14';
+    burst(cx, cy, own.concat([hue]), 70);
     shake = 16;
     SFX.death();
+    const nm = NAMES[p.kind];
     let reason;
-    if (pool.type === 'green') reason = `أُصيب ${NAMES[p.kind]} ببرمجية خبيثة! البرك الخضراء قاتلة لكليكما.`;
-    else if (pool.type === 'red') reason = 'لمس كراكن البيانات الخام الحمراء! هذه البرك آمنة لأرقوس فقط.';
-    else reason = 'دخل أرقوس محطة الوكلاء السماوية! هذه البرك آمنة لكراكن فقط.';
+    if (type === 'green') reason = `أُصيب ${nm} ببرمجية خبيثة! البرك الخضراء قاتلة لكليكما.`;
+    else if (type === 'red') reason = 'لمس كراكن البيانات الخام الحمراء! هذه البرك آمنة لأرقوس فقط.';
+    else if (type === 'cyan') reason = 'دخل أرقوس محطة الوكلاء السماوية! هذه البرك آمنة لكراكن فقط.';
+    else if (type === 'laser') reason = `احترق ${nm} بشعاع الليزر! انتظرا حتى ينطفئ الشعاع ثم اعبرا بسرعة.`;
+    else if (type === 'virus') reason = `أمسك فيروسٌ بـ${nm}! اقفز فوق رأس الفيروس لتدميره بدل أن تلمسه من الجانب.`;
+    else reason = `ابتلع طوفان البرمجيات الخبيثة ${nm}! أسرعا في التسلّق.`;
     document.getElementById('deadReason').textContent = reason;
     state = 'dying';
     stateTimer = 0;
@@ -1265,9 +1485,74 @@
       // 4) lifts & moving platforms (carry riders)
       updateLifts();
 
+      // 4b) lasers, viruses, flood
+      for (const lz of L.lasers) {
+        if (lz.link) { lz.active = !linkActive(lz.link); lz.warn = false; }
+        else {
+          const ph = (levelFrames + lz.offset) % lz.period;
+          lz.active = ph < lz.on;
+          lz.warn = !lz.active && ph > lz.period - 30;
+          lz.rem = lz.active ? lz.on - ph : lz.period - ph;
+        }
+      }
+      for (const v of L.viruses) {
+        if (!v.alive) continue;
+        v.x += v.dir * v.speed;
+        if (v.x <= v.minX) { v.x = v.minX; v.dir = 1; }
+        if (v.x >= v.maxX) { v.x = v.maxX; v.dir = -1; }
+        v.t += 0.06;
+      }
+      if (L.flood && levelFrames > L.flood.delay) {
+        if (levelFrames === L.flood.delay + 1) SFX.alarm();
+        L.flood.y = Math.max(L.flood.minY, L.flood.y - L.flood.speed);
+      }
+
       // 5) physics
       const solids = currentSolids();
-      for (const p of players) if (p.alive) p.update(solids);
+      for (const p of players) { p.py = p.y; if (p.alive) p.update(solids); }
+
+      // 5b) jump pads
+      for (const pad of L.pads) {
+        pad.anim *= 0.86;
+        pad.on = !pad.link || linkActive(pad.link);
+        if (!pad.on) continue;
+        for (const p of players) {
+          if (!p.alive || !p.onGround) continue;
+          const cx = p.x + p.w / 2;
+          if (Math.abs(p.y + p.h - pad.y) < 1 && cx > pad.x - 6 && cx < pad.x + pad.w + 6) {
+            p.vy = pad.power; p.onGround = false; p.coyote = 0; p.jumpBuf = 0; p.boost = true;
+            p.squash = -0.3; pad.anim = 1;
+            SFX.boing();
+            for (let i = 0; i < 10; i++) spawn(pad.x + Math.random() * pad.w, pad.y - 6, (Math.random() - 0.5) * 2, -2 - Math.random() * 3, 25, pad.color, 2.5, 0.1);
+          }
+        }
+      }
+
+      // 5c) lasers, viruses & flood vs players
+      for (const p of players) {
+        if (!p.alive) continue;
+        for (const lz of L.lasers) {
+          if (lz.active && overlap(p, { x: lz.x + 1, y: lz.y, w: lz.w - 2, h: lz.h })) { kill(p, { type: 'laser' }); break; }
+        }
+        if (!p.alive) continue;
+        for (const v of L.viruses) {
+          if (!v.alive) continue;
+          const hit = { x: v.x + 3, y: v.y - v.h + 3, w: v.w - 6, h: v.h - 3 };
+          if (!overlap(p, hit)) continue;
+          if (p.vy > 0 && p.py + p.h <= v.y - v.h + 12) {
+            v.alive = false;
+            p.vy = -9.5; p.boost = true; p.onGround = false;
+            SFX.stomp();
+            shake = Math.max(shake, 5);
+            burst(v.x + 14, v.y - 14, ['#39ff14', '#c8ffb0', '#ff2a55'], 30);
+          } else {
+            kill(p, { type: 'virus' });
+            break;
+          }
+        }
+        if (!p.alive) continue;
+        if (L.flood && p.y + p.h > L.flood.y + 6) kill(p, { type: 'flood' });
+      }
 
       // 6) hazards
       for (const p of players) {
@@ -1724,6 +2009,213 @@
     ctx.restore();
   }
 
+  function drawPad(pad) {
+    const col = pad.on ? pad.color : '#4a4566';
+    ctx.save();
+    ctx.fillStyle = '#2e2550';
+    ctx.beginPath(); ctx.roundRect(pad.x - 5, pad.y - 5, pad.w + 10, 5, 2); ctx.fill();
+    const topY = pad.y - 11 - pad.anim * 10;
+    // spring coil
+    ctx.strokeStyle = pad.on ? '#c9c2ff' : '#5c5678';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    const n = 5, x0 = pad.x + 8, x1 = pad.x + pad.w - 8;
+    for (let i = 0; i <= n; i++) {
+      const yy = pad.y - 5 + (topY + 4 - (pad.y - 5)) * (i / n);
+      ctx.lineTo(i % 2 ? x1 : x0, yy);
+    }
+    ctx.stroke();
+    ctx.shadowColor = col;
+    ctx.shadowBlur = pad.on ? 14 + pad.anim * 20 : 0;
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.roundRect(pad.x, topY, pad.w, 5, 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    if (pad.on) {
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2;
+      for (let k = 0; k < 2; k++) {
+        const ph = ((time * 40 + k * 14) % 28);
+        ctx.globalAlpha = 1 - ph / 28;
+        const ay = topY - 6 - ph;
+        ctx.beginPath();
+        ctx.moveTo(pad.x + pad.w / 2 - 7, ay + 5); ctx.lineTo(pad.x + pad.w / 2, ay); ctx.lineTo(pad.x + pad.w / 2 + 7, ay + 5);
+        ctx.stroke();
+      }
+    }
+    if (pad.id) {
+      ctx.globalAlpha = 0.9;
+      ctx.direction = 'ltr';
+      ctx.textAlign = 'center';
+      ctx.font = '900 11px Cairo, Arial, sans-serif';
+      ctx.fillStyle = pad.color;
+      ctx.fillText(pad.id, pad.x + pad.w / 2, pad.y + 14);
+    }
+    ctx.restore();
+  }
+
+  function drawLaser(lz) {
+    const col = lz.color;
+    const vertical = lz.h >= lz.w;
+    ctx.save();
+    // emitters
+    ctx.fillStyle = '#3a2d63';
+    if (vertical) {
+      ctx.fillRect(lz.x - 5, lz.y, lz.w + 10, 7);
+      ctx.fillRect(lz.x - 5, lz.y + lz.h - 7, lz.w + 10, 7);
+    } else {
+      ctx.fillRect(lz.x, lz.y - 5, 7, lz.h + 10);
+      ctx.fillRect(lz.x + lz.w - 7, lz.y - 5, 7, lz.h + 10);
+    }
+    ctx.fillStyle = lz.active ? col : lz.warn ? (Math.floor(time * 20) % 2 ? col : '#3a2d63') : '#5a4f80';
+    if (vertical) {
+      ctx.fillRect(lz.x - 2, lz.y + 5, lz.w + 4, 3);
+      ctx.fillRect(lz.x - 2, lz.y + lz.h - 8, lz.w + 4, 3);
+    }
+    if (lz.active) {
+      const flick = 0.85 + Math.random() * 0.15;
+      ctx.shadowColor = col;
+      ctx.shadowBlur = 22;
+      ctx.globalAlpha = 0.55 * flick;
+      ctx.fillStyle = col;
+      ctx.fillRect(lz.x, lz.y + 7, lz.w, lz.h - 14);
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = flick;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(lz.x + lz.w / 2 - 1.2, lz.y + 7, 2.4, lz.h - 14);
+      if (Math.random() < 0.3) spawn(lz.x + lz.w / 2, lz.y + 7 + Math.random() * (lz.h - 14), (Math.random() - 0.5) * 3, (Math.random() - 0.5) * 2, 14, col, 2);
+    } else if (lz.warn) {
+      ctx.globalAlpha = 0.5 + 0.4 * Math.sin(time * 40);
+      ctx.strokeStyle = col;
+      ctx.setLineDash([6, 6]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(lz.x + lz.w / 2, lz.y + 7); ctx.lineTo(lz.x + lz.w / 2, lz.y + lz.h - 7); ctx.stroke();
+      ctx.setLineDash([]);
+    } else {
+      ctx.globalAlpha = 0.1;
+      ctx.fillStyle = col;
+      ctx.fillRect(lz.x + lz.w / 2 - 0.5, lz.y + 7, 1, lz.h - 14);
+    }
+    if (lz.link) {
+      ctx.globalAlpha = 0.9;
+      ctx.direction = 'ltr';
+      ctx.textAlign = 'center';
+      ctx.font = '900 11px Cairo, Arial, sans-serif';
+      ctx.fillStyle = col;
+      ctx.fillText(lz.link, lz.x + lz.w / 2, lz.y + lz.h + 12);
+    }
+    ctx.restore();
+  }
+
+  function drawVirus(v) {
+    if (!v.alive) return;
+    const cx = v.x + 14, cy = v.y - 14 + Math.sin(v.t * 3) * 1.2, r = 10.5;
+    ctx.save();
+    // rotating spikes
+    ctx.strokeStyle = '#2bd60f';
+    ctx.fillStyle = '#c8ffb0';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 9; i++) {
+      const a = v.t * v.dir * 1.5 + (i / 9) * Math.PI * 2;
+      const x1 = cx + Math.cos(a) * r, y1 = cy + Math.sin(a) * r;
+      const x2 = cx + Math.cos(a) * (r + 5), y2 = cy + Math.sin(a) * (r + 5);
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(x2, y2, 1.8, 0, Math.PI * 2); ctx.fill();
+    }
+    // body
+    const bg = ctx.createRadialGradient(cx - 4, cy - 4, 1, cx, cy, r + 2);
+    bg.addColorStop(0, '#d8ffc8'); bg.addColorStop(0.45, '#39ff14'); bg.addColorStop(1, '#0b5d00');
+    ctx.shadowColor = '#39ff14';
+    ctx.shadowBlur = 16;
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    // angry eye
+    const ex = cx + v.dir * 2.5;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.ellipse(ex, cy - 1.5, 5, 4.2, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ff2a55';
+    ctx.shadowColor = '#ff2a55'; ctx.shadowBlur = 6;
+    ctx.beginPath(); ctx.arc(ex + v.dir * 1.6, cy - 1, 2.3, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = '#0b3d00';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(ex - 6, cy - 8 + v.dir * 1.5); ctx.lineTo(ex + 6, cy - 8 - v.dir * 1.5); ctx.stroke();
+    // jagged mouth
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    for (let i = 0; i <= 6; i++) ctx.lineTo(cx - 6 + i * 2, cy + 5.5 + (i % 2 ? 1.8 : 0));
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawFlood() {
+    const fl = L.flood;
+    if (!fl || fl.y >= H) return;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 8) {
+      ctx.lineTo(x, fl.y + Math.sin(x * 0.03 + time * 4) * 4 + Math.sin(x * 0.011 - time * 2.3) * 3);
+    }
+    ctx.lineTo(W, H);
+    ctx.closePath();
+    const g = ctx.createLinearGradient(0, fl.y - 6, 0, Math.min(H, fl.y + 160));
+    g.addColorStop(0, 'rgba(200, 255, 176, 0.95)');
+    g.addColorStop(0.08, 'rgba(57, 255, 20, 0.85)');
+    g.addColorStop(1, 'rgba(8, 50, 0, 0.92)');
+    ctx.shadowColor = '#39ff14';
+    ctx.shadowBlur = 30;
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    // malicious code glyphs drifting in the flood
+    ctx.globalAlpha = 0.35;
+    ctx.fillStyle = '#c8ffb0';
+    ctx.direction = 'ltr';
+    ctx.font = '700 12px "Courier New", monospace';
+    for (let i = 0; i < 26; i++) {
+      const gx = (hash(i * 3.7) * W + time * (20 + i)) % W;
+      const gy = fl.y + 22 + hash(i * 5.1) * 120;
+      if (gy < H) ctx.fillText(hash(i + Math.floor(time * 3)) > 0.5 ? '1' : '0', gx, gy);
+    }
+    ctx.restore();
+    if (Math.random() < 0.5) spawn(Math.random() * W, fl.y, (Math.random() - 0.5) * 0.6, -0.8 - Math.random(), 30, '#c8ffb0', 2.5);
+  }
+
+  function drawFloodAlert() {
+    const fl = L.flood;
+    if (!fl || state !== 'playing') return;
+    let lowest = 0;
+    for (const p of players) if (p.alive) lowest = Math.max(lowest, p.y + p.h);
+    const dist = fl.y - lowest;
+    ctx.save();
+    if (dist < 160 && fl.y < H) {
+      const a = (1 - dist / 160) * (0.35 + 0.25 * Math.sin(time * 10));
+      const vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.85);
+      vg.addColorStop(0, 'rgba(255,0,60,0)');
+      vg.addColorStop(1, `rgba(255,0,60,${Math.max(0, a)})`);
+      ctx.fillStyle = vg;
+      ctx.fillRect(0, 0, W, H);
+    }
+    if (levelFrames > 260 || levelFrames <= fl.delay) {
+      ctx.direction = 'rtl';
+      ctx.textAlign = 'center';
+      ctx.font = '900 16px Cairo, Tahoma, sans-serif';
+      const txt = levelFrames <= fl.delay
+        ? `⚠ الطوفان يبدأ بعد ${toAr(Math.ceil((fl.delay - levelFrames) / 60))} ث`
+        : '⚠ الطوفان يرتفع! أسرعا!';
+      ctx.globalAlpha = levelFrames <= fl.delay ? 1 : 0.6 + 0.4 * Math.sin(time * 8);
+      ctx.fillStyle = 'rgba(40, 0, 10, 0.75)';
+      const w = ctx.measureText(txt).width + 30;
+      const yy = levelFrames <= 260 ? 238 : 148;
+      ctx.beginPath(); ctx.roundRect(640 - w / 2, yy - 20, w, 30, 15); ctx.fill();
+      ctx.fillStyle = '#ff6b8a';
+      ctx.shadowColor = '#ff2a55'; ctx.shadowBlur = 10;
+      ctx.fillText(txt, 640, yy);
+    }
+    ctx.restore();
+  }
+
   function drawPortal(p) {
     const isA = p.who === 'argus';
     const col = isA ? '#a259ff' : '#00f3ff';
@@ -1941,12 +2433,17 @@
     for (const pool of L.pools) drawPool(pool);
     for (const d of L.doors) (d.kind === 'bridge' ? drawBridge : drawDoor)(d);
     for (const l of L.lifts) drawLift(l);
+    for (const pad of L.pads) drawPad(pad);
+    for (const lz of L.lasers) drawLaser(lz);
     for (const b of L.buttons) drawButton(b);
     for (const g of L.gems) drawGem(g);
+    for (const v of L.viruses) drawVirus(v);
     drawPlayer(players[1]);
     drawPlayer(players[0]);
+    drawFlood();
     drawParticles();
     drawBanner();
+    drawFloodAlert();
 
     if (state === 'menu') renderPreviews();
   }
@@ -2026,8 +2523,11 @@
     loadLevel(i);
     state = 'playing';
     showOverlay(null);
+    Music.stop();
+    Music.start(LEVELS[i].music);
   }
   function toMenu() {
+    Music.stop();
     loadLevel(defaultLevel());
     state = 'menu';
     showOverlay('start');
@@ -2093,6 +2593,10 @@
     get players() { return players.map((p) => ({ kind: p.kind, x: p.x, y: p.y, onGround: p.onGround, alive: p.alive })); },
     get gems() { return L.gems.filter((g) => g.taken).length + '/' + L.gems.length; },
     get lifts() { return L.lifts.map((l) => ({ id: l.id, x: l.x, y: l.y })); },
+    get lasers() { return L.lasers.map((l) => ({ x: l.x, active: l.active, rem: l.rem })); },
+    get viruses() { return L.viruses.filter((v) => v.alive).map((v) => ({ x: v.x, y: v.y })); },
+    get pads() { return L.pads.map((p) => ({ x: p.x, y: p.y, w: p.w, on: p.on })); },
+    get flood() { return L.flood ? L.flood.y : null; },
   };
 })();
 </script>
