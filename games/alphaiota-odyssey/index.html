@@ -97,7 +97,7 @@
   .dot.laser { background: #ff2266; box-shadow: 0 0 0.6em #ff2266; border-radius: 0.15em; width: 0.35em; }
   .dot.portal { background: linear-gradient(90deg, var(--purple), var(--cyan)); box-shadow: 0 0 0.6em var(--purple); }
   .rules b.r { color: #ff7a93; } .rules b.c { color: #7ff8ff; } .rules b.g { color: #8dff6b; }
-  .levels { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.6em; margin: 0.2em 0 0.8em; }
+  .levels { display: grid; grid-template-columns: repeat(9, 1fr); gap: 0.6em; margin: 0.2em 0 0.8em; }
   .lvl {
     font-family: inherit; color: var(--text); cursor: pointer;
     padding: 0.45em 0.3em; border-radius: 0.8em;
@@ -114,6 +114,7 @@
   .lvl .s .off { color: rgba(255, 255, 255, 0.2); }
   .lvl.secret { border-color: rgba(255, 212, 0, 0.7); background: rgba(255, 212, 0, 0.07); }
   .lvl.boss { border-color: rgba(57, 255, 20, 0.6); }
+  .lvl.w2 { border-color: rgba(255, 213, 107, 0.55); background: rgba(40, 90, 160, 0.14); }
   .races { display: flex; gap: 0.6em; justify-content: center; margin: -0.3em 0 0.6em; flex-wrap: wrap; }
   .lvl.race { padding: 0.35em 1.2em; border-color: rgba(255, 106, 213, 0.6); }
   .lvl.race .n { font-size: 1em; }
@@ -173,8 +174,10 @@
         <button data-code="KeyA" aria-label="أرقوس يسار">◀</button>
         <button data-code="KeyD" aria-label="أرقوس يمين">▶</button>
         <button data-code="KeyW" class="jump" aria-label="أرقوس قفز">▲</button>
+        <button data-code="KeyS" class="jump" aria-label="أرقوس عين الحارس">👁</button>
       </div>
       <div class="tpad right">
+        <button data-code="ArrowDown" class="jump" aria-label="كراكن المجس">🦑</button>
         <button data-code="ArrowUp" class="jump" aria-label="كراكن قفز">▲</button>
         <button data-code="ArrowLeft" aria-label="كراكن يسار">◀</button>
         <button data-code="ArrowRight" aria-label="كراكن يمين">▶</button>
@@ -186,21 +189,21 @@
     <div class="overlay show" id="start">
       <div class="panel">
         <h1>أوديسة ألفايوتا: أرقوس وكراكن</h1>
-        <p class="sub">مغامرة تعاونية للاعبَين: ١١ مرحلة + معركة زعيم + مرحلة سرية + وضع سباق!</p>
+        <p class="sub">عالمان: مركز البيانات وبحر الأساطير • ١٧ مرحلة وزعيمان • مرحلة سرية • وضع سباق</p>
         <div class="cards">
           <div class="card argus">
             <canvas id="pvArgus" dir="ltr"></canvas>
             <div>
-              <h3>أرقوس — اللاعب الأول</h3>
-              <p>الحركة: <kbd>A</kbd> <kbd>D</kbd> &nbsp; القفز: <kbd>W</kbd></p>
+              <h3>أرقوس «بانوبتيس» — اللاعب الأول</h3>
+              <p>الحركة: <kbd>A</kbd> <kbd>D</kbd> &nbsp; القفز: <kbd>W</kbd> &nbsp; عين الحارس: <kbd>S</kbd></p>
               <p>يعبر برك <b style="color:#ff7a93">البيانات الخام الحمراء</b> بأمان.</p>
             </div>
           </div>
           <div class="card kraken">
             <canvas id="pvKraken" dir="ltr"></canvas>
             <div>
-              <h3>كراكن — اللاعب الثاني</h3>
-              <p>الحركة: <kbd>←</kbd> <kbd>→</kbd> &nbsp; القفز: <kbd>↑</kbd></p>
+              <h3>كراكن، من بحار الشمال — اللاعب الثاني</h3>
+              <p>الحركة: <kbd>←</kbd> <kbd>→</kbd> &nbsp; القفز: <kbd>↑</kbd> &nbsp; المجس: <kbd>↓</kbd></p>
               <p>يسبح في <b style="color:#7ff8ff">محطات الوكلاء السماوية</b> بأمان.</p>
             </div>
           </div>
@@ -209,6 +212,7 @@
           <li><span class="dot red"></span><span><b class="r">الحمراء</b> آمنة لأرقوس فقط، <b class="c">السماوية</b> آمنة لكراكن فقط، و<b class="g">الخضراء</b> قاتلة لكليكما!</span></li>
           <li><span class="dot yellow"></span><span><b>الأزرار</b> تشغّل الجهاز الذي يحمل لونها وحرفها (بوابة، مصعد، جسر ضوئي، منصة قفز، ليزر) ما دام أحدكما واقفًا عليها.</span></li>
           <li><span class="dot laser"></span><span><b style="color:#ff6b93">احذرا:</b> الليزر يعمل وينطفئ، والفيروسات تُهزم بالقفز فوق رأسها، والطوفان يرتفع!</span></li>
+          <li><span class="dot portal"></span><span><b style="color:#ffd56b">القدرات (بحر الأساطير):</b> أرقوس يكشف المنصات والحلقات المخفية، وكراكن يرمي مجسّه على الحلقات الذهبية ويصير <b>جزيرة</b> يقف عليها أرقوس في البحر. وبعد كل زعيم <b>تتطوّر الشخصيتان</b>!</span></li>
           <li><span class="dot gem"></span><span><b>النجوم:</b> أنهيا المرحلة ★، واجمعا كل بلّورات لونكما ★، وأنهياها ضمن الوقت المستهدف ★. الهدف: كل منكما في بوابته <b>في الوقت نفسه</b>.</span></li>
         </ul>
         <div class="levels" id="levelList"></div>
@@ -310,6 +314,12 @@
   const C = { yellow: '#ffd400', magenta: '#ff3df2', orange: '#ff8a00', blue: '#4d7cff', ice: '#7fd4ff', laser: '#ff2266', pad: '#39d5ff' };
 
   const NAMES = { argus: 'أرقوس', kraken: 'كراكن' };
+  const THEMES = {
+    1: { bg: '#05050a', glowA: 'rgba(90, 24, 154, 0.38)', glowB: 'rgba(0, 90, 200, 0.24)', grid: '120, 80, 255',
+         plat: ['#2a1a52', '#0d0a20'], edge: '#c27bff', edgeGlow: '#b45cff', under: 'rgba(0, 243, 255, 0.45)' },
+    2: { bg: '#030b1a', glowA: 'rgba(0, 110, 200, 0.4)', glowB: 'rgba(210, 235, 255, 0.16)', grid: '120, 190, 255',
+         plat: ['#25497c', '#0a1a33'], edge: '#ffd56b', edgeGlow: '#ffb72e', under: 'rgba(150, 225, 255, 0.5)' },
+  };
 
   const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -784,7 +794,172 @@
         { who: 'kraken', x: 1194, y: 600, w: 56, h: 80 },
       ],
     },
+    // ================================================================ WORLD 2 — بحر الأساطير
+    // ---------------------------------------------------------------- 12
+    {
+      name: 'عين الحارس', world: 2, abilities: true,
+      tip: '🌊 بحر الأساطير! أرقوس: اضغط S لتفتح عين الحارس وتكشف المنصات المخفية — وابقيا قريبين!',
+      par: 55,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [
+        { x: 1170, y: 590, w: 90, h: 16 },
+        { x: 1050, y: 495, w: 70, h: 16 },
+        { x: 560, y: 400, w: 440, h: 16 },
+        { x: 20, y: 400, w: 400, h: 16 },
+      ],
+      ghosts: [
+        { x: 240, y: 600, w: 100, h: 14 }, { x: 400, y: 560, w: 100, h: 14 }, { x: 560, y: 600, w: 100, h: 14 },
+        { x: 720, y: 560, w: 100, h: 14 }, { x: 880, y: 600, w: 100, h: 14 }, { x: 420, y: 400, w: 140, h: 16 },
+      ],
+      pools: [{ x: 200, y: 680, w: 860, type: 'green' }],
+      buttons: [],
+      gems: [
+        { x: 290, y: 575, who: 'argus' }, { x: 610, y: 575, who: 'argus' }, { x: 930, y: 575, who: 'argus' },
+        { x: 450, y: 535, who: 'kraken' }, { x: 770, y: 535, who: 'kraken' }, { x: 490, y: 375, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 40, y: 320, w: 56, h: 80 },
+        { who: 'kraken', x: 110, y: 320, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 13
+    {
+      name: 'مجس الأعماق', world: 2, abilities: true,
+      tip: 'كراكن: اضغط ↓ قرب حلقة ذهبية ليرمي مجسّه ويسحب نفسه إليها! بعض الحلقات لا تظهر إلا بعين أرقوس.',
+      par: 60,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [
+        { x: 480, y: 290, w: 140, h: 16 },
+        { x: 620, y: 320, w: 40, h: 260 },
+        { x: 960, y: 520, w: 120, h: 16 },
+      ],
+      doors: [{ id: 'D', x: 620, y: 580, w: 40, h: 100, color: C.orange }],
+      rings: [{ x: 380, y: 450 }, { x: 455, y: 250, ghost: true }, { x: 720, y: 230 }, { x: 960, y: 470 }],
+      pools: [{ x: 780, y: 680, w: 180, type: 'red' }],
+      buttons: [{ x: 540, y: 290, w: 50, link: 'D' }],
+      gems: [
+        { x: 700, y: 652, who: 'argus' }, { x: 870, y: 655, who: 'argus' }, { x: 1010, y: 652, who: 'argus' },
+        { x: 380, y: 520, who: 'kraken' }, { x: 600, y: 265, who: 'kraken' }, { x: 880, y: 560, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 1100, y: 600, w: 56, h: 80 },
+        { who: 'kraken', x: 1180, y: 600, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 14
+    {
+      name: 'الجزيرة الحية', world: 2, abilities: true,
+      tip: 'البحّارة ظنّوا الكراكن جزيرة! داخل البحر السماوي يقف أرقوس على رأس كراكن ويعبران معًا. احذرا الصخور!',
+      par: 55,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [
+        { x: 480, y: 600, w: 80, h: 16 },
+        { x: 820, y: 600, w: 80, h: 16 },
+      ],
+      pools: [{ x: 200, y: 680, w: 860, type: 'cyan' }],
+      lasers: [{ x: 660, y: 126, w: 8, h: 554, period: 160, on: 60, offset: 0 }],
+      buttons: [],
+      gems: [
+        { x: 520, y: 575, who: 'argus' }, { x: 860, y: 575, who: 'argus' }, { x: 380, y: 605, who: 'argus' },
+        { x: 300, y: 655, who: 'kraken' }, { x: 600, y: 655, who: 'kraken' }, { x: 960, y: 655, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 1100, y: 600, w: 56, h: 80 },
+        { who: 'kraken', x: 1180, y: 600, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 15
+    {
+      name: 'ناي هيرميس', world: 2, abilities: true,
+      tip: 'نغمات ناي هيرميس تنوّم كراكن! أرقوس لا تنام كل عيونه أبدًا — المسه ليوقظه.',
+      par: 70,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [{ x: 1100, y: 520, w: 160, h: 16 }],
+      ghosts: [{ x: 1000, y: 590, w: 50, h: 14 }],
+      rings: [{ x: 1082, y: 470 }],
+      flutes: [{ x: 260, y: 500, w: 140, h: 180 }, { x: 760, y: 500, w: 140, h: 180 }],
+      pools: [{ x: 520, y: 680, w: 200, type: 'cyan' }],
+      lasers: [
+        { x: 440, y: 126, w: 8, h: 554, period: 140, on: 60, offset: 0 },
+        { x: 940, y: 126, w: 8, h: 554, period: 140, on: 60, offset: 70 },
+      ],
+      buttons: [],
+      gems: [
+        { x: 330, y: 652, who: 'argus' }, { x: 620, y: 605, who: 'argus' }, { x: 1025, y: 565, who: 'argus' },
+        { x: 480, y: 655, who: 'kraken' }, { x: 830, y: 655, who: 'kraken' }, { x: 1060, y: 530, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 1120, y: 440, w: 56, h: 80 },
+        { who: 'kraken', x: 1190, y: 440, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 16
+    {
+      name: 'معبد هيرا', world: 2, abilities: true,
+      tip: 'طواويس هيرا تحرس المعبد! استعملا كل القدرات: الجزيرة، الجسر الخفي، الدرج الخفي، والإيقاظ.',
+      par: 100,
+      spawns: { argus: { x: 40, y: 630 }, kraken: { x: 100, y: 630 } },
+      solids: [{ x: 300, y: 380, w: 800, h: 16 }],
+      ghosts: [
+        { x: 760, y: 670, w: 200, h: 10 },
+        { x: 1170, y: 600, w: 90, h: 14 }, { x: 1060, y: 520, w: 70, h: 14 }, { x: 1170, y: 440, w: 90, h: 14 },
+      ],
+      pools: [
+        { x: 220, y: 680, w: 340, type: 'cyan' },
+        { x: 760, y: 680, w: 200, type: 'red' },
+      ],
+      viruses: [
+        { y: 680, minX: 625, maxX: 720, speed: 1.2 },
+        { y: 380, minX: 475, maxX: 620, speed: 1.3 },
+      ],
+      flutes: [{ x: 760, y: 220, w: 140, h: 160 }],
+      lasers: [{ x: 680, y: 126, w: 8, h: 254, period: 140, on: 60, offset: 0 }],
+      buttons: [],
+      gems: [
+        { x: 390, y: 605, who: 'argus' }, { x: 860, y: 655, who: 'argus' }, { x: 1215, y: 575, who: 'argus' },
+        { x: 520, y: 655, who: 'kraken' }, { x: 1095, y: 495, who: 'kraken' }, { x: 500, y: 355, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 320, y: 300, w: 56, h: 80 },
+        { who: 'kraken', x: 390, y: 300, w: 56, h: 80 },
+      ],
+    },
+    // ---------------------------------------------------------------- 17 (BOSS: Ketos)
+    {
+      name: 'كيتوس', world: 2, abilities: true,
+      tip: 'كيتوس، وحش البحر الإغريقي! اصعدا للمنصّتين العاليتين (عين الحارس + المجس) وقفا على الزرّين: نظرة ميدوسا تحوّله حجرًا حين يطفو!',
+      par: 120,
+      music: 150,
+      winTitle: 'حوّلتما كيتوس إلى حجر! 🏆',
+      winSub: 'مثل برسيوس ورأس ميدوسا! أرقوس وكراكن صارا أساطير بحد ذاتهما.',
+      spawns: { argus: { x: 60, y: 630 }, kraken: { x: 1180, y: 630 } },
+      solids: [
+        { x: 20, y: 330, w: 170, h: 16 },
+        { x: 1110, y: 330, w: 150, h: 16 },
+      ],
+      ghosts: [
+        { x: 210, y: 590, w: 80, h: 14 }, { x: 350, y: 500, w: 80, h: 14 }, { x: 230, y: 410, w: 80, h: 14 },
+      ],
+      rings: [{ x: 1040, y: 480 }, { x: 1092, y: 270 }],
+      pools: [{ x: 300, y: 680, w: 680, type: 'cyan' }],
+      buttons: [
+        { x: 60, y: 330, w: 50, link: 'M' },
+        { x: 1190, y: 330, w: 50, link: 'N' },
+      ],
+      cannon: { kind: 'gaze', x0: 300, x1: 980, y: 560, h: 40, links: ['M', 'N'] },
+      boss: { type: 'ketos', name: 'كيتوس', hp: 3, x: 640, minX: 400, maxX: 880, r: 62, upY: 590, depthY: 790, delay: 150 },
+      gems: [
+        { x: 250, y: 560, who: 'argus' }, { x: 390, y: 470, who: 'argus' },
+        { x: 1040, y: 520, who: 'kraken' }, { x: 1150, y: 300, who: 'kraken' },
+      ],
+      portals: [
+        { who: 'argus', x: 30, y: 600, w: 56, h: 80 },
+        { who: 'kraken', x: 1194, y: 600, w: 56, h: 80 },
+      ],
+    },
   ];
+  LEVELS[10].winTitle = 'هزمتما الفيروس الأم! 🏆';
+  LEVELS[10].winSub = 'العالم الأول تحرّر! والآن… كراكن يشمّ رائحة البحر: بحر الأساطير ينتظركما.';
 
   // Secret level — unlocked by touching the hidden golden glitch in level 2
   const SECRET = {
@@ -869,6 +1044,23 @@
     if (s && typeof s.unlocked === 'number') progress = { ...progress, ...s, stars: s.stars || [], best: s.best || [] };
   } catch (e) { /* storage unavailable */ }
   progress.unlocked = clamp(progress.unlocked, 1, LEVELS.length);
+  // Evolution: beating each world's boss evolves both heroes
+  function evoStage() { return 1 + (progress.stars[10] ? 1 : 0) + (progress.stars[16] ? 1 : 0); }
+  const SIGHT = [0, 300, 420, 9999];   // Argus' reveal radius per stage
+  const REACH = [0, 250, 290, 360];    // Kraken's tentacle range per stage
+  function nearestRing(p) {
+    const range = REACH[p.stage] || 290;
+    const cx = p.x + p.w / 2, cy = p.y + p.h / 2;
+    let best = null, bd = 1e9;
+    for (const r of L.rings) {
+      if (r.ghost && r.vis < 0.35) continue;
+      const d = Math.hypot(r.x - cx, r.y - cy);
+      if (d > range || d < 24) continue;                       // out of reach, or the ring he is already hanging at
+      const score = d + ((r.x - cx) * p.facing < -10 ? 1000 : 0); // prefer rings in front of him
+      if (score < bd) { bd = score; best = r; }
+    }
+    return best;
+  }
   function saveProgress() {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(progress)); } catch (e) { /* ignore */ }
   }
@@ -910,6 +1102,11 @@
     bossDie: () => [392, 311, 262, 196, 131].forEach((f, i) => tone(f, 0.35, 'sawtooth', 0.06, -60, i * 0.12)),
     shoot: () => tone(500, 0.12, 'square', 0.025, -300),
     secret: () => [784, 988, 1175, 1568].forEach((f, i) => tone(f, 0.2, 'sine', 0.06, 0, i * 0.08)),
+    grab: () => { tone(260, 0.15, 'sawtooth', 0.04, 500); tone(700, 0.1, 'triangle', 0.03, 0, 0.08); },
+    lull: () => [880, 784, 659, 523].forEach((f, i) => tone(f, 0.3, 'sine', 0.04, 0, i * 0.12)),
+    wake: () => { tone(523, 0.1, 'square', 0.04); tone(1046, 0.12, 'square', 0.04, 0, 0.08); },
+    splash: () => { tone(120, 0.5, 'sawtooth', 0.05, -60); tone(900, 0.3, 'triangle', 0.02, -600); },
+    evolve: () => [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => tone(f, 0.3, 'triangle', 0.05, 0, i * 0.1)),
   };
 
   /* =========================================================
@@ -1031,11 +1228,24 @@
       this.coyote = 0; this.jumpBuf = 0; this.prevJump = false;
       this.walk = 0; this.moveAmt = 0; this.squash = 0;
       this.alive = true; this.inPortal = false; this.boost = false; this.py = sp.y;
+      this.sleep = 0; this.immune = 0; this.grapple = null; this.gT = 0; this.prevAbility = false;
+      this.looking = false; this.island = false; this.stage = evoStage();
     }
     update(solids) {
       const c = this.controls;
-      const dir = (keys[c.right] ? 1 : 0) - (keys[c.left] ? 1 : 0);
-      const jumpHeld = !!keys[c.up];
+      let dir = (keys[c.right] ? 1 : 0) - (keys[c.left] ? 1 : 0);
+      let jumpHeld = !!keys[c.up];
+      const abilityHeld = !!keys[c.down];
+      if (this.immune > 0) this.immune--;
+      if (this.sleep > 0) { this.sleep--; dir = 0; jumpHeld = false; }
+
+      // Kraken: throw a tentacle at the nearest golden ring in range
+      if (this.kind === 'kraken' && L && L.def.abilities && abilityHeld && !this.prevAbility && !this.grapple && this.sleep <= 0) {
+        const r = nearestRing(this);
+        if (r) { this.grapple = r; this.gT = 0; SFX.grab(); }
+      }
+      this.prevAbility = abilityHeld;
+      if (this.grapple) { this.updateGrapple(solids, dir, jumpHeld); return; }
 
       // Horizontal: snappy acceleration, tight friction
       if (dir !== 0) {
@@ -1065,7 +1275,16 @@
       if (!jumpHeld && !this.boost && this.vy < PHYS.JUMP_CUT) this.vy = PHYS.JUMP_CUT;
 
       this.vy = Math.min(this.vy + PHYS.GRAV, PHYS.MAX_FALL);
+      this.move(solids);
 
+      // Animation state
+      this.squash *= 0.82;
+      if (Math.abs(this.squash) < 0.004) this.squash = 0;
+      const targetMove = this.onGround ? Math.min(1, Math.abs(this.vx) / PHYS.MAX_VX) : 0;
+      this.moveAmt = lerp(this.moveAmt, targetMove, 0.25);
+      this.walk += Math.abs(this.vx) * 0.17;
+    }
+    move(solids) {
       // X axis (strict AABB, with a small automatic step-up while walking)
       this.x += this.vx;
       for (const s of solids) {
@@ -1081,7 +1300,6 @@
         else if (this.vx < 0) this.x = s.x + s.w;
         this.vx = 0;
       }
-
       // Y axis (strict AABB)
       const fallSpeed = this.vy;
       const wasGround = this.onGround;
@@ -1098,17 +1316,31 @@
         this.squash = clamp(fallSpeed / 40, 0.1, 0.28);
         dust(this.x + this.w / 2, this.y + this.h, 5);
       }
-
-      // Animation state
-      this.squash *= 0.82;
-      if (Math.abs(this.squash) < 0.004) this.squash = 0;
-      const targetMove = this.onGround ? Math.min(1, Math.abs(this.vx) / PHYS.MAX_VX) : 0;
-      this.moveAmt = lerp(this.moveAmt, targetMove, 0.25);
-      this.walk += Math.abs(this.vx) * 0.17;
+    }
+    updateGrapple(solids, dir, jumpHeld) {
+      const r = this.grapple;
+      const tx = r.x - this.w / 2, ty = r.y - 10;
+      const dx = tx - this.x, dy = ty - this.y, d = Math.hypot(dx, dy);
+      const jumpPressed = jumpHeld && !this.prevJump;
+      this.prevJump = jumpHeld;
+      this.gT++;
+      const sp = 9;
+      if (d <= sp || this.gT > 80 || (r.ghost && r.vis < 0.35) || jumpPressed) { this.releaseGrapple(dir); return; }
+      this.vx = dx / d * sp; this.vy = dy / d * sp;
+      this.facing = dx >= 0 ? 1 : -1;
+      const ox = this.x, oy = this.y;
+      this.move(solids);
+      if (Math.hypot(this.x - ox, this.y - oy) < 0.8) this.releaseGrapple(dir);
+    }
+    releaseGrapple(dir) {
+      this.grapple = null;
+      this.vy = -5; this.vx = dir * 3;
+      this.boost = true; this.onGround = false; this.coyote = 0;
     }
     renderState() {
       return { t: time, facing: this.facing, walk: this.walk, moveAmt: this.moveAmt,
-               squash: this.squash, onGround: this.onGround, vy: this.vy };
+               squash: this.squash, onGround: this.onGround, vy: this.vy,
+               stage: this.stage, looking: this.looking, island: this.island, sleep: this.sleep > 0 };
     }
   }
 
@@ -1274,6 +1506,8 @@
     g.save();
     g.translate(x, y);
     g.scale(1 + s.squash * 0.6, 1 - s.squash);
+    const stage = s.stage || 1;
+    if (stage >= 3) g.scale(1.08, 1.08);
     g.scale(s.facing < 0 ? -1 : 1, 1);
 
     drawStubbyLegs(g, s, '#7b2fd1', '#45107a');
@@ -1295,29 +1529,61 @@
     g.fill();
     g.restore();
     furStrands(g, 0, -21, 15, 13, 22, 'rgba(235, 210, 255, 0.28)', 11);
+    if (stage >= 3) {   // "Panoptes": eyes all over the body
+      for (const [ex, ey] of [[-9, -25], [8, -23], [0, -14], [-11, -13], [11, -12]]) {
+        g.fillStyle = '#e8ffff'; g.beginPath(); g.arc(ex, ey, 2.4, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#00c8e0'; g.beginPath(); g.arc(ex + 0.4, ey, 1.5, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#05050a'; g.beginPath(); g.arc(ex + 0.6, ey, 0.7, 0, Math.PI * 2); g.fill();
+      }
+    }
 
     // ---- Arms ----
     const armG = g.createLinearGradient(0, 0, 0, 16);
     armG.addColorStop(0, '#9a4cf5'); armG.addColorStop(1, '#5a189a');
     drawStubbyArms(g, s, armG, 0.75);
 
-    // ---- Three eye stalks (drawn before head so bases tuck in) ----
+    // ---- Peacock-feather crown (stage 3: Hera set Argus's eyes on the peacock's tail) ----
+    if (stage >= 3) {
+      for (let j = -2; j <= 2; j++) {
+        const ang = -Math.PI / 2 + j * 0.42 + Math.sin(t * 1.5 + j) * 0.04;
+        const fx = Math.cos(ang) * 40, fy = -46 + Math.sin(ang) * 40;
+        g.strokeStyle = '#2b8f6a'; g.lineWidth = 1.5;
+        g.beginPath(); g.moveTo(0, -48); g.quadraticCurveTo(fx * 0.4, -60, fx, fy); g.stroke();
+        g.save();
+        g.translate(fx, fy); g.rotate(ang + Math.PI / 2);
+        const fg = g.createRadialGradient(0, 0, 1, 0, 0, 11);
+        fg.addColorStop(0, '#1fd1a5'); fg.addColorStop(1, 'rgba(20, 90, 160, 0.9)');
+        g.fillStyle = fg;
+        g.beginPath(); g.ellipse(0, 0, 7, 11, 0, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#ffd56b'; g.beginPath(); g.ellipse(0, 1, 4.2, 5.6, 0, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#00b4d8'; g.beginPath(); g.ellipse(0, 1.5, 3, 4, 0, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#0a1a44'; g.beginPath(); g.ellipse(0, 2, 1.6, 2.3, 0, 0, Math.PI * 2); g.fill();
+        g.restore();
+      }
+    }
+
+    // ---- Eye stalks: 3 → 5 → 7 as Argus evolves toward "Panoptes" (drawn before head) ----
     const lean = -a * 3 + (s.onGround === false ? clamp(s.vy * 0.35, -3, 3) : 0);
     const stalks = [];
-    for (const k of [-1, 0, 1]) {
+    const nEyes = stage >= 3 ? 7 : stage === 2 ? 5 : 3;
+    const spread = nEyes === 3 ? 1 : nEyes === 5 ? 0.62 : 0.47;
+    const es = nEyes === 3 ? 1 : nEyes === 5 ? 0.82 : 0.7;
+    for (let ei = 0; ei < nEyes; ei++) {
+      const k = (ei - (nEyes - 1) / 2) * spread;
       const bx = k * 8, by = -52 + Math.abs(k) * 3;
       const tx = k * 15 + Math.sin(t * 2.4 + k * 1.3) * 2.5 + lean;
-      const ty = -71 - (k === 0 ? 6 : 0) + Math.cos(t * 2.1 + k) * 1.5 + (s.onGround === false ? clamp(s.vy * 0.3, -3, 3) : 0);
+      const ty = -71 - (Math.abs(k) < 0.3 ? 6 : 0) - (nEyes > 3 ? (1 - Math.min(1, Math.abs(k))) * 4 : 0) +
+                 Math.cos(t * 2.1 + k) * 1.5 + (s.onGround === false ? clamp(s.vy * 0.3, -3, 3) : 0);
       stalks.push([tx, ty]);
       g.lineCap = 'round';
       g.beginPath();
       g.moveTo(bx, by);
       g.bezierCurveTo(bx + k * 1.5, by - 10, tx - k * 5, ty + 10, tx, ty + 3);
       g.strokeStyle = '#4a1182';
-      g.lineWidth = 7;
+      g.lineWidth = 7 * es;
       g.stroke();
       g.strokeStyle = '#9b4cff';
-      g.lineWidth = 4.6;
+      g.lineWidth = 4.6 * es;
       g.stroke();
       g.strokeStyle = 'rgba(230, 200, 255, 0.35)';
       g.lineWidth = 1.2;
@@ -1343,23 +1609,23 @@
     for (const [tx, ty] of stalks) {
       const bulbG = g.createRadialGradient(tx - 2, ty - 2, 1, tx, ty, 8);
       bulbG.addColorStop(0, '#c58bff'); bulbG.addColorStop(1, '#5a189a');
-      furPath(g, tx, ty, 7.4, 7.4, 8, 0.12);
+      furPath(g, tx, ty, 7.4 * es, 7.4 * es, 8, 0.12);
       g.fillStyle = bulbG;
       g.fill();
-      const eyeG = g.createRadialGradient(tx - 1.6, ty - 1.8, 0.5, tx, ty, 5.4);
+      const eyeG = g.createRadialGradient(tx - 1.6 * es, ty - 1.8 * es, 0.5, tx, ty, 5.4 * es);
       eyeG.addColorStop(0, '#e8ffff');
       eyeG.addColorStop(0.45, '#00f3ff');
       eyeG.addColorStop(1, '#0094ad');
       g.save();
       g.shadowColor = '#00f3ff';
-      g.shadowBlur = 10;
+      g.shadowBlur = s.looking ? 22 : 10;
       g.fillStyle = eyeG;
-      g.beginPath(); g.arc(tx, ty, 5.3, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(tx, ty, (s.looking ? 6 : 5.3) * es, 0, Math.PI * 2); g.fill();
       g.restore();
       g.fillStyle = '#05050a';
-      g.beginPath(); g.arc(tx + 1.4, ty + 0.5, 2.4, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(tx + 1.4 * es, ty + 0.5 * es, (s.looking ? 1.6 : 2.4) * es, 0, Math.PI * 2); g.fill();
       g.fillStyle = '#ffffff';
-      g.beginPath(); g.arc(tx - 1.2, ty - 2, 1.1, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(tx - 1.2 * es, ty - 2 * es, 1.1 * es, 0, Math.PI * 2); g.fill();
     }
 
     // ---- Mask ----
@@ -1406,6 +1672,8 @@
     g.save();
     g.translate(x, y);
     g.scale(1 + s.squash * 0.6, 1 - s.squash);
+    const stage = s.stage || 1;
+    if (stage >= 3) g.scale(1.1, 1.1);
     g.scale(flip, 1);
 
     drawStubbyLegs(g, s, '#2fc4a8', '#0f7d68');
@@ -1451,6 +1719,12 @@
     drawTentacle(g,
       [[3, -52], [12, -84], [-26 + sw * 0.5, -102 + sw], [-24 + sw, -68 + sw * 1.4]],
       7.6, 1.8, '#5ff0d4', '#1fae92', 1, [0.36, 0.53, 0.69, 0.83], 'rgba(72, 223, 196, 0.6)');
+    if (stage >= 2) {   // second head tentacle, curling the other way
+      const sw3 = Math.sin(t * 2.1 + 1) * 2.5 - a * 3;
+      drawTentacle(g,
+        [[-5, -52], [-12, -78], [12 + sw3 * 0.5, -90 + sw3], [17 + sw3, -70 + sw3]],
+        5.6, 1.5, '#5ff0d4', '#1fae92', -1, [0.42, 0.62, 0.8], 'rgba(72, 223, 196, 0.5)');
+    }
 
     // ---- Head ----
     const headG = g.createRadialGradient(-7, -50, 2, 0, -40, 24);
@@ -1466,6 +1740,19 @@
     g.fill();
     g.restore();
     furStrands(g, 0, -42, 16, 14, 20, 'rgba(225, 255, 250, 0.32)', 71);
+    if (s.island || stage >= 3) {   // "mistaken for an island": rocks and seaweed on his back
+      g.strokeStyle = '#2f9e44'; g.lineWidth = 1.6; g.lineCap = 'round';
+      for (const [sx, h] of [[-12, 9], [-9, 13], [10, 11], [13, 8]]) {
+        g.beginPath(); g.moveTo(sx, -52);
+        g.quadraticCurveTo(sx + Math.sin(t * 3 + sx) * 3, -52 - h / 2, sx + Math.sin(t * 2 + sx) * 2, -52 - h);
+        g.stroke();
+      }
+      const rg2 = g.createLinearGradient(0, -60, 0, -50);
+      rg2.addColorStop(0, '#a3a8b5'); rg2.addColorStop(1, '#5b6170');
+      g.fillStyle = rg2;
+      g.beginPath(); g.ellipse(-4, -54.5, 9, 4.5, -0.1, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.ellipse(6, -55.5, 6, 4, 0.2, 0, Math.PI * 2); g.fill();
+    }
 
     // ---- Mask ----
     g.fillStyle = '#1a1a3a';
@@ -1475,6 +1762,12 @@
     g.beginPath(); g.moveTo(-11, -46.2); g.quadraticCurveTo(0, -47.6, 11, -46.2); g.stroke();
 
     // ---- Angry / determined glowing eyes ( >.< wedge shapes with slanted brows) ----
+    if (s.sleep) {   // lulled by Hermes' pipes: eyes shut
+      g.strokeStyle = '#7ffcff'; g.lineWidth = 1.8; g.lineCap = 'round';
+      for (const sd of [-1, 1]) { g.beginPath(); g.moveTo(sd * 4, -39.5); g.quadraticCurveTo(sd * 8, -37.5, sd * 12, -39.5); g.stroke(); }
+      g.restore();
+      return;
+    }
     g.save();
     g.shadowColor = '#00f3ff';
     g.shadowBlur = 9;
@@ -1550,10 +1843,15 @@
       lasers: (def.lasers || []).map((l) => ({ color: C.laser, ...l, active: false, warn: false, rem: 0 })),
       viruses: (def.viruses || []).map((v, i) => ({ ...v, x: (v.minX + v.maxX) / 2, dir: v.dir || (i % 2 ? -1 : 1), w: 28, h: 28, alive: true, t: i * 1.7 })),
       flood: def.flood ? { ...def.flood, y: 730 } : null,
-      boss: def.boss ? { ...def.boss, maxHp: def.boss.hp, y: def.boss.baseY, dir: 1, t: 0, fire: def.boss.delay, aim: def.boss.delay + 120, stun: 0, flash: 0, dead: false, deathT: 0 } : null,
+      boss: def.boss ? { ...def.boss, maxHp: def.boss.hp, y: def.boss.type === 'ketos' ? def.boss.depthY : def.boss.baseY, dir: 1, t: 0,
+        fire: def.boss.delay, aim: def.boss.delay + 120, stun: 0, flash: 0, dead: false, deathT: 0,
+        phase: 'under', timer: def.boss.delay, tx: def.boss.x } : null,
       cannon: def.cannon ? { ...def.cannon, charge: 0, beam: 0, cool: 0, hit: false } : null,
       orbs: [],
       token: def.secretToken && !progress.secret ? { ...def.secretToken, taken: false } : null,
+      ghosts: (def.ghosts || []).map((g) => ({ ...g, vis: 0 })),
+      rings: (def.rings || []).map((r) => ({ ...r, vis: r.ghost ? 0 : 1 })),
+      flutes: (def.flutes || []).map((fz) => ({ ...fz })),
     };
     if (L.boss) for (const p of L.portals) p.locked = true;
     players[0].reset(def.spawns.argus);
@@ -1612,6 +1910,7 @@
     const list = L.solids.slice();
     for (const d of L.doors) { const r = doorRect(d); if (r) list.push(r); }
     for (const l of L.lifts) list.push({ x: l.x, y: l.y, w: l.w, h: l.h });
+    for (const g of L.ghosts) if (g.vis > 0.35) list.push(g);
     return list;
   }
 
@@ -1654,6 +1953,7 @@
     // orbs
     for (let i = L.orbs.length - 1; i >= 0; i--) {
       const o = L.orbs[i];
+      if (o.delay > 0) { o.delay--; continue; }
       o.x += o.vx; o.y += o.vy; o.vy += o.g; o.life--;
       let gone = o.life <= 0 || o.y > H || o.x < 0 || o.x > W || bossSolidHit(o.x, o.y);
       if (!gone) {
@@ -1668,6 +1968,7 @@
     }
     if (!B) return;
     if (B.dead) { B.deathT++; return; }
+    if (B.type === 'ketos') { updateKetos(B, Cn); return; }
     B.t++;
     const rage = B.maxHp - B.hp;
     if (B.flash > 0) B.flash--;
@@ -1731,6 +2032,83 @@
     }
   }
 
+  function bossHit(B) {
+    B.hp--; B.flash = 40;
+    shake = 20;
+    SFX.bossHit();
+    burst(B.x, B.y, ['#ffffff', '#ffd56b', '#9aa0aa', '#00f3ff'], 60);
+    if (B.hp <= 0) {
+      B.dead = true;
+      L.orbs.length = 0;
+      SFX.bossDie();
+      for (let k = 0; k < 5; k++) burst(B.x + (Math.random() - 0.5) * 120, B.y + (Math.random() - 0.5) * 100, ['#9aa0aa', '#ffd56b', '#ffffff'], 40);
+      shake = 30;
+      for (const p of L.portals) p.locked = false;
+      toast = { text: B.type === 'ketos' ? '🗿 تحوّل كيتوس إلى حجر! ادخلا بوابتيكما!' : '💥 دمّرتما الفيروس الأم! ادخلا بوابتيكما!', t: 0 };
+    }
+  }
+  function updateKetos(B, Cn) {
+    B.t++;
+    if (B.flash > 0) B.flash--;
+    const rage = B.maxHp - B.hp;
+    if (B.phase === 'under') {
+      B.y = B.depthY;
+      B.x += clamp(B.tx - B.x, -3, 3);
+      if (--B.timer <= 0) { B.phase = 'rise'; B.timer = 30; SFX.splash(); }
+    } else if (B.phase === 'rise') {
+      B.y = lerp(B.depthY, B.upY, 1 - B.timer / 30);
+      if (B.timer % 3 === 0) for (let k = 0; k < 4; k++) spawn(B.x + (Math.random() - 0.5) * 120, 672, (Math.random() - 0.5) * 3, -3 - Math.random() * 4, 30, '#c4fdff', 3, 0.2);
+      if (--B.timer <= 0) { B.phase = 'up'; B.timer = 160; }
+    } else if (B.phase === 'up') {
+      B.y = B.upY + Math.sin(B.t * 0.08) * 4;
+      B.timer--;
+      if (B.timer === 130 || B.timer === 60 || (rage >= 1 && B.timer === 95)) {
+        // one aimed water ball per volley, alternating targets; never at someone hanging on a tentacle
+        B.turn = (B.turn || 0) + 1;
+        const order = B.turn % 2 ? [players[0], players[1]] : [players[1], players[0]];
+        const p = order.find((q) => q.alive && !q.grapple);
+        if (p) {
+          // spit a jet into the sky; after a visible warning, the water ball falls straight down on the target
+          const txp = p.x + 15 + (Math.random() - 0.5) * 16;
+          L.orbs.push({ x: txp, y: 140, vx: 0, vy: 0, g: 0.25, life: 400, water: true, delay: 55, ty: p.y + p.h });
+          for (let k = 0; k < 14; k++) spawn(B.x + (Math.random() - 0.5) * 20, B.y - 50, (Math.random() - 0.5) * 2, -6 - Math.random() * 5, 30, '#c4fdff', 3, 0.15);
+          SFX.shoot();
+        }
+      }
+      if (B.timer <= 0) { B.phase = 'dive'; B.timer = 30; SFX.splash(); }
+    } else if (B.phase === 'dive') {
+      B.y = lerp(B.upY, B.depthY, 1 - B.timer / 30);
+      if (--B.timer <= 0) {
+        B.phase = 'under';
+        B.timer = 130 + Math.floor(Math.random() * 60) - rage * 25;
+        B.tx = B.minX + Math.random() * (B.maxX - B.minX);
+      }
+    }
+    // touching Ketos is deadly while he is above water
+    if (B.y < 700) {
+      for (const p of players) {
+        if (!p.alive) continue;
+        const nx = clamp(B.x, p.x, p.x + p.w), ny = clamp(B.y, p.y, p.y + p.h);
+        if (Math.hypot(B.x - nx, B.y - ny) < B.r * 0.85) kill(p, { type: 'ketos' });
+      }
+    }
+    // Medusa's gaze (both buttons held) petrifies him while he is surfaced
+    if (Cn) {
+      const armed = Cn.links.every((id) => linkActive(id));
+      if (Cn.beam > 0) {
+        if (!Cn.hit && (B.phase === 'up' || B.phase === 'rise') && B.y < 650) { Cn.hit = true; bossHit(B); if (!B.dead) B.timer += 30; }
+        if (--Cn.beam === 0) Cn.cool = 80;
+      } else if (Cn.cool > 0) {
+        Cn.cool--;
+      } else if (armed) {
+        if (Cn.charge === 0) SFX.charge();
+        if (++Cn.charge >= 50) { Cn.charge = 0; Cn.beam = 45; Cn.hit = false; SFX.beam(); shake = Math.max(shake, 10); }
+      } else {
+        Cn.charge = Math.max(0, Cn.charge - 2);
+      }
+    }
+  }
+
   function kill(p, pool) {
     if (!p.alive) return;
     p.alive = false;
@@ -1750,7 +2128,10 @@
     else if (type === 'cyan') reason = 'دخل أرقوس محطة الوكلاء السماوية! هذه البرك آمنة لكراكن فقط.';
     else if (type === 'laser') reason = `احترق ${nm} بشعاع الليزر! انتظرا حتى ينطفئ الشعاع ثم اعبرا بسرعة.`;
     else if (type === 'virus') reason = `أمسك فيروسٌ بـ${nm}! اقفز فوق رأس الفيروس لتدميره بدل أن تلمسه من الجانب.`;
-    else if (type === 'orb') reason = `أصابت قذيفة الفيروس الأم ${nm}! تحرّكا باستمرار واحتميا تحت المظلّات.`;
+    else if (type === 'orb') reason = L.boss && L.boss.type === 'ketos'
+      ? `أصابت كرة ماء من كيتوس ${nm}! تحرّكا على المنصّة لتفاديها.`
+      : `أصابت قذيفة الفيروس الأم ${nm}! تحرّكا باستمرار واحتميا تحت المظلّات.`;
+    else if (type === 'ketos') reason = `التهم كيتوس ${nm}! ابتعدا عنه حين يطفو.`;
     else reason = `ابتلع طوفان البرمجيات الخبيثة ${nm}! أسرعا في التسلّق.`;
     document.getElementById('deadReason').textContent = reason;
     state = 'dying';
@@ -1802,15 +2183,23 @@
       document.getElementById('doneTitle').textContent = '✦ أنهيتما المرحلة السرية!';
       document.getElementById('doneSub').textContent = 'قلة قليلة تجد هذه المرحلة. أنتما من النخبة!';
     } else {
+      var stageBefore = evoStage();
       progress.stars[cur] = Math.max(progress.stars[cur] || 0, stars);
       if (!progress.best[cur] || secs < progress.best[cur]) progress.best[cur] = secs;
       progress.unlocked = Math.max(progress.unlocked, Math.min(LEVELS.length, cur + 2));
       saveProgress();
-      const lastL = cur === LEVELS.length - 1;
-      document.getElementById('doneTitle').textContent = lastL ? 'هزمتما الفيروس الأم! 🏆' : `اكتملت المرحلة ${toAr(cur + 1)}!`;
-      document.getElementById('doneSub').textContent = lastL
-        ? 'أرقوس وكراكن حرّرا مركز البيانات بالكامل. فريق أسطوري! جرّبا وضع السباق الآن.'
-        : 'تمت مزامنة أرقوس وكراكن مع الشبكة بنجاح. المرحلة التالية أصعب!';
+      const def = L.def;
+      document.getElementById('doneTitle').textContent = def.winTitle || `اكتملت المرحلة ${toAr(cur + 1)}!`;
+      let sub = def.winSub || 'تمت مزامنة أرقوس وكراكن مع الشبكة بنجاح. المرحلة التالية أصعب!';
+      const stageAfter = evoStage();
+      if (stageAfter > stageBefore) {
+        SFX.evolve();
+        for (const p of players) p.stage = stageAfter;
+        sub += stageAfter === 2
+          ? ' ✨ تطوّر! صار لأرقوس ٥ عيون (رؤية أوسع)، وصار لكراكن مجسّان (مسك أبعد).'
+          : ' ✨ التطوّر الأسطوري! أرقوس صار «بانوبتيس» بعيون على جسده وتاج ريش الطاووس، وكراكن صار «الكراكن الأسطوري» بظهر كالجزيرة!';
+      }
+      document.getElementById('doneSub').textContent = sub;
     }
     const last = mode !== 'campaign' || cur === LEVELS.length - 1;
     document.getElementById('doneStars').innerHTML =
@@ -1890,9 +2279,44 @@
         L.flood.y = Math.max(L.flood.minY, L.flood.y - L.flood.speed);
       }
 
+      // 4c) abilities: Argus' sight reveals hidden things, Kraken becomes an island in the sea
+      const A = players[0], K = players[1];
+      A.looking = !!(L.def.abilities && A.alive && keys[A.controls.down] && A.sleep <= 0);
+      const rad = SIGHT[A.stage] || 420, ax = A.x + 15, ay = A.y + 25;
+      for (const gh of L.ghosts) {
+        const nx = clamp(ax, gh.x, gh.x + gh.w), ny = clamp(ay, gh.y, gh.y + gh.h);
+        const near = A.looking && Math.hypot(ax - nx, ay - ny) < rad;
+        gh.vis = near ? Math.min(1, gh.vis + 0.15) : Math.max(0, gh.vis - 0.06);
+      }
+      for (const r of L.rings) {
+        if (!r.ghost) continue;
+        const near = A.looking && Math.hypot(ax - r.x, ay - r.y) < rad;
+        r.vis = near ? Math.min(1, r.vis + 0.15) : Math.max(0, r.vis - 0.06);
+      }
+      let island = null;
+      if (L.def.abilities && K.alive && K.onGround && !K.grapple && L.pools.some((p) => p.type === 'cyan' && overlap(K, p.hz))) {
+        island = { x: K.x - 6, y: K.y + 4, w: K.w + 12, h: 8 };
+      }
+      K.island = !!island;
+
       // 5) physics
       const solids = currentSolids();
-      for (const p of players) { p.py = p.y; if (p.alive) p.update(solids); }
+      const kx0 = K.x;
+      for (const p of players) { p.py = p.y; if (p.alive) p.update(p === A && island ? solids.concat([island]) : solids); }
+      if (island && A.alive && A.onGround && Math.abs(A.y + A.h - island.y) < 1.5 && A.x < island.x + island.w && A.x + A.w > island.x) {
+        const dx = K.x - kx0;
+        A.x += dx;
+        if (solids.some((sl) => overlap(A, sl))) A.x -= dx;
+      }
+
+      // 5a) Hermes' pipes lull Kraken to sleep; Argus (whose eyes never all sleep) wakes him with a touch
+      for (const fz of L.flutes) {
+        if (K.alive && K.sleep <= 0 && K.immune <= 0 && overlap(K, fz)) { K.sleep = 150; K.grapple = null; SFX.lull(); }
+      }
+      if (K.sleep > 0 && A.alive && K.alive && overlap(A, K)) {
+        K.sleep = 0; K.immune = 100; SFX.wake();
+        burst(K.x + 15, K.y + 10, ['#ffd56b', '#ffffff'], 14);
+      }
 
       // 5b) jump pads
       for (const pad of L.pads) {
@@ -2051,13 +2475,14 @@
     const g = c.getContext('2d');
     g.setTransform(sc, 0, 0, sc, 0, 0);
 
-    g.fillStyle = '#05050a';
+    const TH = THEMES[L.def.world || 1];
+    g.fillStyle = TH.bg;
     g.fillRect(0, 0, W, H);
     let rg = g.createRadialGradient(330, 520, 0, 330, 520, 720);
-    rg.addColorStop(0, 'rgba(90, 24, 154, 0.38)'); rg.addColorStop(1, 'rgba(5, 5, 10, 0)');
+    rg.addColorStop(0, TH.glowA); rg.addColorStop(1, 'rgba(5, 5, 10, 0)');
     g.fillStyle = rg; g.fillRect(0, 0, W, H);
     rg = g.createRadialGradient(1020, 300, 0, 1020, 300, 620);
-    rg.addColorStop(0, 'rgba(0, 90, 200, 0.24)'); rg.addColorStop(1, 'rgba(5, 5, 10, 0)');
+    rg.addColorStop(0, TH.glowB); rg.addColorStop(1, 'rgba(5, 5, 10, 0)');
     g.fillStyle = rg; g.fillRect(0, 0, W, H);
 
     // light-speed streaks
@@ -2077,12 +2502,12 @@
 
     // grid
     for (let x = 0; x <= W; x += 40) {
-      g.strokeStyle = x % 160 === 0 ? 'rgba(120, 80, 255, 0.11)' : 'rgba(120, 80, 255, 0.045)';
+      g.strokeStyle = x % 160 === 0 ? `rgba(${TH.grid}, 0.11)` : `rgba(${TH.grid}, 0.045)`;
       g.lineWidth = 1;
       g.beginPath(); g.moveTo(x + 0.5, 0); g.lineTo(x + 0.5, H); g.stroke();
     }
     for (let y = 0; y <= H; y += 40) {
-      g.strokeStyle = y % 160 === 0 ? 'rgba(120, 80, 255, 0.11)' : 'rgba(120, 80, 255, 0.045)';
+      g.strokeStyle = y % 160 === 0 ? `rgba(${TH.grid}, 0.11)` : `rgba(${TH.grid}, 0.045)`;
       g.beginPath(); g.moveTo(0, y + 0.5); g.lineTo(W, y + 0.5); g.stroke();
     }
 
@@ -2091,6 +2516,21 @@
       const x = hash(i * 3.3) * W, y = hash(i * 6.6) * H, r = hash(i * 1.1) * 1.3 + 0.2;
       g.fillStyle = `rgba(${200 + (i % 3) * 20}, ${200 + (i % 5) * 10}, 255, ${0.25 + hash(i * 9.9) * 0.55})`;
       g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+    }
+
+    // world 2: distant Greek temple columns
+    if ((L.def.world || 1) === 2) {
+      g.save();
+      for (let i = 0; i < 7; i++) {
+        const cx = 90 + i * 185 + hash(i) * 40, top = 210 + hash(i * 3) * 60, w = 34;
+        g.fillStyle = 'rgba(150, 200, 255, 0.06)';
+        g.fillRect(cx - w / 2, top, w, H - top);
+        g.fillRect(cx - w / 2 - 8, top - 10, w + 16, 10);
+        g.fillRect(cx - w / 2 - 6, H - 60, w + 12, 12);
+        g.strokeStyle = 'rgba(150, 200, 255, 0.07)';
+        for (let k = 1; k < 4; k++) { g.beginPath(); g.moveTo(cx - w / 2 + k * w / 4, top); g.lineTo(cx - w / 2 + k * w / 4, H - 60); g.stroke(); }
+      }
+      g.restore();
     }
 
     // HUD band panel
@@ -2129,12 +2569,13 @@
   }
 
   function drawPlatform(g, s) {
+    const TH = THEMES[L.def.world || 1];
     const vertical = s.k === 'wallL' || s.k === 'wallR';
     const grd = vertical
       ? g.createLinearGradient(s.x, 0, s.x + s.w, 0)
       : g.createLinearGradient(0, s.y, 0, s.y + s.h);
-    grd.addColorStop(0, '#2a1a52');
-    grd.addColorStop(1, '#0d0a20');
+    grd.addColorStop(0, TH.plat[0]);
+    grd.addColorStop(1, TH.plat[1]);
     g.fillStyle = grd;
     g.fillRect(s.x, s.y, s.w, s.h);
 
@@ -2156,10 +2597,22 @@
     }
     g.restore();
 
+    if ((L.def.world || 1) === 2 && !vertical && s.h >= 14 && s.k !== 'roof') {   // Greek meander band
+      g.save();
+      g.strokeStyle = 'rgba(255, 213, 107, 0.35)';
+      g.lineWidth = 1;
+      g.beginPath();
+      for (let x = s.x + 4; x < s.x + s.w - 12; x += 12) {
+        const y0 = s.y + 5, y1 = s.y + 11;
+        g.moveTo(x, y1); g.lineTo(x, y0); g.lineTo(x + 8, y0); g.lineTo(x + 8, y1 - 3); g.lineTo(x + 4, y1 - 3);
+      }
+      g.stroke();
+      g.restore();
+    }
     g.save();
-    g.shadowColor = '#b45cff';
+    g.shadowColor = TH.edgeGlow;
     g.shadowBlur = 14;
-    g.strokeStyle = '#c27bff';
+    g.strokeStyle = TH.edge;
     g.lineWidth = 2;
     g.beginPath();
     if (s.k === 'wallL') { g.moveTo(s.x + s.w - 1, 0); g.lineTo(s.x + s.w - 1, H); }
@@ -2172,7 +2625,7 @@
       g.save();
       g.shadowColor = '#00f3ff';
       g.shadowBlur = 8;
-      g.strokeStyle = 'rgba(0, 243, 255, 0.45)';
+      g.strokeStyle = TH.under;
       g.lineWidth = 1;
       g.beginPath();
       const yy = s.k === 'roof' ? s.y + 1 : s.y + s.h - 1;
@@ -2238,7 +2691,7 @@
     ctx.font = '700 11px Cairo, Tahoma, sans-serif';
     ctx.globalAlpha = 0.65;
     ctx.fillStyle = c.light;
-    ctx.fillText(c.label, p.x + p.w / 2, p.y - 20);
+    ctx.fillText((L.def.world || 1) === 2 && p.type === 'cyan' ? 'بحر' : c.label, p.x + p.w / 2, p.y - 20);
     ctx.restore();
   }
 
@@ -2424,6 +2877,273 @@
     ctx.restore();
   }
 
+  function drawGhost(gh) {
+    ctx.save();
+    if (gh.vis < 0.05) {   // faint shimmer hint
+      ctx.globalAlpha = 0.1 + 0.06 * Math.sin(time * 3 + gh.x);
+      ctx.strokeStyle = '#c58bff';
+      ctx.setLineDash([3, 6]);
+      ctx.strokeRect(gh.x + 0.5, gh.y + 0.5, gh.w - 1, gh.h - 1);
+      ctx.setLineDash([]);
+    } else {
+      ctx.globalAlpha = gh.vis;
+      const gg = ctx.createLinearGradient(0, gh.y, 0, gh.y + gh.h);
+      gg.addColorStop(0, 'rgba(197, 139, 255, 0.85)'); gg.addColorStop(1, 'rgba(0, 243, 255, 0.35)');
+      ctx.shadowColor = '#00f3ff';
+      ctx.shadowBlur = 16;
+      ctx.fillStyle = gg;
+      ctx.fillRect(gh.x, gh.y, gh.w, gh.h);
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      for (let x = gh.x + 12; x < gh.x + gh.w - 6; x += 24) {   // little eyes in the platform
+        ctx.beginPath(); ctx.ellipse(x, gh.y + gh.h / 2, 4, 2.4, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#05050a'; ctx.beginPath(); ctx.arc(x, gh.y + gh.h / 2, 1.2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawRing(r) {
+    const K = players[1];
+    const show = r.ghost ? r.vis : 1;
+    ctx.save();
+    if (show < 0.05) {
+      ctx.globalAlpha = 0.12 + 0.06 * Math.sin(time * 3);
+      ctx.strokeStyle = '#ffd56b';
+      ctx.setLineDash([2, 4]);
+      ctx.beginPath(); ctx.arc(r.x, r.y, 10, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+      return;
+    }
+    ctx.globalAlpha = show;
+    const inRange = K.alive && L.def.abilities && Math.hypot(r.x - K.x - 15, r.y - K.y - 25) <= (REACH[K.stage] || 290);
+    ctx.shadowColor = '#ffd56b';
+    ctx.shadowBlur = inRange ? 20 : 10;
+    ctx.strokeStyle = '#ffd56b';
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(r.x, r.y, 10, 0, Math.PI * 2); ctx.stroke();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = '#fff3c4';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(r.x, r.y, 10, 0, Math.PI * 2); ctx.stroke();
+    if (inRange && !K.grapple) {
+      ctx.globalAlpha = show * (0.5 + 0.5 * Math.sin(time * 8));
+      ctx.strokeStyle = '#7ffcff';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(r.x, r.y, 16 + Math.sin(time * 8) * 2, 0, Math.PI * 2); ctx.stroke();
+      ctx.font = '900 12px Cairo, Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.direction = 'ltr';
+      ctx.fillStyle = '#7ffcff';
+      ctx.fillText('↓', r.x, r.y - 20);
+    }
+    ctx.restore();
+  }
+
+  function drawFlute(fz) {
+    ctx.save();
+    const gg = ctx.createLinearGradient(0, fz.y, 0, fz.y + fz.h);
+    gg.addColorStop(0, 'rgba(255, 213, 107, 0.12)'); gg.addColorStop(1, 'rgba(255, 213, 107, 0.02)');
+    ctx.fillStyle = gg;
+    ctx.fillRect(fz.x, fz.y, fz.w, fz.h);
+    // golden pan-pipes
+    const px = fz.x + fz.w / 2 - 14, py = fz.y + 4;
+    ctx.fillStyle = '#ffd56b';
+    ctx.shadowColor = '#ffd56b'; ctx.shadowBlur = 8;
+    for (let k = 0; k < 6; k++) ctx.fillRect(px + k * 5, py, 3.5, 26 - k * 3);
+    ctx.fillRect(px - 1, py + 8, 31, 3);
+    ctx.shadowBlur = 0;
+    // drifting notes
+    ctx.direction = 'ltr';
+    ctx.textAlign = 'center';
+    ctx.font = '700 16px serif';
+    for (let k = 0; k < 6; k++) {
+      const nx = fz.x + 10 + ((k * 37 + time * 18) % (fz.w - 20));
+      const ny = fz.y + fz.h - ((time * 28 + k * 40) % (fz.h - 30));
+      ctx.globalAlpha = 0.35 + 0.25 * Math.sin(time * 3 + k);
+      ctx.fillStyle = '#ffe9a8';
+      ctx.fillText(k % 2 ? '♪' : '♫', nx + Math.sin(time * 2 + k) * 6, ny);
+    }
+    ctx.globalAlpha = 0.7;
+    ctx.direction = 'rtl';
+    ctx.font = '700 11px Cairo, Tahoma, sans-serif';
+    ctx.fillStyle = '#ffd56b';
+    ctx.fillText('ناي هيرميس', fz.x + fz.w / 2, fz.y + 44);
+    ctx.restore();
+  }
+
+  function drawPeacock(v) {
+    const cx = v.x + 14, base = v.y, d = v.dir;
+    ctx.save();
+    // fanned tail with "Argus eyes"
+    for (let k = -3; k <= 3; k++) {
+      const a = -Math.PI / 2 - d * 0.5 + k * 0.28 + Math.sin(v.t * 2 + k) * 0.03;
+      const fx = cx - d * 6 + Math.cos(a) * 26, fy = base - 14 + Math.sin(a) * 26;
+      ctx.strokeStyle = '#1f7a5c'; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(cx - d * 6, base - 12); ctx.lineTo(fx, fy); ctx.stroke();
+      ctx.fillStyle = '#17a37a'; ctx.beginPath(); ctx.ellipse(fx, fy, 5, 7, a + Math.PI / 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffd56b'; ctx.beginPath(); ctx.arc(fx, fy, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#0a1a44'; ctx.beginPath(); ctx.arc(fx, fy, 1.6, 0, Math.PI * 2); ctx.fill();
+    }
+    // body
+    ctx.shadowColor = '#1e90ff'; ctx.shadowBlur = 10;
+    const bg = ctx.createRadialGradient(cx - 3, base - 16, 1, cx, base - 12, 12);
+    bg.addColorStop(0, '#5fb4ff'); bg.addColorStop(1, '#0b3d91');
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.ellipse(cx, base - 12, 8.5, 10, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + d * 6, base - 25, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    // crest, beak, angry eye, legs
+    ctx.fillStyle = '#5fb4ff';
+    for (let k = -1; k <= 1; k++) { ctx.beginPath(); ctx.arc(cx + d * 6 + k * 3, base - 34, 1.6, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#ffb347';
+    ctx.beginPath(); ctx.moveTo(cx + d * 10, base - 26); ctx.lineTo(cx + d * 15, base - 24.5); ctx.lineTo(cx + d * 10, base - 23); ctx.fill();
+    ctx.fillStyle = '#ff2a55';
+    ctx.beginPath(); ctx.arc(cx + d * 7.5, base - 26, 1.4, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#ffb347'; ctx.lineWidth = 1.5;
+    const st = Math.sin(v.t * 6) * 2;
+    ctx.beginPath(); ctx.moveTo(cx - 3, base - 3); ctx.lineTo(cx - 3 + st, base); ctx.moveTo(cx + 3, base - 3); ctx.lineTo(cx + 3 - st, base); ctx.stroke();
+    ctx.restore();
+  }
+
+  function hexMix(a, b, t) {
+    const pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
+    const r = Math.round(((pa >> 16) & 255) * (1 - t) + ((pb >> 16) & 255) * t);
+    const g = Math.round(((pa >> 8) & 255) * (1 - t) + ((pb >> 8) & 255) * t);
+    const bl = Math.round((pa & 255) * (1 - t) + (pb & 255) * t);
+    return `rgb(${r},${g},${bl})`;
+  }
+
+  function drawKetos(B) {
+    if (B.dead && B.deathT > 80) return;
+    const st = B.dead ? 1 : 1 - B.hp / B.maxHp;
+    ctx.save();
+    if (B.phase === 'under' && !B.dead) {   // ripple shows where he lurks
+      ctx.strokeStyle = 'rgba(196, 253, 255, 0.5)';
+      ctx.lineWidth = 2;
+      for (let k = 0; k < 3; k++) {
+        const rr = ((time * 30 + k * 20) % 60) + 10;
+        ctx.globalAlpha = 1 - rr / 70;
+        ctx.beginPath(); ctx.ellipse(B.x, 674, rr * 1.6, rr * 0.25, 0, 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.restore();
+      return;
+    }
+    ctx.beginPath(); ctx.rect(0, 0, W, 675); ctx.clip();
+    let x = B.x, y = B.y;
+    if (B.dead) { y += B.deathT * 1.2; ctx.globalAlpha = Math.max(0, 1 - B.deathT / 80); x += Math.sin(B.deathT) * 2; }
+    const r = B.r;
+    const body = hexMix('#1b6f8f', '#8a8f99', st), belly = hexMix('#7fe3d0', '#c3c7cf', st), fin = hexMix('#0d4a63', '#5f646e', st);
+    // dorsal spikes
+    ctx.fillStyle = fin;
+    for (let k = -3; k <= 3; k++) {
+      const bx = x + k * 16;
+      ctx.beginPath(); ctx.moveTo(bx - 8, y - r * 0.7); ctx.lineTo(bx + Math.sin(B.t * 0.1 + k) * 3, y - r * 1.25 - (3 - Math.abs(k)) * 5); ctx.lineTo(bx + 8, y - r * 0.7); ctx.fill();
+    }
+    // side fins
+    ctx.beginPath(); ctx.ellipse(x - r * 1.05, y + 10, 26, 10, -0.6 + Math.sin(B.t * 0.15) * 0.2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x + r * 1.05, y + 10, 26, 10, 0.6 - Math.sin(B.t * 0.15) * 0.2, 0, Math.PI * 2); ctx.fill();
+    // head
+    const hg = ctx.createRadialGradient(x - 20, y - 25, 6, x, y, r * 1.2);
+    hg.addColorStop(0, B.flash > 0 && Math.floor(B.flash / 4) % 2 ? '#ffffff' : hexMix('#3fb0c9', '#b5b9c2', st));
+    hg.addColorStop(1, body);
+    ctx.shadowColor = st > 0.6 ? 'rgba(200,200,200,0.4)' : '#00b4d8';
+    ctx.shadowBlur = 24;
+    ctx.fillStyle = hg;
+    ctx.beginPath(); ctx.ellipse(x, y, r * 1.15, r * 0.95, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+    // scales
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1;
+    for (let k = 0; k < 10; k++) {
+      ctx.beginPath(); ctx.arc(x - 50 + (k % 5) * 25, y - 30 + Math.floor(k / 5) * 18, 9, 0.2, Math.PI - 0.2); ctx.stroke();
+    }
+    // jaw + teeth
+    ctx.fillStyle = '#081820';
+    ctx.beginPath(); ctx.ellipse(x, y + 25, r * 0.75, 20, 0, 0, Math.PI); ctx.fill();
+    ctx.fillStyle = belly;
+    ctx.beginPath(); ctx.ellipse(x, y + 40, r * 0.8, 12, 0, 0, Math.PI); ctx.fill();
+    ctx.fillStyle = '#f2f2f2';
+    for (let k = 0; k < 8; k++) {
+      const tx2 = x - 40 + k * 11.4;
+      ctx.beginPath(); ctx.moveTo(tx2, y + 25); ctx.lineTo(tx2 + 4, y + 35); ctx.lineTo(tx2 + 8, y + 25); ctx.fill();
+    }
+    // eyes
+    for (const sd of [-1, 1]) {
+      ctx.fillStyle = st > 0.99 ? '#9aa0aa' : '#ffd400';
+      ctx.shadowColor = '#ffd400'; ctx.shadowBlur = st > 0.99 ? 0 : 12;
+      ctx.beginPath(); ctx.ellipse(x + sd * 28, y - 12, 10, 7, sd * 0.25, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#05050a';
+      ctx.beginPath(); ctx.ellipse(x + sd * 28, y - 12, 2.5, 6, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = fin; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(x + sd * 42, y - 26); ctx.lineTo(x + sd * 16, y - 20); ctx.stroke();
+    }
+    // stone cracks
+    if (st > 0) {
+      ctx.strokeStyle = 'rgba(40, 40, 50, 0.7)';
+      ctx.lineWidth = 1.5;
+      const n = Math.round(st * 6);
+      for (let k = 0; k < n; k++) {
+        const a = hash(k * 7) * Math.PI * 2;
+        ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * 20, y + Math.sin(a) * 15);
+        ctx.lineTo(x + Math.cos(a + 0.3) * 45, y + Math.sin(a + 0.2) * 35);
+        ctx.lineTo(x + Math.cos(a) * 65, y + Math.sin(a) * 50);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawGaze(Cn) {
+    const yC = Cn.y + Cn.h / 2, mx = Cn.x0 - 6;
+    ctx.save();
+    // Medusa's stone head
+    ctx.strokeStyle = '#6e8f5a';
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    for (let k = 0; k < 7; k++) {
+      const a = -Math.PI * 0.95 + k * 0.32;
+      ctx.beginPath();
+      ctx.moveTo(mx + Math.cos(a) * 14, yC + Math.sin(a) * 14);
+      ctx.quadraticCurveTo(mx + Math.cos(a) * 24 + Math.sin(time * 4 + k) * 4, yC + Math.sin(a) * 24, mx + Math.cos(a) * 30, yC + Math.sin(a) * 30 + Math.cos(time * 4 + k) * 3);
+      ctx.stroke();
+    }
+    const hg = ctx.createRadialGradient(mx - 4, yC - 4, 2, mx, yC, 17);
+    hg.addColorStop(0, '#d9dde3'); hg.addColorStop(1, '#7c838f');
+    ctx.fillStyle = hg;
+    ctx.beginPath(); ctx.arc(mx, yC, 16, 0, Math.PI * 2); ctx.fill();
+    const ch = Cn.charge / 50;
+    ctx.fillStyle = Cn.beam > 0 || ch > 0 ? '#b6ff6b' : '#3a4a3a';
+    ctx.shadowColor = '#b6ff6b'; ctx.shadowBlur = 8 + ch * 20 + (Cn.beam > 0 ? 20 : 0);
+    for (const sd of [-1, 1]) { ctx.beginPath(); ctx.ellipse(mx + 5, yC + sd * 5, 3, 2, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.shadowBlur = 0;
+    Cn.links.forEach((id, i) => {
+      ctx.fillStyle = linkActive(id) ? '#ffd56b' : '#33405a';
+      ctx.beginPath(); ctx.arc(mx - 8 + i * 16, yC + 24, 4, 0, Math.PI * 2); ctx.fill();
+    });
+    if (ch > 0) {
+      ctx.globalAlpha = ch * 0.6;
+      ctx.strokeStyle = '#b6ff6b';
+      ctx.setLineDash([6, 8]);
+      ctx.beginPath(); ctx.moveTo(Cn.x0 + 12, yC); ctx.lineTo(Cn.x1, yC); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+    }
+    if (Cn.beam > 0) {
+      const a = Math.min(1, Cn.beam / 10);
+      const bg = ctx.createLinearGradient(0, Cn.y, 0, Cn.y + Cn.h);
+      bg.addColorStop(0, 'rgba(182,255,107,0)'); bg.addColorStop(0.5, 'rgba(240,255,200,0.95)'); bg.addColorStop(1, 'rgba(182,255,107,0)');
+      ctx.globalAlpha = a;
+      ctx.shadowColor = '#b6ff6b'; ctx.shadowBlur = 40;
+      ctx.fillStyle = bg;
+      ctx.fillRect(Cn.x0 + 12, Cn.y - Math.random() * 3, Cn.x1 - Cn.x0, Cn.h + Math.random() * 6);
+    }
+    ctx.restore();
+  }
+
   function drawPad(pad) {
     const col = pad.on ? pad.color : '#4a4566';
     ctx.save();
@@ -2523,6 +3243,7 @@
 
   function drawVirus(v) {
     if (!v.alive) return;
+    if ((L.def.world || 1) === 2) { drawPeacock(v); return; }
     const cx = v.x + 14, cy = v.y - 14 + Math.sin(v.t * 3) * 1.2, r = 10.5;
     ctx.save();
     // rotating spikes
@@ -2634,6 +3355,7 @@
   function drawCannon() {
     const Cn = L.cannon;
     if (!Cn) return;
+    if (Cn.kind === 'gaze') { drawGaze(Cn); return; }
     const x = Cn.x;
     ctx.save();
     // pedestal
@@ -2679,6 +3401,7 @@
 
   function drawBoss() {
     const B = L.boss;
+    if (B && B.type === 'ketos') { drawKetos(B); return; }
     if (!B || (B.dead && B.deathT > 40)) return;
     ctx.save();
     if (B.dead) ctx.globalAlpha = 1 - B.deathT / 40;
@@ -2761,11 +3484,25 @@
   function drawOrbs() {
     ctx.save();
     for (const o of L.orbs) {
+      if (o.delay > 0) {   // warning marker where the water ball will land
+        const a = 0.5 + 0.5 * Math.sin(time * 18);
+        ctx.globalAlpha = 0.5 + 0.4 * a;
+        ctx.strokeStyle = '#7ff8ff';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.ellipse(o.x, o.ty - 2, 16 + a * 4, 5, 0, 0, Math.PI * 2); ctx.stroke();
+        ctx.setLineDash([4, 8]);
+        ctx.globalAlpha = 0.25;
+        ctx.beginPath(); ctx.moveTo(o.x, o.y); ctx.lineTo(o.x, o.ty); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1;
+        continue;
+      }
       const g = ctx.createRadialGradient(o.x - 2, o.y - 2, 1, o.x, o.y, 9);
-      g.addColorStop(0, '#ffffff'); g.addColorStop(0.4, o.aimed ? '#ff6b8a' : '#9dff6b'); g.addColorStop(1, o.aimed ? 'rgba(255,42,85,0)' : 'rgba(57,255,20,0)');
+      const c1 = o.water ? '#7ff8ff' : o.aimed ? '#ff6b8a' : '#9dff6b', c2 = o.water ? 'rgba(0,180,255,0)' : o.aimed ? 'rgba(255,42,85,0)' : 'rgba(57,255,20,0)';
+      g.addColorStop(0, '#ffffff'); g.addColorStop(0.4, c1); g.addColorStop(1, c2);
       ctx.fillStyle = g;
       ctx.beginPath(); ctx.arc(o.x, o.y, 9, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = o.aimed ? '#ff2a55' : '#39ff14';
+      ctx.fillStyle = o.water ? '#00b4d8' : o.aimed ? '#ff2a55' : '#39ff14';
       ctx.beginPath(); ctx.arc(o.x, o.y, 4.5, 0, Math.PI * 2); ctx.fill();
     }
     ctx.restore();
@@ -2782,7 +3519,7 @@
     ctx.textAlign = 'right';
     ctx.font = '900 13px Cairo, Tahoma, sans-serif';
     ctx.fillStyle = '#9dff6b';
-    ctx.fillText('👑 الفيروس الأم', x0 + w, y0 + 15);
+    ctx.fillText('👑 ' + (B.name || 'الفيروس الأم'), x0 + w, y0 + 15);
     for (let i = 0; i < B.maxHp; i++) {
       const bx = x0 + i * 72, on = i < B.hp;
       ctx.fillStyle = on ? '#39ff14' : '#2a2a3a';
@@ -2901,8 +3638,42 @@
     ctx.fillStyle = '#000';
     ctx.beginPath(); ctx.ellipse(fx, fy - 1, 16, 3.5, 0, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
+    if (p.kind === 'argus' && p.looking) {
+      ctx.save();
+      const rad = Math.min(SIGHT[p.stage] || 420, 1400);
+      ctx.globalAlpha = 0.22 + 0.08 * Math.sin(time * 6);
+      ctx.strokeStyle = '#c58bff';
+      ctx.setLineDash([6, 10]);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(fx, fy - 25, rad, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+      const sg = ctx.createRadialGradient(fx, fy - 25, 10, fx, fy - 25, rad);
+      sg.addColorStop(0, 'rgba(0, 243, 255, 0.08)'); sg.addColorStop(1, 'rgba(0, 243, 255, 0)');
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = sg;
+      ctx.beginPath(); ctx.arc(fx, fy - 25, rad, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+    if (p.kind === 'kraken' && p.grapple) {
+      const r = p.grapple, sx = fx, sy = p.y + 6;
+      const mxp = (sx + r.x) / 2 + Math.sin(time * 20) * 3, myp = (sy + r.y) / 2 + 8;
+      drawTentacle(ctx, [[sx, sy], [mxp, myp], [mxp, myp], [r.x, r.y]], 5, 2.2, '#3fd8bc', '#5ff0d4', 1, [0.3, 0.5, 0.7], 'rgba(72, 223, 196, 0.6)');
+    }
     if (p.kind === 'argus') drawArgus(ctx, fx, fy, p.renderState());
     else drawKraken(ctx, fx, fy, p.renderState());
+    if (p.sleep > 0) {
+      ctx.save();
+      ctx.direction = 'ltr';
+      ctx.font = '900 14px Cairo, Arial, sans-serif';
+      ctx.fillStyle = '#ffe9a8';
+      ctx.shadowColor = '#ffd56b'; ctx.shadowBlur = 8;
+      for (let k = 0; k < 3; k++) {
+        const ph = (time * 0.8 + k / 3) % 1;
+        ctx.globalAlpha = 1 - ph;
+        ctx.fillText('z', fx + 10 + ph * 14 + k * 3, p.y - 30 - ph * 30);
+      }
+      ctx.restore();
+    }
 
     if (levelFrames < 300 && state === 'playing') {
       const a = Math.min(1, (300 - levelFrames) / 60);
@@ -3008,7 +3779,7 @@
     ctx.textAlign = 'left';
     ctx.font = '700 11px Cairo, Tahoma, sans-serif';
     ctx.fillStyle = 'rgba(200, 190, 240, 0.6)';
-    ctx.fillText('R إعادة • Esc إيقاف • M ' + (muted ? 'تشغيل الصوت' : 'كتم الصوت'), 50, 90);
+    ctx.fillText(L.def.abilities ? 'S عين الحارس • ↓ المجس • R إعادة • Esc إيقاف' : 'R إعادة • Esc إيقاف • M ' + (muted ? 'تشغيل الصوت' : 'كتم الصوت'), 50, 90);
     ctx.restore();
   }
 
@@ -3057,6 +3828,9 @@
     for (const l of L.lifts) drawLift(l);
     for (const pad of L.pads) drawPad(pad);
     for (const lz of L.lasers) drawLaser(lz);
+    for (const fz of L.flutes) drawFlute(fz);
+    for (const gh of L.ghosts) drawGhost(gh);
+    for (const r of L.rings) drawRing(r);
     for (const b of L.buttons) drawButton(b);
     for (const g of L.gems) drawGem(g);
     for (const v of L.viruses) drawVirus(v);
@@ -3100,7 +3874,7 @@
       rg.addColorStop(1, 'rgba(0,0,0,0)');
       g.fillStyle = rg;
       g.fillRect(0, 0, cw, ch);
-      const st = { t: time, facing: 1, walk: time * 6, moveAmt: 0.55, squash: 0, onGround: true, vy: 0 };
+      const st = { t: time, facing: 1, walk: time * 6, moveAmt: 0.55, squash: 0, onGround: true, vy: 0, stage: evoStage() };
       if (kind === 'argus') drawArgus(g, cw / 2 + 2, ch - 6, st);
       else drawKraken(g, cw / 2 + 6, ch - 6, st);
     }
@@ -3154,7 +3928,7 @@
     });
     LEVELS.forEach((lv, i) => {
       const b = document.createElement('button');
-      b.className = 'lvl' + (i === def ? ' current' : '') + (lv.boss ? ' boss' : '');
+      b.className = 'lvl' + (i === def ? ' current' : '') + (lv.boss ? ' boss' : '') + (lv.world === 2 ? ' w2' : '');
       b.id = 'lvl-' + (i + 1);
       const locked = i >= progress.unlocked;
       b.disabled = locked;
@@ -3267,7 +4041,9 @@
   window.__alphaiota = {
     get state() { return state; },
     get level() { return cur; },
-    get players() { return players.map((p) => ({ kind: p.kind, x: p.x, y: p.y, onGround: p.onGround, alive: p.alive })); },
+    get players() { return players.map((p) => ({ kind: p.kind, x: p.x, y: p.y, onGround: p.onGround, alive: p.alive, grapple: !!p.grapple, sleep: p.sleep, island: p.island, stage: p.stage })); },
+    get ghosts() { return L.ghosts.map((g) => g.vis); },
+    get ketos() { return L.boss && L.boss.type === 'ketos' ? { hp: L.boss.hp, phase: L.boss.phase, x: L.boss.x, dead: L.boss.dead } : null; },
     get gems() { return L.gems.filter((g) => g.taken).length + '/' + L.gems.length; },
     get lifts() { return L.lifts.map((l) => ({ id: l.id, x: l.x, y: l.y })); },
     get lasers() { return L.lasers.map((l) => ({ x: l.x, active: l.active, rem: l.rem })); },
@@ -3275,7 +4051,7 @@
     get pads() { return L.pads.map((p) => ({ x: p.x, y: p.y, w: p.w, on: p.on })); },
     get flood() { return L.flood ? L.flood.y : null; },
     get boss() { return L.boss ? { hp: L.boss.hp, x: L.boss.x, dead: L.boss.dead } : null; },
-    get orbs() { return L.orbs.map((o) => ({ x: o.x, y: o.y, vx: o.vx, vy: o.vy })); },
+    get orbs() { return L.orbs.map((o) => ({ x: o.x, y: o.y, vx: o.vx, vy: o.vy, g: o.g, delay: o.delay || 0 })); },
     get mode() { return mode; },
     get lastRaceDeath() { return lastRaceDeath; },
     get secret() { return progress.secret; },
